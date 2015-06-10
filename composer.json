@@ -1,0 +1,45 @@
+{
+    "name": "florianv/laravel-swap",
+    "type": "library",
+    "description": "Integrates Swap with Laravel 5",
+    "keywords": [
+        "laravel",
+        "currency",
+        "money",
+        "rate",
+        "conversion",
+        "exchange rates"
+    ],
+    "homepage": "https://github.com/florianv/laravel-swap",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Florian Voutzinos",
+            "email": "florian@voutzinos.com",
+            "homepage": "http://florian.voutzinos.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Florianv\\LaravelSwap\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Florianv\\LaravelSwap\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/contracts": "5.0.*|5.1.*",
+        "illuminate/support": "5.0.*|5.1.*",
+        "illuminate/view": "5.0.*|5.1.*",
+        "florianv/swap": "~2.1.0"
+    },
+    "require-dev": {
+        "graham-campbell/testbench": "~2.1"
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
