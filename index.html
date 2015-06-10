@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Laravel-swap by florianv</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Laravel-swap</h1>
+      <h2 class="project-tagline">Integrates Swap with Laravel 5</h2>
+      <a href="https://github.com/florianv/laravel-swap" class="btn">View on GitHub</a>
+      <a href="https://github.com/florianv/laravel-swap/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/florianv/laravel-swap/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="laravel-swap---" class="anchor" href="#laravel-swap---" aria-hidden="true"><span class="octicon octicon-link"></span></a>Laravel Swap <a href="https://travis-ci.org/florianv/laravel-swap"><img src="http://img.shields.io/travis/florianv/laravel-swap.svg?style=flat" alt="Build status"></a> <a href="https://packagist.org/packages/florianv/laravel-swap"><img src="http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat" alt="Version"></a> <a href="https://packagist.org/packages/florianv/laravel-swap"><img src="http://img.shields.io/badge/php-5.5+-ff69b4.svg" alt="PHP Version"></a>
+</h1>
+
+<blockquote>
+<p>Integrates <a href="https://github.com/florianv/swap">Swap</a> with Laravel 5</p>
+</blockquote>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install the package via <a href="https://getcomposer.org">Composer</a>:</p>
+
+<div class="highlight highlight-bash"><pre>$ composer require florianv/laravel-swap</pre></div>
+
+<h2>
+<a id="configuration" class="anchor" href="#configuration" aria-hidden="true"><span class="octicon octicon-link"></span></a>Configuration</h2>
+
+<p>Register the service provider and the facade in your configuration:</p>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c">// config/app.php</span></span>
+<span class="pl-s1"><span class="pl-s"><span class="pl-pds">'</span>providers<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1">    <span class="pl-c1">Florianv\LaravelSwap\</span><span class="pl-c1">SwapServiceProvider</span><span class="pl-k">::</span><span class="pl-c1">class</span></span>
+<span class="pl-s1">],</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-s"><span class="pl-pds">'</span>aliases<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> [</span>
+<span class="pl-s1">    <span class="pl-s"><span class="pl-pds">'</span>Swap<span class="pl-pds">'</span></span> <span class="pl-k">=&gt;</span> <span class="pl-c1">Florianv\LaravelSwap\Facades\</span><span class="pl-c1">Swap</span><span class="pl-k">::</span><span class="pl-c1">class</span></span>
+<span class="pl-s1">]</span></pre></div>
+
+<p>Publish Swap's configuration:</p>
+
+<div class="highlight highlight-bash"><pre>$ php artisan vendor:publish</pre></div>
+
+<p>By default, <code>Swap</code> is configured to use the <code>FileGetContentsHttpAdapter</code>, the <code>YahooFinanceProvider</code> provider and don't use a cache.</p>
+
+<p>For more informations about all possibilities including Laravel Cache integration, read the comments in the 
+<a href="https://github.com/florianv/laravel-swap/blob/master/config/swap.php">configuration file</a>.</p>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="via-the-facade" class="anchor" href="#via-the-facade" aria-hidden="true"><span class="octicon octicon-link"></span></a>Via the Facade</h3>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-c1">Route</span><span class="pl-k">::</span>get(<span class="pl-s"><span class="pl-pds">'</span>/<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> () {</span>
+<span class="pl-s1">    <span class="pl-smi">$rate</span> <span class="pl-k">=</span> <span class="pl-c1">Swap</span><span class="pl-k">::</span>quote(<span class="pl-s"><span class="pl-pds">'</span>EUR/USD<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">});</span></pre></div>
+
+<h3>
+<a id="via-injection" class="anchor" href="#via-injection" aria-hidden="true"><span class="octicon octicon-link"></span></a>Via Injection</h3>
+
+<div class="highlight highlight-php"><pre><span class="pl-s1"><span class="pl-k">use</span> <span class="pl-c1">Swap\SwapInterface</span>;</span>
+<span class="pl-s1"></span>
+<span class="pl-s1"><span class="pl-c1">Route</span><span class="pl-k">::</span>get(<span class="pl-s"><span class="pl-pds">'</span>/<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-c1">SwapInterface</span> <span class="pl-smi">$swap</span>) {</span>
+<span class="pl-s1">    <span class="pl-smi">$rate</span> <span class="pl-k">=</span> <span class="pl-smi">$swap</span><span class="pl-k">-&gt;</span>quote(<span class="pl-s"><span class="pl-pds">'</span>EUR/USD<span class="pl-pds">'</span></span>);</span>
+<span class="pl-s1">});</span></pre></div>
+
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
+
+<p><a href="https://github.com/florianv/laravel-swap/blob/master/LICENSE">MIT</a></p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/florianv/laravel-swap">Laravel-swap</a> is maintained by <a href="https://github.com/florianv">florianv</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
+
