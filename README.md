@@ -1,6 +1,10 @@
-# Laravel Swap [![Build status][travis-image]][travis-url] [![Version][version-image]][version-url] [![PHP Version][php-version-image]][php-version-url]
+# Laravel Swap
 
-> Integrates [Swap](https://github.com/florianv/swap) with Laravel 5
+[![Build status][travis-image]][travis-url]
+[![Version][version-image]][version-url]
+[![Downloads][downloads-image]][downloads-url]
+
+> Integrates [Swap](https://github.com/florianv/swap) with Laravel
 
 ## Installation
 
@@ -33,7 +37,7 @@ $ php artisan vendor:publish
 
 By default, `Swap` is configured to use the `FileGetContentsHttpAdapter`, the `YahooFinanceProvider` provider and don't use a cache.
 
-For more informations about all possibilities including Laravel Cache integration, read the comments in the 
+For more informations about all possibilities including Laravel Cache integration, read the comments in the
 [configuration file](https://github.com/florianv/laravel-swap/blob/master/config/swap.php).
 
 ## Usage
@@ -61,10 +65,10 @@ Route::get('/', function (SwapInterface $swap) {
 [MIT](https://github.com/florianv/laravel-swap/blob/master/LICENSE)
 
 [travis-url]: https://travis-ci.org/florianv/laravel-swap
-[travis-image]: http://img.shields.io/travis/florianv/laravel-swap.svg?style=flat
+[travis-image]: http://img.shields.io/travis/florianv/laravel-swap.svg
 
 [version-url]: https://packagist.org/packages/florianv/laravel-swap
-[version-image]: http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat
+[version-image]: http://img.shields.io/packagist/v/florianv/laravel-swap.svg
 
-[php-version-url]: https://packagist.org/packages/florianv/laravel-swap
-[php-version-image]: http://img.shields.io/badge/php-5.5+-ff69b4.svg
+[downloads-url]: https://packagist.org/packages/florianv/laravel-swap
+[downloads-image]: https://img.shields.io/packagist/dt/florianv/laravel-swap.svg
