@@ -31,10 +31,10 @@
     },
     "require": {
         "php": ">=5.5.9",
-        "illuminate/contracts": "5.0.*|5.1.*|5.2.*",
-        "illuminate/support": "5.0.*|5.1.*|5.2.*",
-        "illuminate/view": "5.0.*|5.1.*|5.2.*",
-        "florianv/swap": "~2.1.0"
+        "illuminate/contracts": "~5.0",
+        "illuminate/support": "~5.0",
+        "illuminate/view": "~5.0",
+        "florianv/swap": "~2.1"
     },
     "require-dev": {
         "graham-campbell/testbench": "~2.1"
