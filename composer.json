@@ -34,7 +34,7 @@
         "illuminate/contracts": "~5.0",
         "illuminate/support": "~5.0",
         "illuminate/view": "~5.0",
-        "florianv/swap": "~2.1"
+        "florianv/swap": "~2.4"
     },
     "require-dev": {
         "graham-campbell/testbench": "~2.1"
