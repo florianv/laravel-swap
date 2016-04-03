@@ -89,14 +89,22 @@ class ServiceProviderTest extends AbstractTestCase
         $this->assertInstanceOf('Swap\Provider\ChainProvider', $this->app['swap.provider']);
     }
 
-    public function testMultipleProviders()
+    public function testAllProviders()
     {
         $this->app->config->set('swap.providers', [
             'yahoo_finance' => true,
+            'google_finance' => true,
+            'european_central_bank' => true,
+            'national_bank_of_romania' => true,
+            'webservicex' => true,
             'open_exchange_rates' => [
                 'app_id' => 'foo',
                 'enterprise' => true,
-            ]
+            ],
+            'xignite' => [
+                'token' => 'bar'
+            ],
+            'central_bank_of_republic_turkey' => true
         ]);
 
         $this->assertInstanceOf('Swap\Provider\ChainProvider', $this->app['swap.provider']);

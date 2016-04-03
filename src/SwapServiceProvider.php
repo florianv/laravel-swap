@@ -15,6 +15,7 @@ use Ivory\HttpAdapter\FileGetContentsHttpAdapter;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Swap\Cache\IlluminateCache;
+use Swap\Provider\CentralBankOfRepublicTurkeyProvider;
 use Swap\Provider\ChainProvider;
 use Swap\Provider\EuropeanCentralBankProvider;
 use Swap\Provider\GoogleFinanceProvider;
@@ -122,6 +123,9 @@ final class SwapServiceProvider extends ServiceProvider
                             $app['swap.http_adapter'],
                             $providerConfig['token']
                         );
+                        break;
+                    case 'central_bank_of_republic_turkey':
+                        $providers[] = new CentralBankOfRepublicTurkeyProvider($app['swap.http_adapter']);
                         break;
                     default:
                         throw new \RuntimeException(sprintf('Unknown provider with name "%s".', $providerName));
