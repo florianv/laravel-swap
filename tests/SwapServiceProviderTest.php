@@ -104,8 +104,8 @@ class ServiceProviderTest extends AbstractTestCase
             'xignite' => [
                 'token' => 'bar'
             ],
-			'central_bank_of_republic_turkey' => true,
-			'central_bank_of_czech_republic' => true
+            'central_bank_of_republic_turkey' => true,
+            'central_bank_of_czech_republic' => true
         ]);
 
         $this->assertInstanceOf('Swap\Provider\ChainProvider', $this->app['swap.provider']);

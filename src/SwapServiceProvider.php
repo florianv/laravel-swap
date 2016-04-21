@@ -128,9 +128,9 @@ final class SwapServiceProvider extends ServiceProvider
                     case 'central_bank_of_republic_turkey':
                         $providers[] = new CentralBankOfRepublicTurkeyProvider($app['swap.http_adapter']);
                         break;
-					case 'central_bank_of_czech_republic':
-						$providers[] = new CentralBankOfCzechRepublicProvider($app['swap.http_adapter']);
-						break;
+                    case 'central_bank_of_czech_republic':
+                        $providers[] = new CentralBankOfCzechRepublicProvider($app['swap.http_adapter']);
+                        break;
                     default:
                         throw new \RuntimeException(sprintf('Unknown provider with name "%s".', $providerName));
                 }
