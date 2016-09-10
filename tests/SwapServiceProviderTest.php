@@ -14,7 +14,7 @@ namespace Florianv\LaravelSwap\Tests;
 use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
 use Ivory\HttpAdapter\CurlHttpAdapter;
 
-class ServiceProviderTest extends AbstractTestCase
+class SwapServiceProviderTest extends AbstractTestCase
 {
     use ServiceProviderTestCaseTrait;
 
@@ -46,7 +46,7 @@ class ServiceProviderTest extends AbstractTestCase
     public function testUnknownCache()
     {
         $this->app->config->set('swap.cache', [
-            'type' => 'unknown'
+            'type' => 'unknown',
         ]);
         $this->app['swap.cache'];
     }
@@ -60,7 +60,7 @@ class ServiceProviderTest extends AbstractTestCase
         $this->app->config->set('swap.cache', [
             'type' => 'illuminate',
             'store' => 'not_found',
-            'ttl' => 60
+            'ttl' => 60,
         ]);
         $this->app['swap.cache'];
     }
@@ -78,7 +78,7 @@ class ServiceProviderTest extends AbstractTestCase
         $this->app->config->set('swap.cache', [
             'type' => 'illuminate',
             'store' => 'array',
-            'ttl' => 60
+            'ttl' => 60,
         ]);
 
         $this->assertInstanceOf('Swap\Cache\IlluminateCache', $this->app['swap.cache']);
@@ -102,10 +102,10 @@ class ServiceProviderTest extends AbstractTestCase
                 'enterprise' => true,
             ],
             'xignite' => [
-                'token' => 'bar'
+                'token' => 'bar',
             ],
             'central_bank_of_republic_turkey' => true,
-            'central_bank_of_czech_republic' => true
+            'central_bank_of_czech_republic' => true,
         ]);
 
         $this->assertInstanceOf('Swap\Provider\ChainProvider', $this->app['swap.provider']);

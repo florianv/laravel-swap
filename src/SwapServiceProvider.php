@@ -36,8 +36,6 @@ final class SwapServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -48,8 +46,6 @@ final class SwapServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
@@ -67,7 +63,7 @@ final class SwapServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'swap', 'swap.provider', 'swap.http_adapter', 'swap.cache'
+            'swap', 'swap.provider', 'swap.http_adapter', 'swap.cache',
         ];
     }
 
@@ -149,7 +145,7 @@ final class SwapServiceProvider extends ServiceProvider
     {
         $app->singleton('swap.cache', function ($app) {
             if (null === $cacheConfig = $app['config']['swap.cache']) {
-                return null;
+                return;
             }
 
             if ('illuminate' === $cacheConfig['type']) {
