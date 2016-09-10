@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Florianv\LaravelSwap\Tests;
+namespace Swap\Laravel\Tests;
 
 use GrahamCampbell\TestBench\AbstractPackageTestCase;
 
@@ -20,6 +20,6 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
      */
     protected function getServiceProviderClass($app)
     {
-        return 'Florianv\LaravelSwap\SwapServiceProvider';
+        return 'Swap\Laravel\SwapServiceProvider';
     }
 }

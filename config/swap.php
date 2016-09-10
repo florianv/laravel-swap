@@ -13,28 +13,32 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Http Adapter
+    | Options.
     |--------------------------------------------------------------------------
     |
-    | This option specifies a service id to use as http adapter
-    | (defaults to FileGetContentsHttpAdapter).
+    | The options to pass to Swap amongst:
     |
+    | * cache_ttl: The cache ttl in seconds.
     */
-    'http_adapter' => null,
+    'options' => [],
 
     /*
     |--------------------------------------------------------------------------
-    | Providers
+    | Services
     |--------------------------------------------------------------------------
     |
-    | This option specifies the providers to use with their name as key and
-    | their config as value. The providers will be wrapped in a ChainProvider
-    | in the order they appear in this array.
+    | This option specifies the services to use with their name as key and
+    | their config as value.
     |
-    | Here is the config spec for each provider:
+    | Here is the config spec for each service:
     |
-    | * "yahoo_finance", "google_finance", "european_central_bank", "webservicex"
-    |   "national_bank_of_romania" can be enabled with "true" as value.
+    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "fixer"
+    |   "google", "national_bank_of_romania", "webservicex", "yahoo" can be enabled with "true" as value.
+    |
+    | * 'currency_layer' => [
+    |       'access_key' => 'secret', // Your app id
+    |       'enterprise' => true, // True if your AppId is an enterprise one
+    |   ]
     |
     | * 'open_exchange_rates' => [
     |       'app_id' => 'secret', // Your app id
@@ -47,8 +51,8 @@ return [
     |
     */
 
-    'providers' => [
-        'yahoo_finance' => true,
+    'services' => [
+        'fixer' => true,
     ],
 
     /*
@@ -56,15 +60,36 @@ return [
     | Cache
     |--------------------------------------------------------------------------
     |
-    | This option specifies which cache to use to store rate values and its ttl.
-    | Currently only Illuminate cache is supported:
+    | This option specifies the Laravel cache store to use.
     |
-    | 'cache' => [
-    |    'type' => 'illuminate',
-    |    'store' => 'apc', // Name of the cache store
-    |    'ttl' => 60 // Ttl in minutes (defaults to 0)
-    | ],
+    | 'cache' => 'file'
     */
     'cache' => null,
 
+    /*
+    |--------------------------------------------------------------------------
+    | Http Client.
+    |--------------------------------------------------------------------------
+    |
+    | The HTTP client service name to use.
+    */
+    'http_client' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Request Factory.
+    |--------------------------------------------------------------------------
+    |
+    | The Request Factory service name to use.
+    */
+    'request_factory' => null,
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cache Item Pool.
+    |--------------------------------------------------------------------------
+    |
+    | The Cache Item Pool service name to use.
+    */
+    'cache_item_pool' => null,
 ];

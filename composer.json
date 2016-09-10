@@ -1,7 +1,7 @@
 {
     "name": "florianv/laravel-swap",
     "type": "library",
-    "description": "Integrates Swap with Laravel 5",
+    "description": "Currency exchange rates library for Laravel",
     "keywords": [
         "laravel",
         "currency",
@@ -21,26 +21,28 @@
     ],
     "autoload": {
         "psr-4": {
-            "Florianv\\LaravelSwap\\": "src/"
+            "Swap\\Laravel\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Florianv\\LaravelSwap\\Tests\\": "tests/"
+            "Swap\\Laravel\\Tests\\": "tests/"
         }
     },
     "require": {
-        "php": ">=5.5.9",
-        "illuminate/contracts": "~5.0",
-        "illuminate/support": "~5.0",
-        "illuminate/view": "~5.0",
-        "florianv/swap": "~2.5"
+        "php": "^5.5|^7.0",
+        "florianv/swap": "^3.0",
+        "psr/cache": "^1.0",
+        "cache/adapter-common": "^0.3"
     },
     "require-dev": {
-        "graham-campbell/testbench": "~2.1"
+        "graham-campbell/testbench": "~2.1",
+        "php-http/guzzle6-adapter": "^1.0",
+        "php-http/message": "^1.0",
+        "cache/integration-tests": "^0.11"
     },
-    "config": {
-        "bin-dir": "bin"
+    "scripts": {
+        "test": "phpunit"
     },
     "extra": {
         "branch-alias": {
