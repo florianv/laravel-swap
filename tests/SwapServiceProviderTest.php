@@ -72,7 +72,7 @@ class SwapServiceProviderTest extends AbstractTestCase
                 'array' => [
                     'driver' => 'array',
                 ],
-            ]
+            ],
         ]);
 
         $this->app->config->set('swap.cache', [
