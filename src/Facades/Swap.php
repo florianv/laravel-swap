@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace Florianv\LaravelSwap\Facades;
+namespace Swap\Laravel\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

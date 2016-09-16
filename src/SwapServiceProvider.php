@@ -9,22 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Florianv\LaravelSwap;
+namespace Swap\Laravel;
 
-use Ivory\HttpAdapter\FileGetContentsHttpAdapter;
+use Exchanger\Exchanger;
+use Exchanger\Service\Chain;
+use Exchanger\Service\PhpArray;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
-use Swap\Cache\IlluminateCache;
-use Swap\Provider\CentralBankOfRepublicTurkeyProvider;
-use Swap\Provider\CentralBankOfCzechRepublicProvider;
-use Swap\Provider\ChainProvider;
-use Swap\Provider\EuropeanCentralBankProvider;
-use Swap\Provider\GoogleFinanceProvider;
-use Swap\Provider\NationalBankOfRomaniaProvider;
-use Swap\Provider\OpenExchangeRatesProvider;
-use Swap\Provider\WebserviceXProvider;
-use Swap\Provider\XigniteProvider;
-use Swap\Provider\YahooFinanceProvider;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
 use Swap\Swap;
 
 /**
@@ -36,8 +30,6 @@ final class SwapServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -48,15 +40,134 @@ final class SwapServiceProvider extends ServiceProvider
 
     /**
      * Register the application services.
-     *
-     * @return void
      */
     public function register()
     {
-        $this->registerHttpAdapter($this->app);
-        $this->registerProvider($this->app);
-        $this->registerCache($this->app);
+        $this->registerHttp($this->app);
+        $this->registerCacheItemPool($this->app);
+        $this->registerChain($this->app);
+        $this->registerExchangeRateProvider($this->app);
         $this->registerSwap($this->app);
+    }
+
+    /**
+     * Register the http related stuff.
+     *
+     * @param Application $app
+     */
+    private function registerHttp(Application $app)
+    {
+        $app->singleton('swap.http_client', function ($app) {
+            if ($httpClient = $app->config->get('swap.http_client')) {
+                return $app[$httpClient];
+            }
+
+            return HttpClientDiscovery::find();
+        });
+
+        $app->singleton('swap.request_factory', function ($app) {
+            if ($requestFactory = $app->config->get('swap.request_factory')) {
+                return $app[$requestFactory];
+            }
+
+            return MessageFactoryDiscovery::find();
+        });
+    }
+
+    /**
+     * Register the core services.
+     *
+     * @param Application $app
+     */
+    private function registerServices(Application $app)
+    {
+        foreach ($app->config->get('swap.services', []) as $name => $config) {
+            if (false === $config) {
+                continue;
+            }
+
+            $camelized = str_replace('_', '', ucwords($name, '_'));
+            $class = 'Exchanger\\Service\\' . $camelized;
+            $serviceName = sprintf('swap.service.%s', $name);
+
+            // The PhpArray service is a particular case
+            if ('array' === $name) {
+                return $app->singleton($serviceName, function () use ($config) {
+                    return new PhpArray($config);
+                });
+            }
+
+            // Process the regular services
+            if (!class_exists($class)) {
+                throw new \RuntimeException(sprintf('The service "%s" does not exist.', $name));
+            }
+
+            if (!is_array($config)) {
+                $config = [];
+            }
+
+            $app->singleton($serviceName, function ($app) use ($class, $config) {
+                return new $class($app['swap.http_client'], $app['swap.request_factory'], $config);
+            });
+
+            $app->tag($serviceName, 'swap.service');
+        }
+    }
+
+    /**
+     * Register the chain service.
+     *
+     * @param Application $app
+     */
+    private function registerChain(Application $app)
+    {
+        $app->singleton('swap.chain', function ($app) {
+            $this->registerServices($app);
+
+            return new Chain($app->tagged('swap.service'));
+        });
+    }
+
+    /**
+     * Register the cache item pool.
+     *
+     * @param Application $app
+     */
+    private function registerCacheItemPool(Application $app)
+    {
+        $app->singleton('swap.cache_item_pool', function ($app) {
+            if ($cacheItemPool = $app->config->get('swap.cache_item_pool')) {
+                return $app[$cacheItemPool];
+            }
+
+            return null;
+        });
+    }
+
+    /**
+     * Register the exchange rate provider.
+     *
+     * @param Application $app
+     */
+    public function registerExchangeRateProvider(Application $app)
+    {
+        $app->singleton('swap.exchange_rate_provider', function ($app) {
+            return new Exchanger($app['swap.chain'], $app['swap.cache_item_pool'], $app->config->get('swap.options', []));
+        });
+    }
+
+    /**
+     * Registers Swap.
+     *
+     * @param Application $app
+     */
+    private function registerSwap(Application $app)
+    {
+        $app->singleton('swap', function ($app) {
+            return new Swap($app['swap.exchange_rate_provider']);
+        });
+
+        $app->bind('Swap\Swap', 'swap');
     }
 
     /**
@@ -67,116 +178,7 @@ final class SwapServiceProvider extends ServiceProvider
     public function provides()
     {
         return [
-            'swap', 'swap.provider', 'swap.http_adapter', 'swap.cache'
+            'swap'
         ];
-    }
-
-    /**
-     * Registers the Http adapter.
-     *
-     * @param Application $app
-     */
-    private function registerHttpAdapter(Application $app)
-    {
-        $app->singleton('swap.http_adapter', function ($app) {
-            $adapter = $app['config']['swap.http_adapter'];
-
-            return null === $adapter ? new FileGetContentsHttpAdapter() : $app[$adapter];
-        });
-    }
-
-    /**
-     * Registers the provider.
-     *
-     * @param Application $app
-     */
-    private function registerProvider(Application $app)
-    {
-        $app->singleton('swap.provider', function ($app) {
-            $providers = [];
-
-            foreach ($app['config']['swap.providers'] as $providerName => $providerConfig) {
-                switch ($providerName) {
-                    case 'yahoo_finance':
-                        $providers[] = new YahooFinanceProvider($app['swap.http_adapter']);
-                        break;
-                    case 'google_finance':
-                        $providers[] = new GoogleFinanceProvider($app['swap.http_adapter']);
-                        break;
-                    case 'european_central_bank':
-                        $providers[] = new EuropeanCentralBankProvider($app['swap.http_adapter']);
-                        break;
-                    case 'national_bank_of_romania':
-                        $providers[] = new NationalBankOfRomaniaProvider($app['swap.http_adapter']);
-                        break;
-                    case 'webservicex':
-                        $providers[] = new WebserviceXProvider($app['swap.http_adapter']);
-                        break;
-                    case 'open_exchange_rates':
-                        $providers[] = new OpenExchangeRatesProvider(
-                            $app['swap.http_adapter'],
-                            $providerConfig['app_id'],
-                            isset($providerConfig['enterprise']) ? $providerConfig['enterprise'] : false
-                        );
-                        break;
-                    case 'xignite':
-                        $providers[] = new XigniteProvider(
-                            $app['swap.http_adapter'],
-                            $providerConfig['token']
-                        );
-                        break;
-                    case 'central_bank_of_republic_turkey':
-                        $providers[] = new CentralBankOfRepublicTurkeyProvider($app['swap.http_adapter']);
-                        break;
-                    case 'central_bank_of_czech_republic':
-                        $providers[] = new CentralBankOfCzechRepublicProvider($app['swap.http_adapter']);
-                        break;
-                    default:
-                        throw new \RuntimeException(sprintf('Unknown provider with name "%s".', $providerName));
-                }
-            }
-
-            return new ChainProvider($providers);
-        });
-    }
-
-    /**
-     * Registers the cache.
-     *
-     * @param Application $app
-     */
-    private function registerCache(Application $app)
-    {
-        $app->singleton('swap.cache', function ($app) {
-            if (null === $cacheConfig = $app['config']['swap.cache']) {
-                return null;
-            }
-
-            if ('illuminate' === $cacheConfig['type']) {
-                $repository = $app['cache']->store($cacheConfig['store']);
-
-                return new IlluminateCache(
-                    $repository->getStore(),
-                    isset($cacheConfig['ttl']) ? $cacheConfig['ttl'] : 0
-                );
-            }
-
-            throw new \RuntimeException(sprintf('Unknown cache type "%s".', $cacheConfig['type']));
-        });
-    }
-
-    /**
-     * Registers the Swap service.
-     *
-     * @param Application $app
-     */
-    private function registerSwap(Application $app)
-    {
-        $app->singleton('swap', function ($app) {
-            return new Swap($app['swap.provider'], $app['swap.cache']);
-        });
-
-        $app->bind('Swap\Swap', 'swap');
-        $app->bind('Swap\SwapInterface', 'swap');
     }
 }
