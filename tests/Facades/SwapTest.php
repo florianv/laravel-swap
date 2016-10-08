@@ -9,9 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace Florianv\LaravelSwap\Tests\Facades;
+namespace Swap\Laravel\Tests\Facades;
 
-use Florianv\LaravelSwap\Tests\AbstractTestCase;
+use Swap\Laravel\Tests\AbstractTestCase;
 use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
 
 class SwapTest extends AbstractTestCase
@@ -31,7 +31,7 @@ class SwapTest extends AbstractTestCase
      */
     protected function getFacadeClass()
     {
-        return 'Florianv\LaravelSwap\Facades\Swap';
+        return 'Swap\Laravel\Facades\Swap';
     }
 
     /**

@@ -1,74 +1,85 @@
-# Laravel Swap
+<img src="https://github.com/florianv/swap/blob/master/doc/logo.png" width="200px" align="left"/>
+> Currency exchange rates library for Laravel
 
-[![Build status][travis-image]][travis-url]
-[![Version][version-image]][version-url]
-[![Downloads][downloads-image]][downloads-url]
+[![Build status](http://img.shields.io/travis/florianv/laravel-swap.svg?style=flat-square)](https://travis-ci.org/florianv/laravel-swap)
+[![Total Downloads](https://img.shields.io/packagist/dt/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
+[![Scrutinizer](https://img.shields.io/scrutinizer/g/florianv/laravel-swap.svg?style=flat-square)](https://scrutinizer-ci.com/g/florianv/laravel-swap)
+[![Version](http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 
-> Integrates [Swap](https://github.com/florianv/swap) with Laravel
+**Swap** allows you to retrieve currency exchange rates from various services such as [Fixer](http://fixer.io) or [Yahoo](https://finance.yahoo.com/) and optionally cache the results.
 
-## Installation
+<br /><br />
 
-Install the package via [Composer](https://getcomposer.org):
+## QuickStart
+
+1) Install via Composer:
 
 ```bash
-$ composer require florianv/laravel-swap
+$ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapter
 ```
 
-## Configuration
-
-Register the service provider and the facade in your configuration:
+2) Configure the Service Provider and alias:
 
 ```php
 // config/app.php
 'providers' => [
-    Florianv\LaravelSwap\SwapServiceProvider::class
+    Swap\Laravel\SwapServiceProvider::class
 ],
 
 'aliases' => [
-    'Swap' => Florianv\LaravelSwap\Facades\Swap::class
+    'Swap' => Swap\Laravel\Facades\Swap::class
 ]
 ```
 
-Publish Swap's configuration:
+3) Publish the Package configuration
 
 ```bash
-$ php artisan vendor:publish
+$ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 ```
 
-By default, `Swap` is configured to use the `FileGetContentsHttpAdapter`, the `YahooFinanceProvider` provider and don't use a cache.
-
-For more informations about all possibilities including Laravel Cache integration, read the comments in the
-[configuration file](https://github.com/florianv/laravel-swap/blob/master/config/swap.php).
-
-## Usage
-
-### Via the Facade
+4) Start using it!
 
 ```php
-Route::get('/', function () {
-    $rate = Swap::quote('EUR/USD');
-});
+// Get the latest EUR/USD rate
+$rate = Swap::latest('EUR/USD');
+
+// 1.129
+$rate->getValue();
+
+// 2016-08-26
+$rate->getDate()->format('Y-m-d');
+
+// Get the EUR/USD rate yesterday
+$rate = Swap::historical('EUR/USD', Carbon::yesterday());
 ```
 
-### Via Injection
+## Documentation
 
-```php
-use Swap\SwapInterface;
+The complete documentation can be found [here](https://github.com/florianv/laravel-swap/blob/master/doc/readme.md).
 
-Route::get('/', function (SwapInterface $swap) {
-    $rate = $swap->quote('EUR/USD');
-});
-```
+## Services
+
+Here is the list of the currently implemented services.
+
+| Service | Base Currency | Quote Currency | Historical |
+|---------------------------------------------------------------------------|----------------------|----------------|----------------|
+| [Fixer](http://fixer.io) | * | * | Yes |
+| [European Central Bank](http://www.ecb.europa.eu/home/html/index.en.html) | EUR | * | Yes |
+| [Google](http://www.google.com/finance) | * | * | No |
+| [Open Exchange Rates](https://openexchangerates.org) | USD (free), * (paid) | * | Yes |
+| [Xignite](https://www.xignite.com) | * | * | Yes |
+| [Yahoo](https://finance.yahoo.com) | * | * | No |
+| [WebserviceX](http://www.webservicex.net/ws/default.aspx) | * | * | No |
+| [National Bank of Romania](http://www.bnr.ro) | RON | * | No |
+| [Central Bank of the Republic of Turkey](http://www.tcmb.gov.tr) | * | TRY | No |
+| [Central Bank of the Czech Republic](http://www.cnb.cz) | * | CZK | No |
+| [currencylayer](https://currencylayer.com) | USD (free), * (paid) | * | Yes |
+
+## Credits
+
+- [Florian Voutzinos](https://github.com/florianv)
+- [All Contributors](https://github.com/florianv/laravel-swap/contributors)
 
 ## License
 
-[MIT](https://github.com/florianv/laravel-swap/blob/master/LICENSE)
-
-[travis-url]: https://travis-ci.org/florianv/laravel-swap
-[travis-image]: http://img.shields.io/travis/florianv/laravel-swap.svg
-
-[version-url]: https://packagist.org/packages/florianv/laravel-swap
-[version-image]: http://img.shields.io/packagist/v/florianv/laravel-swap.svg
-
-[downloads-url]: https://packagist.org/packages/florianv/laravel-swap
-[downloads-image]: https://img.shields.io/packagist/dt/florianv/laravel-swap.svg
+The MIT License (MIT). Please see [LICENSE](https://github.com/florianv/laravel-swap/blob/master/LICENSE) for more information.

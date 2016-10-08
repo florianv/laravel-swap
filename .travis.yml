@@ -2,15 +2,19 @@ language: php
 
 php:
   - 5.5
-  - 5.5.9
   - 5.6
   - 7.0
-  - nightly
   - hhvm
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
 before_script:
-  - composer selfupdate
-  - composer --prefer-source --dev install
+  - travis_retry composer self-update
+  - travis_retry composer update --no-interaction --prefer-dist
 
 script:
-  - bin/phpunit
+  - composer test
