@@ -14,11 +14,10 @@ namespace Swap\Laravel;
 use Exchanger\Exchanger;
 use Exchanger\Service\Chain;
 use Exchanger\Service\PhpArray;
-use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Support\Facades\Config;
-use Illuminate\Support\ServiceProvider;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Support\ServiceProvider;
 use Swap\Swap;
 
 /**
@@ -57,7 +56,7 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function registerHttp(Application $app)
     {
-        $app->singleton('swap.http_client', function ($app) {
+        $app->singleton('swap.http_client', function($app) {
             if ($httpClient = $app->config->get('swap.http_client')) {
                 return $app[$httpClient];
             }
@@ -65,7 +64,7 @@ final class SwapServiceProvider extends ServiceProvider
             return HttpClientDiscovery::find();
         });
 
-        $app->singleton('swap.request_factory', function ($app) {
+        $app->singleton('swap.request_factory', function($app) {
             if ($requestFactory = $app->config->get('swap.request_factory')) {
                 return $app[$requestFactory];
             }
@@ -91,7 +90,7 @@ final class SwapServiceProvider extends ServiceProvider
 
             // The PhpArray service is a particular case
             if ('array' === $name) {
-                return $app->singleton($serviceName, function () use ($config) {
+                return $app->singleton($serviceName, function() use ($config) {
                     return new PhpArray($config);
                 });
             }
@@ -105,7 +104,7 @@ final class SwapServiceProvider extends ServiceProvider
                 $config = [];
             }
 
-            $app->singleton($serviceName, function ($app) use ($class, $config) {
+            $app->singleton($serviceName, function($app) use ($class, $config) {
                 return new $class($app['swap.http_client'], $app['swap.request_factory'], $config);
             });
 
@@ -120,7 +119,7 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function registerChain(Application $app)
     {
-        $app->singleton('swap.chain', function ($app) {
+        $app->singleton('swap.chain', function($app) {
             $this->registerServices($app);
 
             return new Chain($app->tagged('swap.service'));
@@ -134,7 +133,7 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function registerCacheItemPool(Application $app)
     {
-        $app->singleton('swap.cache_item_pool', function ($app) {
+        $app->singleton('swap.cache_item_pool', function($app) {
             if ($cacheItemPool = $app->config->get('swap.cache_item_pool')) {
                 return $app[$cacheItemPool];
             }
@@ -156,7 +155,7 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function registerExchangeRateProvider(Application $app)
     {
-        $app->singleton('swap.exchange_rate_provider', function ($app) {
+        $app->singleton('swap.exchange_rate_provider', function($app) {
             return new Exchanger($app['swap.chain'], $app['swap.cache_item_pool'], $app->config->get('swap.options', []));
         });
     }
@@ -168,7 +167,7 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function registerSwap(Application $app)
     {
-        $app->singleton('swap', function ($app) {
+        $app->singleton('swap', function($app) {
             return new Swap($app['swap.exchange_rate_provider']);
         });
 
