@@ -77,7 +77,7 @@ $rate->getValue();
 $rate->getDate()->format('Y-m-d');
 
 // Get the EUR/USD rate yesterday
-$rate = Swap::historical('EUR/USD', Carbon::yesterday());
+$rate = Swap::historical('EUR/USD', Carbon\Carbon::yesterday());
 ```
 
 ## Cache
