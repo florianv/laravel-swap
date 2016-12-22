@@ -34,7 +34,7 @@ final class SwapServiceProvider extends ServiceProvider
     public function boot()
     {
         $source = realpath(__DIR__.'/../config/swap.php');
-        $this->publishes([$source => config_path('swap.php')]);
+        $this->publishes([$source => $this->getConfigPath('swap.php')]);
         $this->mergeConfigFrom($source, 'swap');
     }
 
@@ -199,5 +199,17 @@ final class SwapServiceProvider extends ServiceProvider
         $camelized = ucfirst(implode('', array_map('ucfirst', explode('_', $name))));
 
         return 'Exchanger\\Service\\'.$camelized;
+    }
+
+    /**
+     * Gets the full path to the config.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    private function getConfigPath($path = '')
+    {
+        return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
     }
 }
