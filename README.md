@@ -1,5 +1,5 @@
 <img src="https://github.com/florianv/swap/blob/master/doc/logo.png" width="200px" align="left"/>
-> Currency exchange rates library for Laravel
+> Currency exchange rates library for Laravel and Lumen
 
 [![Build status](http://img.shields.io/travis/florianv/laravel-swap.svg?style=flat-square)](https://travis-ci.org/florianv/laravel-swap)
 [![Total Downloads](https://img.shields.io/packagist/dt/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
@@ -12,16 +12,18 @@
 
 ## QuickStart
 
-1) Install via Composer:
+### Installation
 
 ```bash
 $ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapter
 ```
 
-2) Configure the Service Provider and alias:
+### Laravel
+
+Configure the Service Provider and alias:
 
 ```php
-// config/app.php
+// /config/app.php
 'providers' => [
     Swap\Laravel\SwapServiceProvider::class
 ],
@@ -31,13 +33,34 @@ $ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapt
 ]
 ```
 
-3) Publish the Package configuration
+Publish the Package configuration
 
 ```bash
 $ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 ```
 
-4) Start using it!
+### Lumen
+
+Configure the Service Provider and alias:
+
+```php
+// /boostrap/app.php
+
+// Register the facade
+$app->withFacades(true, [
+    Swap\Laravel\Facades\Swap::class => 'Swap'
+]);
+
+// Load the configuration
+$app->configure('swap');
+
+// Register the service provider
+$app->register(Swap\Laravel\SwapServiceProvider::class);
+```
+
+Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to override it.
+
+## Usage
 
 ```php
 // Get the latest EUR/USD rate

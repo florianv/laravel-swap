@@ -14,7 +14,7 @@ namespace Swap\Laravel;
 use Exchanger\Exchanger;
 use Exchanger\Service\Chain;
 use Exchanger\Service\PhpArray;
-use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Http\Discovery\HttpClientDiscovery;
@@ -34,7 +34,7 @@ final class SwapServiceProvider extends ServiceProvider
     public function boot()
     {
         $source = realpath(__DIR__.'/../config/swap.php');
-        $this->publishes([$source => config_path('swap.php')]);
+        $this->publishes([$source => $this->getConfigPath('swap.php')]);
         $this->mergeConfigFrom($source, 'swap');
     }
 
@@ -53,9 +53,9 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Register the http related stuff.
      *
-     * @param Application $app
+     * @param Container $app
      */
-    private function registerHttp(Application $app)
+    private function registerHttp(Container $app)
     {
         $app->singleton('swap.http_client', function ($app) {
             if ($httpClient = $app->config->get('swap.http_client')) {
@@ -77,9 +77,9 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Register the core services.
      *
-     * @param Application $app
+     * @param Container $app
      */
-    private function registerServices(Application $app)
+    private function registerServices(Container $app)
     {
         foreach ($app->config->get('swap.services', []) as $name => $config) {
             if (false === $config) {
@@ -116,9 +116,9 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Register the chain service.
      *
-     * @param Application $app
+     * @param Container $app
      */
-    private function registerChain(Application $app)
+    private function registerChain(Container $app)
     {
         $app->singleton('swap.chain', function ($app) {
             $this->registerServices($app);
@@ -130,9 +130,9 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Registers the cache.
      *
-     * @param Application $app
+     * @param Container $app
      */
-    private function registerCacheItemPool(Application $app)
+    private function registerCacheItemPool(Container $app)
     {
         $app->singleton('swap.cache_item_pool', function ($app) {
             if ($cacheItemPool = $app->config->get('swap.cache_item_pool')) {
@@ -152,9 +152,9 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Register the exchange rate provider.
      *
-     * @param Application $app
+     * @param Container $app
      */
-    private function registerExchangeRateProvider(Application $app)
+    private function registerExchangeRateProvider(Container $app)
     {
         $app->singleton('swap.exchange_rate_provider', function ($app) {
             return new Exchanger($app['swap.chain'], $app['swap.cache_item_pool'], $app->config->get('swap.options', []));
@@ -164,9 +164,9 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Registers Swap.
      *
-     * @param Application $app
+     * @param Container $app
      */
-    private function registerSwap(Application $app)
+    private function registerSwap(Container $app)
     {
         $app->singleton('swap', function ($app) {
             return new Swap($app['swap.exchange_rate_provider']);
@@ -199,5 +199,17 @@ final class SwapServiceProvider extends ServiceProvider
         $camelized = ucfirst(implode('', array_map('ucfirst', explode('_', $name))));
 
         return 'Exchanger\\Service\\'.$camelized;
+    }
+
+    /**
+     * Gets the full path to the config.
+     *
+     * @param string $path
+     *
+     * @return string
+     */
+    private function getConfigPath($path = '')
+    {
+        return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
     }
 }

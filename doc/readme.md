@@ -3,6 +3,8 @@
 ## Index
 * [Installation](#installation)
 * [Setup](#setup)
+ * [Laravel](#laravel)
+ * [Lumen](#lumen)
 * [Configuration](#configuration)
 * [Usage](#usage)
 * [Cache](#cache)
@@ -25,10 +27,12 @@ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapter
 
 ## Setup
 
+### Laravel
+
 Configure the Service Provider and alias:
 
 ```php
-// config/app.php
+// /config/app.php
 'providers' => [
     Swap\Laravel\SwapServiceProvider::class
 ],
@@ -43,6 +47,27 @@ Publish the Package configuration
 ```bash
 $ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 ```
+
+### Lumen
+
+Configure the Service Provider and alias:
+
+```php
+// /boostrap/app.php
+
+// Register the facade
+$app->withFacades(true, [
+    Swap\Laravel\Facades\Swap::class => 'Swap'
+]);
+
+// Load the configuration
+$app->configure('swap');
+
+// Register the service provider
+$app->register(Swap\Laravel\SwapServiceProvider::class);
+```
+
+Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to override it.
 
 ## Configuration
 
