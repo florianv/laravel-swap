@@ -1,7 +1,5 @@
 **Swap** allows you to retrieve currency exchange rates from various services such as [Fixer](http://fixer.io) or [Yahoo](https://finance.yahoo.com/) and optionally cache the results.
 
-<br /><br />
-
 ## QuickStart
 
 ### Installation
