@@ -1,9 +1,10 @@
 {
     "name": "florianv/laravel-swap",
     "type": "library",
-    "description": "Currency exchange rates library for Laravel",
+    "description": "Currency exchange rates library for Laravel and Lumen",
     "keywords": [
         "laravel",
+        "lumen",
         "currency",
         "money",
         "rate",
