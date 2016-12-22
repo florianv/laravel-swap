@@ -3,6 +3,8 @@
 ## Index
 * [Installation](#installation)
 * [Setup](#setup)
+ * [Laravel](#laravel)
+ * [Lumen](#lumen)
 * [Configuration](#configuration)
 * [Usage](#usage)
 * [Cache](#cache)
