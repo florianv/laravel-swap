@@ -33,7 +33,7 @@ return [
     | Here is the config spec for each service:
     |
     | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "fixer"
-    |   "google", "national_bank_of_romania", "webservicex", "yahoo" can be enabled with "true" as value.
+    |   "google", "national_bank_of_romania", "webservicex", "yahoo", "russian_central_bank" can be enabled with "true" as value.
     |
     | * 'currency_layer' => [
     |       'access_key' => 'secret', // Your app id

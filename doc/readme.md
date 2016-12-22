@@ -237,5 +237,6 @@ Here is the complete list of supported services and their possible configuration
     'webservicex' => true,
     'xignite' => ['token' => 'token'],
     'yahoo' => true,
+    'russian_central_bank' => true
 ]
 ```            
