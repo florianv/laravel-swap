@@ -1,4 +1,5 @@
 <img src="https://github.com/florianv/swap/blob/master/doc/logo.png" width="200px" align="left"/>
+
 > Currency exchange rates library for Laravel and Lumen
 
 [![Build status](http://img.shields.io/travis/florianv/laravel-swap.svg?style=flat-square)](https://travis-ci.org/florianv/laravel-swap)
