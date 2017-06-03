@@ -210,6 +210,6 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function getConfigPath($path = '')
     {
-        return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
+        return app()->basePath().'/config'.($path ? '/'.$path : $path);
     }
 }
