@@ -18,7 +18,9 @@ $ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapt
 Configure the Service Provider and alias:
 
 ```php
+<?php
 // /config/app.php
+
 'providers' => [
     Swap\Laravel\SwapServiceProvider::class
 ],
@@ -39,6 +41,7 @@ $ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 Configure the Service Provider and alias:
 
 ```php
+<?php
 // /boostrap/app.php
 
 // Register the facade
@@ -58,6 +61,8 @@ Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to o
 ## Usage
 
 ```php
+<?php
+
 // Get the latest EUR/USD rate
 $rate = Swap::latest('EUR/USD');
 
