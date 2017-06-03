@@ -74,7 +74,7 @@ class SwapServiceProviderTest extends AbstractTestCase
             'webservicex' => true,
             'xignite' => ['token' => 'token'],
             'yahoo' => true,
-            'russian_central_bank' => true
+            'russian_central_bank' => true,
         ]);
 
         $this->assertInstanceOf(Chain::class, $this->app['swap.chain']);

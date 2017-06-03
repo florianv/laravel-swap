@@ -233,7 +233,20 @@ Here is the complete list of supported services and their possible configuration
     'google' => true,
     'national_bank_of_romania' => true,
     'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
-    'array' => [['EUR/USD' => new ExchangeRate('1.5')]],
+    'array' => [
+        [
+            'EUR/USD' => new ExchangeRate('1.1'),
+            'EUR/GBP' => 1.5
+        ],
+        [
+            '2017-01-01' => [
+                'EUR/USD' => new ExchangeRate('1.5')
+            ],
+            '2017-01-03' => [
+                'EUR/GBP' => 1.3
+            ],
+        ]
+    ],
     'webservicex' => true,
     'xignite' => ['token' => 'token'],
     'yahoo' => true,
