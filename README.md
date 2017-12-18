@@ -7,7 +7,7 @@
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/florianv/laravel-swap.svg?style=flat-square)](https://scrutinizer-ci.com/g/florianv/laravel-swap)
 [![Version](http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 
-**Swap** allows you to retrieve currency exchange rates from various services such as [Fixer](http://fixer.io) or [Yahoo](https://finance.yahoo.com/) and optionally cache the results.
+**Swap** allows you to retrieve currency exchange rates from various services such as [Fixer](http://fixer.io) or [Google](https://google.com/) and optionally cache the results.
 
 <br /><br />
 
@@ -92,13 +92,13 @@ Here is the list of the currently implemented services.
 | [Google](http://www.google.com/finance) | * | * | No |
 | [Open Exchange Rates](https://openexchangerates.org) | USD (free), * (paid) | * | Yes |
 | [Xignite](https://www.xignite.com) | * | * | Yes |
-| [Yahoo](https://finance.yahoo.com) | * | * | No |
 | [WebserviceX](http://www.webservicex.net/ws/default.aspx) | * | * | No |
 | [National Bank of Romania](http://www.bnr.ro) | RON | * | No |
 | [Central Bank of the Republic of Turkey](http://www.tcmb.gov.tr) | * | TRY | No |
 | [Central Bank of the Czech Republic](http://www.cnb.cz) | * | CZK | No |
 | [Russian Central Bank](http://http://www.cbr.ru) | * | RUB | Yes |
 | [currencylayer](https://currencylayer.com) | USD (free), * (paid) | * | Yes |
+| [Cryptonator](https://www.cryptonator.com) | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies)  | No |
 | Array | * | * | Yes |
 
 ## Credits
