@@ -91,9 +91,13 @@ final class SwapServiceProvider extends ServiceProvider
 
             // The PhpArray service is a particular case
             if ('array' === $name) {
-                return $app->singleton($serviceName, function () use ($config) {
+                $app->singleton($serviceName, function () use ($config) {
                     return new PhpArray($config);
                 });
+                
+                $app->tag($serviceName, 'swap.service');
+                
+                return;
             }
 
             // Process the regular services
