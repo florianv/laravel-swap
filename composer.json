@@ -32,8 +32,7 @@
     },
     "require": {
         "php": "^5.5|^7.0",
-        "florianv/swap": "^3.0",
-        "denlapaev/exchanger": "dev-master#84e94b2309deee75acb373aeb7953d341ff669aa",
+        "denlapaev/swap": "dev-master#67996937af7cffb656751dc80fcda2fd723cc9e6",
         "psr/cache": "^1.0",
         "cache/adapter-common": "^0.3"
     },
@@ -46,7 +45,7 @@
     "repositories": [
         {
           "type": "git",
-          "url": "https://github.com/denlapaev/exchanger.git"
+          "url": "https://github.com/denlapaev/swap.git"
         }
     ],
     "scripts": {
