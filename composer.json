@@ -1,5 +1,5 @@
 {
-    "name": "florianv/laravel-swap",
+    "name": "denlapaev/laravel-swap",
     "type": "library",
     "description": "Currency exchange rates library for Laravel and Lumen",
     "keywords": [
@@ -32,7 +32,7 @@
     },
     "require": {
         "php": "^5.5|^7.0",
-        "florianv/swap": "^3.0",
+        "denlapaev/swap": "dev-master#67996937af7cffb656751dc80fcda2fd723cc9e6",
         "psr/cache": "^1.0",
         "cache/adapter-common": "^0.3"
     },
@@ -42,6 +42,12 @@
         "php-http/message": "^1.0",
         "cache/integration-tests": "^0.11"
     },
+    "repositories": [
+        {
+          "type": "git",
+          "url": "https://github.com/denlapaev/swap.git"
+        }
+    ],
     "scripts": {
         "test": "phpunit"
     },
