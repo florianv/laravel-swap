@@ -32,7 +32,7 @@
     },
     "require": {
         "php": "^5.5|^7.0",
-        "florianv/swap": "^3.0",
+        "florianv/swap": "^3.3",
         "psr/cache": "^1.0",
         "cache/adapter-common": "^0.3"
     },

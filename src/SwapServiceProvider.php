@@ -94,10 +94,10 @@ final class SwapServiceProvider extends ServiceProvider
                 $app->singleton($serviceName, function () use ($config) {
                     return new PhpArray($config);
                 });
-                
+
                 $app->tag($serviceName, 'swap.service');
-                
-                return;
+
+                continue;
             }
 
             // Process the regular services
@@ -200,6 +200,11 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function getServiceClass($name)
     {
+        // WebserviceX is a special case
+        if ('webservicex' === $name) {
+            $name = 'webservice_x';
+        }
+
         $camelized = ucfirst(implode('', array_map('ucfirst', explode('_', $name))));
 
         return 'Exchanger\\Service\\'.$camelized;

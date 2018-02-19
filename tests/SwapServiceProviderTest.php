@@ -15,7 +15,22 @@ use Exchanger\CurrencyPair;
 use Exchanger\ExchangeRate;
 use Exchanger\ExchangeRateQuery;
 use Exchanger\HistoricalExchangeRateQuery;
+use Exchanger\Service\CentralBankOfCzechRepublic;
+use Exchanger\Service\CentralBankOfRepublicTurkey;
+use Exchanger\Service\Cryptonator;
+use Exchanger\Service\CurrencyDataFeed;
+use Exchanger\Service\CurrencyLayer;
+use Exchanger\Service\EuropeanCentralBank;
 use Exchanger\Service\Fixer;
+use Exchanger\Service\Forge;
+use Exchanger\Service\Google;
+use Exchanger\Service\NationalBankOfRomania;
+use Exchanger\Service\OpenExchangeRates;
+use Exchanger\Service\PhpArray;
+use Exchanger\Service\RussianCentralBank;
+use Exchanger\Service\WebserviceX;
+use Exchanger\Service\Xignite;
+use Exchanger\Service\Yahoo;
 use GrahamCampbell\TestBench\Traits\ServiceProviderTestCaseTrait;
 use Exchanger\Service\Chain;
 use Http\Discovery\HttpClientDiscovery;
@@ -75,10 +90,33 @@ class SwapServiceProviderTest extends AbstractTestCase
             'xignite' => ['token' => 'token'],
             'yahoo' => true,
             'russian_central_bank' => true,
+            'currency_data_feed' => ['api_key' => 'secret'],
+            'forge' => ['api_key' => 'secret'],
             'cryptonator' => true,
         ]);
 
         $this->assertInstanceOf(Chain::class, $this->app['swap.chain']);
+
+        $services = $this->app->tagged('swap.service');
+
+        $this->assertCount(16, $services);
+
+        $this->assertInstanceOf(CentralBankOfCzechRepublic::class, $services[0]);
+        $this->assertInstanceOf(CentralBankOfRepublicTurkey::class, $services[1]);
+        $this->assertInstanceOf(CurrencyLayer::class, $services[2]);
+        $this->assertInstanceOf(EuropeanCentralBank::class, $services[3]);
+        $this->assertInstanceOf(Fixer::class, $services[4]);
+        $this->assertInstanceOf(Google::class, $services[5]);
+        $this->assertInstanceOf(NationalBankOfRomania::class, $services[6]);
+        $this->assertInstanceOf(OpenExchangeRates::class, $services[7]);
+        $this->assertInstanceOf(PhpArray::class, $services[8]);
+        $this->assertInstanceOf(WebserviceX::class, $services[9]);
+        $this->assertInstanceOf(Xignite::class, $services[10]);
+        $this->assertInstanceOf(Yahoo::class, $services[11]);
+        $this->assertInstanceOf(RussianCentralBank::class, $services[12]);
+        $this->assertInstanceOf(CurrencyDataFeed::class, $services[13]);
+        $this->assertInstanceOf(Forge::class, $services[14]);
+        $this->assertInstanceOf(Cryptonator::class, $services[15]);
     }
 
     public function testSwapIsInjectable()
