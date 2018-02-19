@@ -250,6 +250,8 @@ Here is the complete list of supported services and their possible configuration
     'webservicex' => true,
     'xignite' => ['token' => 'token'],
     'russian_central_bank' => true,
-    'cryptonator' => true
+    'cryptonator' => true,
+    'currency_data_feed' => ['api_key' => 'secret'],
+    'forge' => ['api_key' => 'secret'],
 ]
 ```            
