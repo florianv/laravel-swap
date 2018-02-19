@@ -49,8 +49,15 @@ return [
     |       'token' => 'secret', // The API token
     |   ]
     |
+    | * 'currency_data_feed' => [
+    |       'api_key' => 'secret', // The API token
+    |   ]
+    |
+    | * 'forge' => [
+    |       'api_key' => 'secret', // The API token
+    |   ]
+    |
     */
-
     'services' => [
         'fixer' => true,
     ],
