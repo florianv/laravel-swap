@@ -48,6 +48,14 @@
     "extra": {
         "branch-alias": {
             "dev-master": "1.0-dev"
+        },
+        "laravel": {
+            "providers": [
+                "Swap\\Laravel\\SwapServiceProvider"
+            ],
+            "aliases": {
+                "Swap": "Swap\\Laravel\\Facades\\Swap"
+            }
         }
     }
 }

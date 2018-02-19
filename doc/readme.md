@@ -79,11 +79,11 @@ If you wish to use different services, you can modify the `services` configurati
 // app/config/swap.php
 'services' => [
     'fixer' => true,
-    'yahoo' => true,
+    'google' => true,
 ]    
 ```
 
-With this configuration, Swap will first use [Fixer.io](http://fixer.io) and fallback to [Yahoo](https://finance.yahoo.com) in case of failure.
+With this configuration, Swap will first use [Fixer.io](http://fixer.io) and fallback to [Google](https://google.com) in case of failure.
 
 > You can consult the list of the supported services and their options [here](#supported-services)
 
@@ -233,10 +233,23 @@ Here is the complete list of supported services and their possible configuration
     'google' => true,
     'national_bank_of_romania' => true,
     'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
-    'array' => [['EUR/USD' => new ExchangeRate('1.5')]],
+    'array' => [
+        [
+            'EUR/USD' => new ExchangeRate('1.1'),
+            'EUR/GBP' => 1.5
+        ],
+        [
+            '2017-01-01' => [
+                'EUR/USD' => new ExchangeRate('1.5')
+            ],
+            '2017-01-03' => [
+                'EUR/GBP' => 1.3
+            ],
+        ]
+    ],
     'webservicex' => true,
     'xignite' => ['token' => 'token'],
-    'yahoo' => true,
-    'russian_central_bank' => true
+    'russian_central_bank' => true,
+    'cryptonator' => true
 ]
 ```            

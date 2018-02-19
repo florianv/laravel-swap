@@ -90,7 +90,8 @@ class SwapServiceProviderTest extends AbstractTestCase
             'yahoo' => true,
             'russian_central_bank' => true,
             'currency_data_feed' => ['api_key' => 'secret'],
-            'forge' => ['api_key' => 'secret']
+            'forge' => ['api_key' => 'secret'],
+            'cryptonator' => true,
         ]);
 
         $this->assertInstanceOf(Chain::class, $this->app['swap.chain']);

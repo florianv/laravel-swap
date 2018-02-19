@@ -91,9 +91,13 @@ final class SwapServiceProvider extends ServiceProvider
 
             // The PhpArray service is a particular case
             if ('array' === $name) {
-                return $app->singleton($serviceName, function () use ($config) {
+                $app->singleton($serviceName, function () use ($config) {
                     return new PhpArray($config);
                 });
+                
+                $app->tag($serviceName, 'swap.service');
+                
+                return;
             }
 
             // Process the regular services
@@ -210,6 +214,6 @@ final class SwapServiceProvider extends ServiceProvider
      */
     private function getConfigPath($path = '')
     {
-        return app()->basePath() . '/config' . ($path ? '/' . $path : $path);
+        return app()->basePath().'/config'.($path ? '/'.$path : $path);
     }
 }
