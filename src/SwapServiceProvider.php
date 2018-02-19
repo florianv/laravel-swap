@@ -94,10 +94,10 @@ final class SwapServiceProvider extends ServiceProvider
                 $app->singleton($serviceName, function () use ($config) {
                     return new PhpArray($config);
                 });
-                
+
                 $app->tag($serviceName, 'swap.service');
-                
-                return;
+
+                continue;
             }
 
             // Process the regular services

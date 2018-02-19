@@ -17,6 +17,7 @@ use Exchanger\ExchangeRateQuery;
 use Exchanger\HistoricalExchangeRateQuery;
 use Exchanger\Service\CentralBankOfCzechRepublic;
 use Exchanger\Service\CentralBankOfRepublicTurkey;
+use Exchanger\Service\Cryptonator;
 use Exchanger\Service\CurrencyDataFeed;
 use Exchanger\Service\CurrencyLayer;
 use Exchanger\Service\EuropeanCentralBank;
@@ -98,7 +99,7 @@ class SwapServiceProviderTest extends AbstractTestCase
 
         $services = $this->app->tagged('swap.service');
 
-        $this->assertCount(15, $services);
+        $this->assertCount(16, $services);
 
         $this->assertInstanceOf(CentralBankOfCzechRepublic::class, $services[0]);
         $this->assertInstanceOf(CentralBankOfRepublicTurkey::class, $services[1]);
@@ -115,6 +116,7 @@ class SwapServiceProviderTest extends AbstractTestCase
         $this->assertInstanceOf(RussianCentralBank::class, $services[12]);
         $this->assertInstanceOf(CurrencyDataFeed::class, $services[13]);
         $this->assertInstanceOf(Forge::class, $services[14]);
+        $this->assertInstanceOf(Cryptonator::class, $services[15]);
     }
 
     public function testSwapIsInjectable()
