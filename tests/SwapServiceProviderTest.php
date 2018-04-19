@@ -81,7 +81,7 @@ class SwapServiceProviderTest extends AbstractTestCase
             'central_bank_of_republic_turkey' => true,
             'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
             'european_central_bank' => true,
-            'fixer' => true,
+            'fixer' => ['access_key' => 'secret'],
             'google' => true,
             'national_bank_of_romania' => true,
             'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
@@ -183,7 +183,7 @@ class SwapServiceProviderTest extends AbstractTestCase
     public function testTaggedService()
     {
         $this->app->singleton('service_custom', function ($app) {
-            return new Fixer($app['swap.http_client'], $app['swap.request_factory']);
+            return new Fixer($app['swap.http_client'], $app['swap.request_factory'], ['access_key' => 'test']);
         });
 
         $this->app->tag('service_custom', 'swap.service');

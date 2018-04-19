@@ -32,8 +32,12 @@ return [
     |
     | Here is the config spec for each service:
     |
-    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "fixer"
-    |   "google", "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator" can be enabled with "true" as value.
+    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "google",
+    |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator" can be enabled with "true" as value.
+    |
+    | * 'fixer' => [
+    |       'access_key' => 'secret', // Your app id
+    |   ]
     |
     | * 'currency_layer' => [
     |       'access_key' => 'secret', // Your app id
@@ -59,7 +63,7 @@ return [
     |
     */
     'services' => [
-        'fixer' => true,
+        'fixer' => ['access_key' => 'YOUR_KEY'],
     ],
 
     /*

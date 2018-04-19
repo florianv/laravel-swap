@@ -78,7 +78,7 @@ If you wish to use different services, you can modify the `services` configurati
 ```php
 // app/config/swap.php
 'services' => [
-    'fixer' => true,
+    'fixer' => ['access_key' => 'YOUR_KEY'],
     'google' => true,
 ]    
 ```
@@ -229,7 +229,7 @@ Here is the complete list of supported services and their possible configuration
     'central_bank_of_republic_turkey' => true,
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
     'european_central_bank' => true,
-    'fixer' => true,
+    'fixer' => ['access_key' => 'YOUR_KEY'],
     'google' => true,
     'national_bank_of_romania' => true,
     'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
