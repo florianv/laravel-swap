@@ -71,7 +71,7 @@ $rate = Swap::historical('EUR/USD', Carbon\Carbon::yesterday());
 
 The complete documentation can be found [here](https://github.com/florianv/laravel-swap/blob/master/doc/readme.md).
 
-## Sponsors :heart_eyes: 
+## Sponsors
 
 We are proudly supported by the following echange rate providers offering *free plans up to 1,000 requests per day*:
 
