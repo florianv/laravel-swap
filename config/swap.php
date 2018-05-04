@@ -44,6 +44,10 @@ return [
     |       'enterprise' => true, // True if your AppId is an enterprise one
     |   ]
     |
+    | * 'forge' => [
+    |       'api_key' => 'secret', // The API token
+    |   ]
+    |
     | * 'open_exchange_rates' => [
     |       'app_id' => 'secret', // Your app id
     |       'enterprise' => true, // True if your AppId is an enterprise one
@@ -57,13 +61,11 @@ return [
     |       'api_key' => 'secret', // The API token
     |   ]
     |
-    | * 'forge' => [
-    |       'api_key' => 'secret', // The API token
-    |   ]
-    |
     */
     'services' => [
         'fixer' => ['access_key' => 'YOUR_KEY'],
+        'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
+        'forge' => ['api_key' => 'secret'],
     ],
 
     /*

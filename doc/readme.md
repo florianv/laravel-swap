@@ -13,6 +13,7 @@
 * [Service](#service)
   * [Creating a Service](#creating-a-service)
   * [Supported Services](#supported-services)  
+* [Sponsors](#sponsors)
 
 ## Installation
 
@@ -71,7 +72,7 @@ Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to o
 
 ## Configuration
 
-By default Swap uses the [Fixer.io](http://fixer.io) service to fetch rates.
+By default Swap uses the [Fixer](http://fixer.io) service, and will fallback to [currencylayer](https://currencylayer.com) and then [1Forge](https://1forge.com), in case of failure.
 
 If you wish to use different services, you can modify the `services` configuration:
 
@@ -79,13 +80,14 @@ If you wish to use different services, you can modify the `services` configurati
 // app/config/swap.php
 'services' => [
     'fixer' => ['access_key' => 'YOUR_KEY'],
-    'google' => true,
+    'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
+    'forge' => ['api_key' => 'secret'],
 ]    
 ```
 
-With this configuration, Swap will first use [Fixer.io](http://fixer.io) and fallback to [Google](https://google.com) in case of failure.
+We recommend to use one of the [services that support our project](#sponsors), providing a free plan up to 1,000 requests per day.
 
-> You can consult the list of the supported services and their options [here](#supported-services)
+The complete list of all supported services is available [here](#supported-services).
 
 ## Usage
 
@@ -225,14 +227,20 @@ Here is the complete list of supported services and their possible configuration
 ```php
 // app/config/swap.php
 'services' => [
-    'central_bank_of_czech_republic' => true,
-    'central_bank_of_republic_turkey' => true,
-    'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
-    'european_central_bank' => true,
     'fixer' => ['access_key' => 'YOUR_KEY'],
-    'google' => true,
+    'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
+    'forge' => ['api_key' => 'secret'],
+    'european_central_bank' => true,
     'national_bank_of_romania' => true,
+    'central_bank_of_republic_turkey' => true,
+    'central_bank_of_czech_republic' => true,
+    'russian_central_bank' => true,
+    'webservicex' => true,
+    'google' => true,
+    'cryptonator' => true,
+    'currency_data_feed' => ['api_key' => 'secret'],
     'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
+    'xignite' => ['token' => 'token'],
     'array' => [
         [
             'EUR/USD' => new ExchangeRate('1.1'),
@@ -247,11 +255,24 @@ Here is the complete list of supported services and their possible configuration
             ],
         ]
     ],
-    'webservicex' => true,
-    'xignite' => ['token' => 'token'],
-    'russian_central_bank' => true,
-    'cryptonator' => true,
-    'currency_data_feed' => ['api_key' => 'secret'],
-    'forge' => ['api_key' => 'secret'],
 ]
 ```            
+
+### Sponsors
+
+We are proudly supported by the following echange rate providers offering *free plans up to 1,000 requests per day*:
+
+<img src="https://s3.amazonaws.com/swap.assets/fixer_icon.png?v=2" height="20px" width="20px"/> **[Fixer](https://fixer.io)**
+
+Fixer is a simple and lightweight API for foreign exchange rates that supports up to 170 world currencies.
+They provide real-time rates and historical data, however, EUR is the only available base currency on the free plan.
+
+<img src="https://s3.amazonaws.com/swap.assets/currencylayer_icon.png" height="20px" width="20px"/> **[currencylayer](https://currencylayer.com)**
+
+Currencylayer provides reliable exchange rates and currency conversions for your business up to 168 world currencies.
+They provide real-time rates and historical data, however, USD is the only available base currency on the free plan.
+
+<img src="https://s3.amazonaws.com/swap.assets/1forge_icon.png" height="20px" width="20px"/> **[1Forge](https://1forge.com)**
+
+1Forge provides Forex and Cryptocurrency quotes for over 700 unique currency pairs. 
+They provide the fastest price updates available of any provider, however, they don’t support smaller currencies or historical data.
