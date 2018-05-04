@@ -1,15 +1,12 @@
-<img src="https://github.com/florianv/swap/blob/master/doc/logo.png" width="200px" align="left"/>
-
-> Currency exchange rates library for Laravel and Lumen
+# <img src="https://s3.amazonaws.com/swap.assets/swap_logo.png" height="30px" width="30px"/> Laravel Swap
 
 [![Build status](http://img.shields.io/travis/florianv/laravel-swap.svg?style=flat-square)](https://travis-ci.org/florianv/laravel-swap)
 [![Total Downloads](https://img.shields.io/packagist/dt/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/florianv/laravel-swap.svg?style=flat-square)](https://scrutinizer-ci.com/g/florianv/laravel-swap)
 [![Version](http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 
-**Swap** allows you to retrieve currency exchange rates from various services such as [Fixer](http://fixer.io) or [Google](https://google.com/) and optionally cache the results.
-
-<br /><br />
+Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io)**, **[currencylayer](https://currencylayer.com)** or **[1Forge](https://1forge.com)** 
+and optionally cache the results.
 
 ## QuickStart
 
@@ -81,27 +78,46 @@ $rate = Swap::historical('EUR/USD', Carbon\Carbon::yesterday());
 
 The complete documentation can be found [here](https://github.com/florianv/laravel-swap/blob/master/doc/readme.md).
 
+## Sponsors :heart_eyes: 
+
+We are proudly supported by the following echange rate providers offering *free plans up to 1,000 requests per day*:
+
+<img src="https://s3.amazonaws.com/swap.assets/fixer_icon.png?v=2" height="20px" width="20px"/> **[Fixer](https://fixer.io)**
+
+Fixer is a simple and lightweight API for foreign exchange rates that supports up to 170 world currencies.
+They provide real-time rates and historical data, however, EUR is the only available base currency on the free plan.
+
+<img src="https://s3.amazonaws.com/swap.assets/currencylayer_icon.png" height="20px" width="20px"/> **[currencylayer](https://currencylayer.com)**
+
+Currencylayer provides reliable exchange rates and currency conversions for your business up to 168 world currencies.
+They provide real-time rates and historical data, however, USD is the only available base currency on the free plan.
+
+<img src="https://s3.amazonaws.com/swap.assets/1forge_icon.png" height="20px" width="20px"/> **[1Forge](https://1forge.com)**
+
+1Forge provides Forex and Cryptocurrency quotes for over 700 unique currency pairs. 
+They provide the fastest price updates available of any provider, however, they don’t support smaller currencies or historical data.
+
 ## Services
 
-Here is the list of the currently implemented services.
+Here is the list of the currently implemented services:
 
-| Service | Registry Alias | Base Currency | Quote Currency | Historical |
-|----------------------------------------------------------------|---------------|----------------------|----------------|----------------|
-| [Fixer](http://fixer.io) | `fixer` | * | * | Yes |
-| [European Central Bank](http://www.ecb.europa.eu/home/html/index.en.html) | `european_central_bank` | EUR | * | Yes |
-| [Google](http://www.google.com/finance) | `google` | * | * | No |
+| Service | Base Currency | Quote Currency | Historical |
+|---------------------------------------------------------------------------|----------------------|----------------|----------------|
+| [Fixer](https://fixer.io) | EUR (free, no SSL), * (paid) | * | Yes |
+| [currencylayer](https://currencylayer.com) | USD (free), * (paid) | * | Yes |
+| [1Forge](https://1forge.com) | * (free but limited or paid) | * (free but limited or paid) | No |
+| [European Central Bank](https://www.ecb.europa.eu/home/html/index.en.html) | EUR | * | Yes |
+| [National Bank of Romania](http://www.bnr.ro) | RON | * | Yes |
+| [Central Bank of the Republic of Turkey](http://www.tcmb.gov.tr) | * | TRY | No |
+| [Central Bank of the Czech Republic](https://www.cnb.cz) | * | CZK | Yes |
+| [Central Bank of Russia](https://cbr.ru) | * | RUB | Yes |
+| [WebserviceX](http://www.webservicex.net) | * | * | No |
+| [Google](https://www.google.com/finance) | * | * | No |
+| [Cryptonator](https://www.cryptonator.com) | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies)  | No |
+| [CurrencyDataFeed](https://currencydatafeed.com) | * (free but limited or paid) | * (free but limited or paid) | No |
 | [Open Exchange Rates](https://openexchangerates.org) | USD (free), * (paid) | * | Yes |
-| [Xignite](https://www.xignite.com) | `xignite` | * | * | Yes |
-| [WebserviceX](http://www.webservicex.net/ws/default.aspx) | `webservicex` | * | * | No |
-| [National Bank of Romania](http://www.bnr.ro) | `national_bank_of_romania` | RON | * | No |
-| [Central Bank of the Republic of Turkey](http://www.tcmb.gov.tr) | `central_bank_of_republic_turkey` | * | TRY | No |
-| [Central Bank of the Czech Republic](http://www.cnb.cz) | `central_bank_of_czech_republic` | * | CZK | No |
-| [Russian Central Bank](http://http://www.cbr.ru) | `russian_central_bank` | * | RUB | Yes |
-| [currencylayer](https://currencylayer.com) | `currency_layer` | USD (free), * (paid) | * | Yes |
-| [Cryptonator](https://www.cryptonator.com) | `cryptonator` | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies)  | No |
-| [1Forge](https://1forge.com) | `forge` | * (free but limited or paid) | * (free but limited or paid) | No |
-| [CurrencyDataFeed](https://currencydatafeed.com) | `currency_data_feed` | * (free but limited or paid) | * (free but limited or paid) | No |
-| Array | `array` | * | * | Yes |
+| [Xignite](https://www.xignite.com) | * | * | Yes |
+| Array | * | * | Yes |
 
 ## Credits
 
