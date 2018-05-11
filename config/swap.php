@@ -37,6 +37,7 @@ return [
     |
     | * 'fixer' => [
     |       'access_key' => 'secret', // Your app id
+    |       'enterprise' => true, // True if your AppId is an enterprise one
     |   ]
     |
     | * 'currency_layer' => [
@@ -63,7 +64,7 @@ return [
     |
     */
     'services' => [
-        'fixer' => ['access_key' => 'YOUR_KEY'],
+        'fixer' => ['access_key' => 'YOUR_KEY', 'enterprise' => false],
         'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
         'forge' => ['api_key' => 'secret'],
     ],
