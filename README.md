@@ -13,7 +13,7 @@ and optionally cache the results.
 ### Installation
 
 ```bash
-$ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapter
+$ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapter ^1.0
 ```
 
 ### Laravel
