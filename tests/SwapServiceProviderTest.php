@@ -35,8 +35,8 @@ class SwapServiceProviderTest extends AbstractTestCase
     }
 
     /**
-     * @expectedException \RuntimeException
-     * @expectedExceptionMessage The service "unknown" does not exist.
+     * @expectedException \LogicException
+     * @expectedExceptionMessage The service "unknown" is not registered.
      */
     public function testUnknownService()
     {
