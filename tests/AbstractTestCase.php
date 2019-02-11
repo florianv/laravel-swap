@@ -12,6 +12,7 @@
 namespace Swap\Laravel\Tests;
 
 use GrahamCampbell\TestBench\AbstractPackageTestCase;
+use Swap\Laravel\SwapServiceProvider;
 
 abstract class AbstractTestCase extends AbstractPackageTestCase
 {
@@ -20,6 +21,6 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
      */
     protected function getServiceProviderClass($app)
     {
-        return 'Swap\Laravel\SwapServiceProvider';
+        return SwapServiceProvider::class;
     }
 }

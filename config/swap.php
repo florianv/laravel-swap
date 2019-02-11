@@ -97,13 +97,4 @@ return [
     | The Request Factory service name to use.
     */
     'request_factory' => null,
-
-    /*
-    |--------------------------------------------------------------------------
-    | Cache Item Pool.
-    |--------------------------------------------------------------------------
-    |
-    | The Cache Item Pool service name to use.
-    */
-    'cache_item_pool' => null,
 ];
