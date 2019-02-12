@@ -2,3 +2,4 @@ composer.lock
 phpunit.xml
 vendor
 bin/
+.php_cs.cache

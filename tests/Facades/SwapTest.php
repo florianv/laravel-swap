@@ -11,12 +11,14 @@
 
 namespace Swap\Laravel\Tests\Facades;
 
+use Swap\Laravel\Facades\Swap as SwapFacade;
 use Swap\Laravel\Tests\AbstractTestCase;
-use GrahamCampbell\TestBench\Traits\FacadeTestCaseTrait;
+use GrahamCampbell\TestBenchCore\FacadeTrait;
+use Swap\Swap;
 
 class SwapTest extends AbstractTestCase
 {
-    use FacadeTestCaseTrait;
+    use FacadeTrait;
 
     /**
      * {@inheritdoc}
@@ -31,7 +33,7 @@ class SwapTest extends AbstractTestCase
      */
     protected function getFacadeClass()
     {
-        return 'Swap\Laravel\Facades\Swap';
+        return SwapFacade::class;
     }
 
     /**
@@ -39,6 +41,6 @@ class SwapTest extends AbstractTestCase
      */
     protected function getFacadeRoot()
     {
-        return 'Swap\Swap';
+        return Swap::class;
     }
 }
