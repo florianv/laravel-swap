@@ -7,12 +7,15 @@
  * [Lumen](#lumen)
 * [Configuration](#configuration)
 * [Usage](#usage)
+  * [Retrieving Rates](#retrieving-rates)
+  * [Rate Provider](#rate-provider)
 * [Cache](#cache)
- * [Rates Caching](#rates-caching)
-  * [Cache Options](#cache-options)
-* [Service](#service)
-  * [Creating a Service](#creating-a-service)
-  * [Supported Services](#supported-services)  
+  * [Rates Caching](#rates-caching)
+  * [Query Cache Options](#cache-options)
+* [Creating a Service](#creating-a-service)
+  * [Standard Service](#standard-service)
+  * [Historical Service](#historical-service)
+* [Supported Services](#supported-services)  
 * [Sponsors](#sponsors)
 
 ## Installation
@@ -20,30 +23,34 @@
 Swap is decoupled from any library sending HTTP requests (like Guzzle), instead it uses an abstraction called [HTTPlug](http://httplug.io/) 
 which provides the http layer used to send requests to exchange rate services. 
 
-Below is an example using [Guzzle 6](http://docs.guzzlephp.org/en/latest/index.html):
+Below is an example using Curl:
 
 ```bash
-composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapter
+$ composer require php-http/curl-client nyholm/psr7 php-http/message florianv/laravel-swap
 ```
 
 ## Setup
 
-### Laravel
+### Laravel 5.5
 
-Configure the Service Provider and alias:
+If you don't use auto-discovery, add the ServiceProvider to the providers array in config/app.php
 
 ```php
 // /config/app.php
 'providers' => [
     Swap\Laravel\SwapServiceProvider::class
 ],
+```
 
+If you want to use the facade to log messages, add this to your facades in app.php:
+
+```
 'aliases' => [
     'Swap' => Swap\Laravel\Facades\Swap::class
 ]
 ```
 
-Publish the Package configuration
+Copy the package config to your local config with the publish command:
 
 ```bash
 $ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
@@ -91,6 +98,8 @@ The complete list of all supported services is available [here](#supported-servi
 
 ## Usage
 
+### Retrieving Rates
+
 In order to get rates, you can use the `latest()` or `historical()` methods on `Swap`:
 
 ```php
@@ -106,6 +115,18 @@ $rate->getDate()->format('Y-m-d');
 // Get the EUR/USD rate yesterday
 $rate = Swap::historical('EUR/USD', Carbon\Carbon::yesterday());
 ```
+
+### Rate provider
+
+When using the chain service, it can be useful to know which service provided the rate.
+
+You can use the `getProviderName()` function on a rate that gives you the name of the service that returned it:
+
+```php
+$name = $rate->getProviderName();
+```
+
+For example, if Fixer returned the rate, it will be identical to `fixer`.
 
 ## Cache
 
@@ -126,39 +147,62 @@ It is possible to cache rates during a given time using the Laravel cache store 
 
 Rates are now cached using the Laravel `file` store during 3600 seconds.
 
-### Cache Options
+### Query Cache Options
 
-You can override the `cache_ttl` per request:
+You can override `Swap` caching options per request.
+
+#### cache_ttl
+
+Set cache TTL in seconds. Default: `null` - cache entries permanently
 
 ```php
-// Overrides the global cache ttl to 60 seconds
+// Override the global cache_ttl only for this query
 $rate = Swap::latest('EUR/USD', ['cache_ttl' => 60]);
 $rate = Swap::historical('EUR/USD', $date, ['cache_ttl' => 60]);
+```
 
-// Disable the cache
+#### cache
+
+Disable/Enable caching. Default: `true`
+
+```php
+// Disable caching for this query
 $rate = Swap::latest('EUR/USD', ['cache' => false]);
 $rate = Swap::historical('EUR/USD', $date, ['cache' => false]);
 ```
 
-## Service
+#### cache_key_prefix
 
-### Creating a Service
+Set the cache key prefix. Default: empty string
+
+There is a limitation of 64 characters for the key length in PSR-6, because of this, key prefix must not exceed 24 characters, as sha1() hash takes 40 symbols.
+
+PSR-6 do not allows characters `{}()/\@:` in key, these characters are replaced with `-`
+
+```php
+// Override cache key prefix for this query
+$rate = Swap::latest('EUR/USD', ['cache_key_prefix' => 'currencies-special-']);
+$rate = Swap::historical('EUR/USD', $date, ['cache_key_prefix' => 'currencies-special-']);
+```
+
+## Creating a Service
 
 You want to add a new service to `Swap` ? Great!
 
-First you must check if the service supports retrieval of historical rates. If it's the case, you must extend the `HistoricalService` class,
-otherwise use the `Service` class.
+If your service must send http requests to retrieve rates, your class must extend the `HttpService` class, otherwise you can extend the more generic `Service` class.
+
+### Standard service
 
 In the following example, we are creating a `Constant` service that returns a constant rate value.
 
 ```php
-use Exchanger\Service\Service;
-use Exchanger\Contract\ExchangeRateQuery;
-use Exchanger\ExchangeRate;
-use Swap\Service\Registry;
-use Swap\Builder;
+namespace App\Swap;
 
-class ConstantService extends Service
+use Exchanger\Contract\ExchangeRateQuery;
+use Exchanger\Contract\ExchangeRate;
+use Exchanger\Service\HttpService;
+
+class ConstantService extends HttpService
 {
     /**
      * Gets the exchange rate.
@@ -167,12 +211,12 @@ class ConstantService extends Service
      *
      * @return ExchangeRate
      */
-    public function getExchangeRate(ExchangeRateQuery $exchangeQuery)
+    public function getExchangeRate(ExchangeRateQuery $exchangeQuery): ExchangeRate
     {
         // If you want to make a request you can use
-        $content = $this->request('http://example.com');
+        // $content = $this->request('http://example.com');
 
-        return new ExchangeRate($this->options['value']);
+        return $this->createInstantRate($exchangeQuery->getCurrencyPair(), $this->options['value']);
     }
 
     /**
@@ -180,9 +224,9 @@ class ConstantService extends Service
      *
      * @param array &$options
      *
-     * @return array
+     * @return void
      */
-    public function processOptions(array &$options)
+    public function processOptions(array &$options): void
     {
         if (!isset($options['value'])) {
             throw new \InvalidArgumentException('The "value" option must be provided.');
@@ -196,29 +240,93 @@ class ConstantService extends Service
      *
      * @return bool
      */
-    public function supportQuery(ExchangeRateQuery $exchangeQuery)
+    public function supportQuery(ExchangeRateQuery $exchangeQuery): bool
     {
         // For example, our service only supports EUR as base currency
         return 'EUR' === $exchangeQuery->getCurrencyPair()->getBaseCurrency();
     }
+
+    /**
+     * Gets the name of the exchange rate service.
+     *
+     * @return string
+     */
+    public function getName(): string
+    {
+        return 'constant';
+    }
 }
 ```
 
-In order to register your service, you need to tag it as `swap.service` in your service provider:
+You will need to register it in the `boot()` method of your `AppServiceProvider`:
 
 ```php
-// Create a custom service 'constant_service' that always return 1
-$this->app->singleton('constant_service', function ($app) {
-    return new ConstantService(null, null, ['value' => 1]);
-});
+// /app/Providers/AppServiceProvider.php
+use Swap\Service\Registry;
+use App\Swap\ConstantService;
 
-// Tag the service as 'swap.service'
-$this->app->tag('constant_service', 'swap.service');
+class AppServiceProvider extends ServiceProvider
+{
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        Registry::register('constant', ConstantService::class);
+    }
+}
 ```
 
-> If you want your service to be called first (before the configured Swap ones),
-you will need to declare your service provider before the `Swap\Laravel\SwapServiceProvider::class`
-in your `config/app.php`
+Then you can use it in the config:
+
+```php
+// /config/swap.php
+
+'services' => [
+    'constant' => ['value' => 10],
+],
+```
+
+### Historical service
+
+If your service supports retrieving historical rates, you need to use the `SupportsHistoricalQueries` trait.
+
+You will need to rename the `getExchangeRate` method to `getLatestExchangeRate` and switch its visibility to protected, and implement a new `getHistoricalExchangeRate` method:
+
+```php
+use Exchanger\Service\SupportsHistoricalQueries;
+
+class ConstantService extends HttpService
+{
+    use SupportsHistoricalQueries;
+    
+    /**
+     * Gets the exchange rate.
+     *
+     * @param ExchangeRateQuery $exchangeQuery
+     *
+     * @return ExchangeRate
+     */
+    protected function getLatestExchangeRate(ExchangeRateQuery $exchangeQuery): ExchangeRate
+    {
+        return $this->createInstantRate($exchangeQuery->getCurrencyPair(), $this->options['value']);
+    }
+
+    /**
+     * Gets an historical rate.
+     *
+     * @param HistoricalExchangeRateQuery $exchangeQuery
+     *
+     * @return ExchangeRate
+     */
+    protected function getHistoricalExchangeRate(HistoricalExchangeRateQuery $exchangeQuery): ExchangeRate
+    {
+        return $this->createInstantRate($exchangeQuery->getCurrencyPair(), $this->options['value']);
+    }
+}    
+```
     
 ### Supported Services
 
@@ -236,19 +344,18 @@ Here is the complete list of supported services and their possible configuration
     'central_bank_of_czech_republic' => true,
     'russian_central_bank' => true,
     'webservicex' => true,
-    'google' => true,
     'cryptonator' => true,
     'currency_data_feed' => ['api_key' => 'secret'],
     'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
     'xignite' => ['token' => 'token'],
     'array' => [
         [
-            'EUR/USD' => new ExchangeRate('1.1'),
+            'EUR/USD' => 1.1,
             'EUR/GBP' => 1.5
         ],
         [
             '2017-01-01' => [
-                'EUR/USD' => new ExchangeRate('1.5')
+                'EUR/USD' => 1.5
             ],
             '2017-01-03' => [
                 'EUR/GBP' => 1.3

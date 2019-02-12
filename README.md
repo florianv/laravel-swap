@@ -13,25 +13,29 @@ and optionally cache the results.
 ### Installation
 
 ```bash
-$ composer require florianv/laravel-swap php-http/message php-http/guzzle6-adapter ^1.0
+$ composer require php-http/curl-client nyholm/psr7 php-http/message florianv/laravel-swap
 ```
 
-### Laravel
+### Laravel 5.5+:
 
-Configure the Service Provider and alias:
+If you don't use auto-discovery, add the ServiceProvider to the providers array in config/app.php
 
 ```php
 // /config/app.php
 'providers' => [
     Swap\Laravel\SwapServiceProvider::class
 ],
+```
 
+If you want to use the facade to log messages, add this to your facades in app.php:
+
+```
 'aliases' => [
     'Swap' => Swap\Laravel\Facades\Swap::class
 ]
 ```
 
-Publish the Package configuration
+Copy the package config to your local config with the publish command:
 
 ```bash
 $ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
@@ -112,12 +116,11 @@ Here is the list of the currently implemented services:
 | [Central Bank of the Czech Republic](https://www.cnb.cz) | * | CZK | Yes |
 | [Central Bank of Russia](https://cbr.ru) | * | RUB | Yes |
 | [WebserviceX](http://www.webservicex.net) | * | * | No |
-| [Google](https://www.google.com/finance) | * | * | No |
 | [Cryptonator](https://www.cryptonator.com) | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies)  | No |
 | [CurrencyDataFeed](https://currencydatafeed.com) | * (free but limited or paid) | * (free but limited or paid) | No |
 | [Open Exchange Rates](https://openexchangerates.org) | USD (free), * (paid) | * | Yes |
 | [Xignite](https://www.xignite.com) | * | * | Yes |
-| [CurrencyConverterApi](https://www.currencyconverterapi.com) | * | * | Yes (free but limited or paid) |
+| [Currency Converter API](https://www.currencyconverterapi.com) | * | * | Yes (free but limited or paid) |
 | Array | * | * | Yes |
 
 ## Credits
