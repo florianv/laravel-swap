@@ -11,6 +11,8 @@
 
 namespace Swap\Laravel;
 
+use Cache\Bridge\SimpleCache\SimpleCacheBridge;
+use Cache\Adapter\Illuminate\IlluminateCachePool;
 use Illuminate\Support\ServiceProvider;
 use Swap\Builder;
 
@@ -92,14 +94,14 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Gets the simple cache.
      *
-     * @return LaravelSimpleCache
+     * @return SimpleCacheBridge
      */
     private function getSimpleCache()
     {
         if ($cache = $this->app->config->get('swap.cache')) {
             $store = $this->app['cache']->store($cache)->getStore();
 
-            return new LaravelSimpleCache($store);
+            return new SimpleCacheBridge(new IlluminateCachePool($store));
         }
 
         return null;
