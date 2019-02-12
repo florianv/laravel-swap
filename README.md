@@ -16,9 +16,9 @@ and optionally cache the results.
 $ composer require php-http/curl-client nyholm/psr7 php-http/message florianv/laravel-swap
 ```
 
-### Laravel 5.5+:
+### Laravel 5.5+
 
-If you don't use auto-discovery, add the ServiceProvider to the providers array in config/app.php
+If you don't use auto-discovery, add the `ServiceProvider` to the providers array in `config/app.php`:
 
 ```php
 // /config/app.php

@@ -3,8 +3,8 @@
 ## Index
 * [Installation](#installation)
 * [Setup](#setup)
- * [Laravel](#laravel)
- * [Lumen](#lumen)
+  * [Laravel](#laravel)
+  * [Lumen](#lumen)
 * [Configuration](#configuration)
 * [Usage](#usage)
   * [Retrieving Rates](#retrieving-rates)
@@ -31,7 +31,7 @@ $ composer require php-http/curl-client nyholm/psr7 php-http/message florianv/la
 
 ## Setup
 
-### Laravel 5.5
+### Laravel
 
 If you don't use auto-discovery, add the ServiceProvider to the providers array in config/app.php
 
