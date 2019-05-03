@@ -339,6 +339,7 @@ Here is the complete list of supported services and their possible configuration
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
     'forge' => ['api_key' => 'secret'],
     'european_central_bank' => true,
+    'exchange_rates_api' => true,
     'national_bank_of_romania' => true,
     'central_bank_of_republic_turkey' => true,
     'central_bank_of_czech_republic' => true,

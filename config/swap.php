@@ -32,7 +32,7 @@ return [
     |
     | Here is the config spec for each service:
     |
-    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "google",
+    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "exchange_rates_api",
     |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator" can be enabled with "true" as value.
     |
     | * 'fixer' => [
