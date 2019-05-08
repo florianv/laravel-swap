@@ -79,7 +79,7 @@ Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to o
 
 ## Configuration
 
-By default Swap uses the [Fixer](http://fixer.io) service, and will fallback to [currencylayer](https://currencylayer.com) and then [1Forge](https://1forge.com), in case of failure.
+By default Swap uses the [Fixer](http://fixer.io) service, and will fallback to [currencylayer](https://currencylayer.com) in case of failure.
 
 If you wish to use different services, you can modify the `services` configuration:
 
@@ -88,7 +88,6 @@ If you wish to use different services, you can modify the `services` configurati
 'services' => [
     'fixer' => ['access_key' => 'YOUR_KEY'],
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
-    'forge' => ['api_key' => 'secret'],
 ]    
 ```
 
@@ -337,7 +336,6 @@ Here is the complete list of supported services and their possible configuration
 'services' => [
     'fixer' => ['access_key' => 'YOUR_KEY'],
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
-    'forge' => ['api_key' => 'secret'],
     'european_central_bank' => true,
     'exchange_rates_api' => true,
     'national_bank_of_romania' => true,
@@ -345,6 +343,7 @@ Here is the complete list of supported services and their possible configuration
     'central_bank_of_czech_republic' => true,
     'russian_central_bank' => true,
     'webservicex' => true,
+    'forge' => ['api_key' => 'secret'],
     'cryptonator' => true,
     'currency_data_feed' => ['api_key' => 'secret'],
     'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
@@ -379,8 +378,3 @@ They provide real-time rates and historical data, however, EUR is the only avail
 
 Currencylayer provides reliable exchange rates and currency conversions for your business up to 168 world currencies.
 They provide real-time rates and historical data, however, USD is the only available base currency on the free plan.
-
-<img src="https://s3.amazonaws.com/swap.assets/1forge_icon.png" height="20px" width="20px"/> **[1Forge](https://1forge.com)**
-
-1Forge provides Forex and Cryptocurrency quotes for over 700 unique currency pairs. 
-They provide the fastest price updates available of any provider, however, they don’t support smaller currencies or historical data.

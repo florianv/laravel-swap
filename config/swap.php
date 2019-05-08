@@ -32,7 +32,7 @@ return [
     |
     | Here is the config spec for each service:
     |
-    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "exchange_rates_api",
+    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "google",
     |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator" can be enabled with "true" as value.
     |
     | * 'fixer' => [
@@ -66,7 +66,6 @@ return [
     'services' => [
         'fixer' => ['access_key' => 'YOUR_KEY', 'enterprise' => false],
         'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
-        'forge' => ['api_key' => 'secret'],
     ],
 
     /*
