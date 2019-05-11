@@ -62,6 +62,12 @@ return [
     |       'api_key' => 'secret', // The API token
     |   ]
     |
+    | * 'currency_converter' => [
+    |       'api_key' => 'access_key', // The API token
+    |       'enterprise' => true, // True if your AppId is an enterprise one
+    |   ]
+
+    |
     */
     'services' => [
         'fixer' => ['access_key' => 'YOUR_KEY', 'enterprise' => false],
