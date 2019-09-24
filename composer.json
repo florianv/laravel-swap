@@ -33,7 +33,7 @@
     "require": {
         "php": "^7.1.3",
         "florianv/swap": "^4.0",
-        "cache/illuminate-adapter": "^0.2.0",
+        "amodar/illuminate-adapter": "^0.2.1",
         "cache/simple-cache-bridge": "^1.0"
     },
     "require-dev": {
