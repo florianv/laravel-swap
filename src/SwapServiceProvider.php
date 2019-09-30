@@ -99,9 +99,11 @@ final class SwapServiceProvider extends ServiceProvider
     private function getSimpleCache()
     {
         if ($cache = $this->app->config->get('swap.cache')) {
-            $store = $this->app['cache']->store($cache)->getStore();
+            $store = $this->app['cache']->store($cache);
 
-            return new SimpleCacheBridge(new IlluminateCachePool($store));
+            return $store instanceof \Psr\SimpleCache\CacheInterface
+                ? $store
+                : new SimpleCacheBridge(new IlluminateCachePool($store->getStore()));
         }
 
         return null;
