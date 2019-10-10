@@ -21,12 +21,11 @@ class SwapServiceProviderTest extends AbstractTestCase
 {
     use ServiceProviderTrait;
 
-    /**
-     * @expectedException \InvalidArgumentException
-     * @expectedExceptionMessage The "access_key" option must be provided.
-     */
     public function testMissingServiceConfig()
     {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "access_key" option must be provided.');
+
         $this->app->config->set('swap.services', [
             'currency_layer' => true,
         ]);
@@ -34,12 +33,11 @@ class SwapServiceProviderTest extends AbstractTestCase
         $this->app['swap'];
     }
 
-    /**
-     * @expectedException \LogicException
-     * @expectedExceptionMessage The service "unknown" is not registered.
-     */
     public function testUnknownService()
     {
+        $this->expectException(\LogicException::class);
+        $this->expectExceptionMessage('The service "unknown" is not registered.');
+
         $this->app->config->set('swap.services', [
             'unknown' => true,
         ]);
@@ -49,7 +47,7 @@ class SwapServiceProviderTest extends AbstractTestCase
 
     public function testEmptyServices()
     {
-        $this->app['swap'];
+        Assert::assertInstanceOf(Swap::class, $this->app['swap']);
     }
 
     public function testSwapIsInjectable()

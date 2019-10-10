@@ -15,6 +15,16 @@ Swap allows you to retrieve currency exchange rates from various services such a
 $ composer require php-http/curl-client nyholm/psr7 php-http/message florianv/laravel-swap
 ```
 
+### Laravel 5.7 or lesser
+
+If you use cache, add also PSR-6 adapter and PSR-16 bridge cache dependencies :
+
+```bash
+$ composer require cache/illuminate-adapter cache/simple-cache-bridge
+```
+
+These dependencies are not required with Laravel 5.8 or greater which [implements PSR-16](https://github.com/laravel/framework/pull/27217).
+
 ### Laravel 5.5+
 
 If you don't use auto-discovery, add the `ServiceProvider` to the providers array in `config/app.php`:

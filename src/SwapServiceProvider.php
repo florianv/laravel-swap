@@ -99,9 +99,26 @@ final class SwapServiceProvider extends ServiceProvider
     private function getSimpleCache()
     {
         if ($cache = $this->app->config->get('swap.cache')) {
-            $store = $this->app['cache']->store($cache)->getStore();
+            $store = $this->app['cache']->store($cache);
 
-            return new SimpleCacheBridge(new IlluminateCachePool($store));
+            // Check simple cache PSR-16 compatibility
+            if ($store instanceof \Psr\SimpleCache\CacheInterface) {
+                return $store;
+            }
+
+            // Ensure PSR-6 adapter class exists
+            if (! class_exists(IlluminateCachePool::class)) {
+                throw new \Exception("cache/illuminate-adapter dependency is missing");
+            }
+
+            // Ensure PSR-16 bridge class exists
+            if (! class_exists(SimpleCacheBridge::class)) {
+                throw new \Exception("cache/simple-cache-bridge dependency is missing");
+            }
+
+            return new SimpleCacheBridge(
+                new IlluminateCachePool($store->getStore())
+            );
         }
 
         return null;
