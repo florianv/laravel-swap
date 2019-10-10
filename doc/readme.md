@@ -56,6 +56,16 @@ Copy the package config to your local config with the publish command:
 $ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 ```
 
+__Laravel 5.7 or lesser :__
+
+If you use cache, add also PSR-6 adapter and PSR-16 bridge cache dependencies :
+
+```bash
+$ composer require cache/illuminate-adapter cache/simple-cache-bridge
+```
+
+These dependencies are not required with Laravel 5.8 or greater which [implements PSR-16](https://github.com/laravel/framework/pull/27217).
+
 ### Lumen
 
 Configure the Service Provider and alias:
