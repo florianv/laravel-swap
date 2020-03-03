@@ -33,18 +33,24 @@ return [
     | Here is the config spec for each service:
     |
     | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "google",
-    |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator" can be enabled with "true" as value.
+    |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator", "bulgarian_national_bank"
+    |   can be enabled with "true" as value.
     |
     | * 'fixer' => [
-    |       'access_key' => 'secret', // Your app id
-    |       'enterprise' => true, // True if your AppId is an enterprise one
+    |       'access_key' => 'secret', // Your access key
+    |       'enterprise' => true, // True if your access key is a paying one
     |   ]
     |
     | * 'currency_layer' => [
-    |       'access_key' => 'secret', // Your app id
-    |       'enterprise' => true, // True if your AppId is an enterprise one
+    |       'access_key' => 'secret', // Your access key
+    |       'enterprise' => true, // True if your access key is a paying one
     |   ]
-    |
+
+    | * 'coin_layer' => [
+    |       'access_key' => 'secret', // Your access key
+    |       'paid' => true, // True if your access key is a paying one
+    |   ]
+
     | * 'forge' => [
     |       'api_key' => 'secret', // The API token
     |   ]
