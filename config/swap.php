@@ -72,6 +72,10 @@ return [
     |       'api_key' => 'access_key', // The API token
     |       'enterprise' => true, // True if your AppId is an enterprise one
     |   ]
+    |
+    | * 'xchangeapi' => [
+    |       'api-key' => 'secret', // The API token
+    |   ]
 
     |
     */

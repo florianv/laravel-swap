@@ -360,6 +360,7 @@ Here is the complete list of supported services and their possible configuration
     'currency_data_feed' => ['api_key' => 'secret'],
     'open_exchange_rates' => ['app_id' => 'secret', 'enterprise' => false],
     'xignite' => ['token' => 'token'],
+    'xchangeapi' => ['api-key' => 'api-key'],
     'array' => [
         [
             'EUR/USD' => 1.1,
