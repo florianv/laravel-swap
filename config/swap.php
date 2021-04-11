@@ -45,13 +45,21 @@ return [
     |       'access_key' => 'secret', // Your access key
     |       'enterprise' => true, // True if your access key is a paying one
     |   ]
-
+    |
+    | * 'exchange_rates_api' => [
+    |       'access_key' => 'secret', // Your access key
+    |   ]
+    |
     | * 'coin_layer' => [
     |       'access_key' => 'secret', // Your access key
     |       'paid' => true, // True if your access key is a paying one
     |   ]
-
+    |
     | * 'forge' => [
+    |       'api_key' => 'secret', // The API token
+    |   ]
+    |
+    | * 'abstract_api' => [
     |       'api_key' => 'secret', // The API token
     |   ]
     |
