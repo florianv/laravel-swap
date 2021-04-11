@@ -19,7 +19,7 @@ abstract class AbstractTestCase extends AbstractPackageTestCase
     /**
      * {@inheritdoc}
      */
-    protected function getServiceProviderClass($app)
+    protected function getServiceProviderClass()
     {
         return SwapServiceProvider::class;
     }
