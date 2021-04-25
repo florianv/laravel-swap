@@ -5,7 +5,8 @@
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/florianv/laravel-swap.svg?style=flat-square)](https://scrutinizer-ci.com/g/florianv/laravel-swap)
 [![Version](http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 
-Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io)** or **[currencylayer](https://currencylayer.com)** and optionally cache the results.
+Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io)**, **[currencylayer](https://currencylayer.com)** 
+or **[exchangeratesapi](https://exchangeratesapi.io)** and optionally cache the results.
 
 ## Sponsors
 
@@ -18,6 +19,10 @@ Swap allows you to retrieve currency exchange rates from various services such a
      <td><img src="https://s3.amazonaws.com/swap.assets/currencylayer_icon.png" width="50px"/></td>
      <td><a href="https://currencylayer.com">currencylayer</a> provides reliable exchange rates and currency conversions for your business up to 168 world currencies.</td>
    </tr>
+   <tr>
+     <td><img src="https://exchangeratesapi.io/assets/images/api-logo.svg" width="50px"/></td>
+     <td><a href="https://exchangeratesapi.io">exchangeratesapi</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
+   </tr>   
 </table>
 
 ## QuickStart
