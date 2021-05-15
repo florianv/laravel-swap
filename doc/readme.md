@@ -14,7 +14,11 @@
    <tr>
      <td><img src="https://exchangeratesapi.io/assets/images/api-logo.svg" width="50px"/></td>
      <td><a href="https://exchangeratesapi.io">exchangeratesapi</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
-   </tr>    
+   </tr>   
+   <tr>
+     <td><img src="https://global-uploads.webflow.com/5ebbd0a566a3996636e55959/5ec2ba27ede983917dbff22f_favicon.png" width="50px"/></td>
+     <td><a href="https://www.abstractapi.com/">Abstract</a> provides simple exchange rates for developers and a dozen of APIs covering thousands of use cases.</td>
+   </tr>  
 </table>
 
 ## Index
@@ -116,6 +120,7 @@ If you wish to use different services, you can modify the `services` configurati
     'fixer' => ['access_key' => 'YOUR_KEY'],
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
     'exchange_rates_api' => ['access_key' => 'secret'],
+    'abstract_api' => ['api_key' => 'secret'],
 ]    
 ```
 
@@ -365,12 +370,12 @@ Here is the complete list of supported services and their possible configuration
     'fixer' => ['access_key' => 'YOUR_KEY'],
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
     'exchange_rates_api' => ['access_key' => 'secret'],
+    'abstract_api' => ['api_key' => 'secret'],
     'coin_layer' => ['access_key' => 'secret', 'paid' => false],
     'european_central_bank' => true,
     'national_bank_of_romania' => true,
     'central_bank_of_republic_turkey' => true,
     'central_bank_of_czech_republic' => true,
-    'abstract_api' => ['api_key' => 'secret'],
     'russian_central_bank' => true,
     'bulgarian_national_bank' => true,
     'webservicex' => true,

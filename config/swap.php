@@ -91,6 +91,7 @@ return [
         'fixer' => ['access_key' => 'YOUR_KEY', 'enterprise' => false],
         'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
         'exchange_rates_api' => ['access_key' => 'secret'],
+        'abstract_api' => ['api_key' => 'secret'],
     ],
 
     /*
