@@ -1,5 +1,5 @@
-Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io)**, **[currencylayer](https://currencylayer.com)** 
-or **[exchangeratesapi](https://exchangeratesapi.io)** and optionally cache the results.
+Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io)**, **[currencylayer](https://currencylayer.com)**, 
+**[exchangeratesapi](https://exchangeratesapi.io)** or **[Abstract](https://www.abstractapi.com)** and optionally cache the results. 
 
 ## Sponsors
 
@@ -16,6 +16,10 @@ or **[exchangeratesapi](https://exchangeratesapi.io)** and optionally cache the 
      <td><img src="https://exchangeratesapi.io/assets/images/api-logo.svg" width="50px"/></td>
      <td><a href="https://exchangeratesapi.io">exchangeratesapi</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
    </tr>   
+   <tr>
+     <td><img src="https://global-uploads.webflow.com/5ebbd0a566a3996636e55959/5ec2ba27ede983917dbff22f_favicon.png" width="50px"/></td>
+     <td><a href="https://www.abstractapi.com/">Abstract</a> provides simple exchange rates for developers and a dozen of APIs covering thousands of use cases.</td>
+   </tr>  
 </table>
 
 ## QuickStart
@@ -97,7 +101,7 @@ Here is the list of the currently implemented services:
 | [Fixer](https://fixer.io) | EUR (free, no SSL), * (paid) | * | Yes |
 | [currencylayer](https://currencylayer.com) | USD (free), * (paid) | * | Yes |
 | [exchangeratesapi](https://exchangeratesapi.io) | USD (free), * (paid) | * | Yes |
-| [Abstract](https://www.abstractapi.com) | * | * | No |
+| [Abstract](https://www.abstractapi.com) | * | * | Yes |
 | [coinlayer](https://coinlayer.com) | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies) | Yes |
 | [European Central Bank](https://www.ecb.europa.eu/home/html/index.en.html) | EUR | * | Yes |
 | [National Bank of Romania](http://www.bnr.ro) | RON, AED, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EGP, EUR, GBP, HRK, HUF, INR, JPY, KRW, MDL, MXN, NOK, NZD, PLN, RSD, RUB, SEK, TRY, UAH, USD, XAU, XDR, ZAR | RON, AED, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EGP, EUR, GBP, HRK, HUF, INR, JPY, KRW, MDL, MXN, NOK, NZD, PLN, RSD, RUB, SEK, TRY, UAH, USD, XAU, XDR, ZAR | Yes |
