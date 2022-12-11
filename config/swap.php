@@ -36,14 +36,12 @@ return [
     |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator", "bulgarian_national_bank"
     |   can be enabled with "true" as value.
     |
-    | * 'fixer' => [
+    | * 'apilayer_fixer' => [
     |       'access_key' => 'secret', // Your access key
-    |       'enterprise' => true, // True if your access key is a paying one
     |   ]
     |
-    | * 'currency_layer' => [
+    | * 'apilayer_exchange_rates_data' => [
     |       'access_key' => 'secret', // Your access key
-    |       'enterprise' => true, // True if your access key is a paying one
     |   ]
     |
     | * 'exchange_rates_api' => [
@@ -88,10 +86,10 @@ return [
     |
     */
     'services' => [
-        'fixer' => ['access_key' => 'YOUR_KEY', 'enterprise' => false],
-        'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
-        'exchange_rates_api' => ['access_key' => 'secret'],
-        'abstract_api' => ['api_key' => 'secret'],
+        'apilayer_fixer' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/fixer-api'],
+        'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
+        'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
+        'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
     ],
 
     /*
