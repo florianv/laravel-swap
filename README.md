@@ -5,8 +5,8 @@
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/florianv/laravel-swap.svg?style=flat-square)](https://scrutinizer-ci.com/g/florianv/laravel-swap)
 [![Version](http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 
-Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://apilayer.com/marketplace/fixer-api)**, **[currencylayer](https://apilayer.com/marketplace/currency_data-api)**, 
-**[exchangeratesapi](https://apilayer.com/marketplace/exchangerates_data-api)** or **[Abstract](https://www.abstractapi.com)** and optionally cache the results. 
+Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://apilayer.com/marketplace/fixer-api)**, **[Currency Data](https://apilayer.com/marketplace/currency_data-api)**, 
+**[Exchange Rates Data](https://apilayer.com/marketplace/exchangerates_data-api)** or **[Abstract](https://www.abstractapi.com)** and optionally cache the results. 
 
 ## Sponsors
 
