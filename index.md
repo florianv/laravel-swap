@@ -96,7 +96,6 @@ The complete documentation can be found [here](https://github.com/florianv/larav
 
 Here is the list of the currently implemented services:
 
-
 | Service | Base Currency | Quote Currency | Historical |
 |---------------------------------------------------------------------------|----------------------|----------------|----------------|
 | [Fixer](https://apilayer.com/marketplace/fixer-api) | EUR (free, no SSL), * (paid) | * | Yes |
@@ -104,6 +103,9 @@ Here is the list of the currently implemented services:
 | [Exchange Rates Data](https://apilayer.com/marketplace/exchangerates_data-api) | USD (free), * (paid) | * | Yes |
 | [Abstract](https://www.abstractapi.com) | * | * | Yes |
 | [coinlayer](https://coinlayer.com) | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies) | Yes |
+| [Fixer](https://fixer.io) | EUR (free, no SSL), * (paid) | * | Yes |
+| [currencylayer](https://currencylayer.com) | USD (free), * (paid) | * | Yes |
+| [exchangeratesapi](https://exchangeratesapi.io) | USD (free), * (paid) | * | Yes |
 | [European Central Bank](https://www.ecb.europa.eu/home/html/index.en.html) | EUR | * | Yes |
 | [National Bank of Georgia](https://nbg.gov.ge) | * | GEL | Yes |
 | [National Bank of the Republic of Belarus](https://www.nbrb.by) | * | BYN (from 01-07-2016),<br>BYR (01-01-2000 - 30-06-2016),<br>BYB (25-05-1992 - 31-12-1999) | Yes |
