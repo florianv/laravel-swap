@@ -110,21 +110,21 @@ Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to o
 
 ## Configuration
 
-By default Swap uses the [Fixer](http://fixer.io) service, and will fallback to [currencylayer](https://apilayer.com/marketplace/currency_data-api) in case of failure.
+By default Swap uses the [Fixer](https://apilayer.com/marketplace/fixer-api) service, and will fallback to [Currency Data](https://apilayer.com/marketplace/currency_data-api) in case of failure.
 
 If you wish to use different services, you can modify the `services` configuration:
 
 ```php
 // app/config/swap.php
 'services' => [
-    'fixer' => ['access_key' => 'YOUR_KEY'],
-    'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
-    'exchange_rates_api' => ['access_key' => 'secret'],
-    'abstract_api' => ['api_key' => 'secret'],
+  'apilayer_fixer' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/fixer-api'],
+  'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
+  'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
+  'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
 ]    
 ```
 
-We recommend to use one of the [services that support our project](#sponsors), providing a free plan up to 1,000 requests per day.
+We recommend to use one of the [services that support our project](#sponsors), providing a free plan up to 100 requests per month.
 
 The complete list of all supported services is available [here](#supported-services).
 
@@ -367,10 +367,13 @@ Here is the complete list of supported services and their possible configuration
 ```php
 // app/config/swap.php
 'services' => [
+    'apilayer_fixer' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/fixer-api'],
+    'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
+    'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
+    'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
     'fixer' => ['access_key' => 'YOUR_KEY'],
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
     'exchange_rates_api' => ['access_key' => 'secret'],
-    'abstract_api' => ['api_key' => 'secret'],
     'coin_layer' => ['access_key' => 'secret', 'paid' => false],
     'european_central_bank' => true,
     'national_bank_of_romania' => true,
