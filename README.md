@@ -5,23 +5,23 @@
 [![Scrutinizer](https://img.shields.io/scrutinizer/g/florianv/laravel-swap.svg?style=flat-square)](https://scrutinizer-ci.com/g/florianv/laravel-swap)
 [![Version](http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 
-Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io)**, **[currencylayer](https://currencylayer.com)**, 
-**[exchangeratesapi](https://exchangeratesapi.io)** or **[Abstract](https://www.abstractapi.com)** and optionally cache the results. 
+Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://apilayer.com/marketplace/fixer-api)**, **[currencylayer](https://apilayer.com/marketplace/currency_data-api)**, 
+**[exchangeratesapi](https://apilayer.com/marketplace/exchangerates_data-api)** or **[Abstract](https://www.abstractapi.com)** and optionally cache the results. 
 
 ## Sponsors
 
 <table>
    <tr>
-      <td><img src="https://s3.amazonaws.com/swap.assets/fixer_icon.png?v=2" width="50px"/></td>
-      <td><a href="https://fixer.io">Fixer</a> is a simple and lightweight API for foreign exchange rates that supports up to 170 world currencies.</td>
+      <td><img src="https://assets.apilayer.com/apis/fixer.png" width="50px"/></td>
+      <td><a href="https://apilayer.com/marketplace/fixer-api">Fixer</a> is a simple and lightweight API for foreign exchange rates that supports up to 170 world currencies.</td>
    </tr>
    <tr>
-     <td><img src="https://s3.amazonaws.com/swap.assets/currencylayer_icon.png" width="50px"/></td>
-     <td><a href="https://currencylayer.com">currencylayer</a> provides reliable exchange rates and currency conversions for your business up to 168 world currencies.</td>
+     <td><img src="https://assets.apilayer.com/apis/currency_data.png" width="50px"/></td>
+     <td><a href="https://apilayer.com/marketplace/currency_data-api">Currency Data</a> provides reliable exchange rates and currency conversions for your business up to 168 world currencies.</td>
    </tr>
    <tr>
-     <td><img src="https://exchangeratesapi.io/assets/images/api-logo.svg" width="50px"/></td>
-     <td><a href="https://exchangeratesapi.io">exchangeratesapi</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
+     <td><img src="https://assets.apilayer.com/apis/exchangerates_data.png" width="50px"/></td>
+     <td><a href="https://apilayer.com/marketplace/exchangerates_data-api">Exchange Rates Data</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
    </tr>   
    <tr>
      <td><img src="https://global-uploads.webflow.com/5ebbd0a566a3996636e55959/5ec2ba27ede983917dbff22f_favicon.png" width="50px"/></td>
@@ -119,9 +119,9 @@ Here is the list of the currently implemented services:
 
 | Service | Base Currency | Quote Currency | Historical |
 |---------------------------------------------------------------------------|----------------------|----------------|----------------|
-| [Fixer](https://fixer.io) | EUR (free, no SSL), * (paid) | * | Yes |
-| [currencylayer](https://currencylayer.com) | USD (free), * (paid) | * | Yes |
-| [exchangeratesapi](https://exchangeratesapi.io) | USD (free), * (paid) | * | Yes |
+| [Fixer](https://apilayer.com/marketplace/fixer-api) | EUR (free, no SSL), * (paid) | * | Yes |
+| [Currency Data](https://apilayer.com/marketplace/currency_data-api) | USD (free), * (paid) | * | Yes |
+| [Exchange Rates Data](https://apilayer.com/marketplace/exchangerates_data-api) | USD (free), * (paid) | * | Yes |
 | [Abstract](https://www.abstractapi.com) | * | * | Yes |
 | [coinlayer](https://coinlayer.com) | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies) | Yes |
 | [European Central Bank](https://www.ecb.europa.eu/home/html/index.en.html) | EUR | * | Yes |
