@@ -125,8 +125,12 @@ Here is the list of the currently implemented services:
 | [Abstract](https://www.abstractapi.com) | * | * | Yes |
 | [coinlayer](https://coinlayer.com) | * Crypto (Limited standard currencies) | * Crypto (Limited standard currencies) | Yes |
 | [European Central Bank](https://www.ecb.europa.eu/home/html/index.en.html) | EUR | * | Yes |
+| [National Bank of Georgia](https://nbg.gov.ge) | * | GEL | Yes |
+| [National Bank of the Republic of Belarus](https://www.nbrb.by) | * | BYN (from 01-07-2016),<br>BYR (01-01-2000 - 30-06-2016),<br>BYB (25-05-1992 - 31-12-1999) | Yes |
 | [National Bank of Romania](http://www.bnr.ro) | RON, AED, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EGP, EUR, GBP, HRK, HUF, INR, JPY, KRW, MDL, MXN, NOK, NZD, PLN, RSD, RUB, SEK, TRY, UAH, USD, XAU, XDR, ZAR | RON, AED, AUD, BGN, BRL, CAD, CHF, CNY, CZK, DKK, EGP, EUR, GBP, HRK, HUF, INR, JPY, KRW, MDL, MXN, NOK, NZD, PLN, RSD, RUB, SEK, TRY, UAH, USD, XAU, XDR, ZAR | Yes |
+| [National Bank of Ukranie](https://bank.gov.ua) | * | UAH | Yes |
 | [Central Bank of the Republic of Turkey](http://www.tcmb.gov.tr) | * | TRY | Yes |
+| [Central Bank of the Republic of Uzbekistan](https://cbu.uz) | * | UZS | Yes |
 | [Central Bank of the Czech Republic](https://www.cnb.cz) | * | CZK | Yes |
 | [Central Bank of Russia](https://cbr.ru) | * | RUB | Yes |
 | [Bulgarian National Bank](http://bnb.bg) | * | BGN | Yes |
@@ -139,6 +143,7 @@ Here is the list of the currently implemented services:
 | [Currency Converter API](https://www.currencyconverterapi.com) | * | * | Yes (free but limited or paid) |
 | [xChangeApi.com](https://xchangeapi.com) | * | * | Yes |
 | [fastFOREX.io](https://www.fastforex.io) | USD (free), * (paid) | * | No |
+| [exchangerate.host](https://www.exchangerate.host) | * | * | Yes |
 | Array | * | * | Yes |
 
 ## Credits
