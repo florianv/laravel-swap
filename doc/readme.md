@@ -5,7 +5,7 @@
 <table>
    <tr>
       <td><img src="https://assets.apilayer.com/apis/fixer.png" width="50px"/></td>
-      <td><a href="https://apilayer.com/marketplace/fixer-api">Fixer</a> is a simple and lightweight API for foreign exchange rates that supports up to 170 world currencies.</td>
+      <td><a href="https://fixer.io/">Fixer</a> is a simple and lightweight API for foreign exchange rates that supports up to 170 world currencies.</td>
    </tr>
    <tr>
      <td><img src="https://assets.apilayer.com/apis/currency_data.png" width="50px"/></td>
@@ -110,14 +110,14 @@ Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to o
 
 ## Configuration
 
-By default Swap uses the [Fixer](https://apilayer.com/marketplace/fixer-api) service, and will fallback to [Currency Data](https://apilayer.com/marketplace/currency_data-api) in case of failure.
+By default Swap uses the [Fixer](https://fixer.io/) service, and will fallback to [Currency Data](https://apilayer.com/marketplace/currency_data-api) in case of failure.
 
 If you wish to use different services, you can modify the `services` configuration:
 
 ```php
 // app/config/swap.php
 'services' => [
-  'apilayer_fixer' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/fixer-api'],
+  'apilayer_fixer' => ['api_key' => 'Get your key here: https://fixer.io/'],
   'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
   'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
   'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
@@ -367,7 +367,7 @@ Here is the complete list of supported services and their possible configuration
 ```php
 // app/config/swap.php
 'services' => [
-    'apilayer_fixer' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/fixer-api'],
+    'apilayer_fixer' => ['api_key' => 'Get your key here: https://fixer.io/'],
     'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
     'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
     'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
