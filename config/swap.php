@@ -87,8 +87,8 @@ return [
     */
     'services' => [
         'apilayer_fixer' => ['api_key' => 'Get your key here: https://fixer.io/'],
-        'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
-        'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
+        'apilayer_currency_data' => ['api_key' => 'Get your key here: https://currencylayer.com'],
+        'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://exchangeratesapi.io'],
         'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
     ],
 

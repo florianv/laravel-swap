@@ -9,11 +9,11 @@
    </tr>
    <tr>
      <td><img src="https://assets.apilayer.com/apis/currency_data.png" width="50px"/></td>
-     <td><a href="https://apilayer.com/marketplace/currency_data-api">Currency Data</a> provides reliable exchange rates and currency conversions for your business up to 168 world currencies.</td>
+     <td><a href="https://currencylayer.com">Currency Data</a> provides reliable exchange rates and currency conversions for your business up to 168 world currencies.</td>
    </tr>
    <tr>
      <td><img src="https://assets.apilayer.com/apis/exchangerates_data.png" width="50px"/></td>
-     <td><a href="https://apilayer.com/marketplace/exchangerates_data-api">Exchange Rates Data</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
+     <td><a href="https://exchangeratesapi.io">Exchange Rates Data</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
    </tr>   
    <tr>
      <td><img src="https://global-uploads.webflow.com/5ebbd0a566a3996636e55959/5ec2ba29feeeb05d69160e7b_webclip.png" width="50px"/></td>
@@ -110,7 +110,7 @@ Copy the [configuration](config/swap.php) to `/config/swap.php` if you wish to o
 
 ## Configuration
 
-By default Swap uses the [Fixer](https://fixer.io/) service, and will fallback to [Currency Data](https://apilayer.com/marketplace/currency_data-api) in case of failure.
+By default Swap uses the [Fixer](https://fixer.io/) service, and will fallback to [Currency Data](https://currencylayer.com) in case of failure.
 
 If you wish to use different services, you can modify the `services` configuration:
 
@@ -118,8 +118,8 @@ If you wish to use different services, you can modify the `services` configurati
 // app/config/swap.php
 'services' => [
   'apilayer_fixer' => ['api_key' => 'Get your key here: https://fixer.io/'],
-  'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
-  'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
+  'apilayer_currency_data' => ['api_key' => 'Get your key here: https://currencylayer.com'],
+  'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://exchangeratesapi.io'],
   'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
 ]    
 ```
@@ -368,8 +368,8 @@ Here is the complete list of supported services and their possible configuration
 // app/config/swap.php
 'services' => [
     'apilayer_fixer' => ['api_key' => 'Get your key here: https://fixer.io/'],
-    'apilayer_currency_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/currency_data-api'],
-    'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://apilayer.com/marketplace/exchangerates_data-api'],
+    'apilayer_currency_data' => ['api_key' => 'Get your key here: https://currencylayer.com'],
+    'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://exchangeratesapi.io'],
     'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
     'fixer' => ['access_key' => 'YOUR_KEY'],
     'currency_layer' => ['access_key' => 'secret', 'enterprise' => false],
