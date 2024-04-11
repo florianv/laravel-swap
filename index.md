@@ -1,5 +1,5 @@
-Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io/)**, **[Currency Data](https://currencylayer.com)**,
-**[Exchange Rates Data](https://exchangeratesapi.io)** or **[Abstract](https://www.abstractapi.com)** and optionally cache the results.
+Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io/)**, **[Currency Data](https://currencylayer.com)**
+or **[Exchange Rates Data](https://exchangeratesapi.io)** and optionally cache the results.
 
 ## Sponsors
 
@@ -16,10 +16,6 @@ Swap allows you to retrieve currency exchange rates from various services such a
      <td><img src="https://assets.apilayer.com/apis/exchangerates_data.png" width="50px"/></td>
      <td><a href="https://exchangeratesapi.io">Exchange Rates Data</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
    </tr>   
-   <tr>
-     <td><img src="https://global-uploads.webflow.com/5ebbd0a566a3996636e55959/5ec2ba29feeeb05d69160e7b_webclip.png" width="50px"/></td>
-     <td><a href="https://www.abstractapi.com/">Abstract</a> provides simple exchange rates for developers and a dozen of APIs covering thousands of use cases.</td>
-   </tr>  
 </table>
 
 ## QuickStart
