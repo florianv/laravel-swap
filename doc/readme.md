@@ -14,11 +14,7 @@
    <tr>
      <td><img src="https://assets.apilayer.com/apis/exchangerates_data.png" width="50px"/></td>
      <td><a href="https://exchangeratesapi.io">Exchange Rates Data</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
-   </tr>   
-   <tr>
-     <td><img src="https://global-uploads.webflow.com/5ebbd0a566a3996636e55959/5ec2ba29feeeb05d69160e7b_webclip.png" width="50px"/></td>
-     <td><a href="https://www.abstractapi.com/">Abstract</a> provides simple exchange rates for developers and a dozen of APIs covering thousands of use cases.</td>
-   </tr>  
+   </tr> 
 </table>
 
 ## Index
@@ -120,7 +116,6 @@ If you wish to use different services, you can modify the `services` configurati
   'apilayer_fixer' => ['api_key' => 'Get your key here: https://fixer.io/'],
   'apilayer_currency_data' => ['api_key' => 'Get your key here: https://currencylayer.com'],
   'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://exchangeratesapi.io'],
-  'abstract_api' => ['api_key' => 'Get your key here: https://app.abstractapi.com/users/signup'],
 ]    
 ```
 
