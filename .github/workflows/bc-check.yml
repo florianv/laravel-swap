@@ -23,4 +23,6 @@ jobs:
         run: composer update --no-interaction --prefer-dist
 
       - name: Run BC Check
-        run: vendor/bin/roave-backward-compatibility-check
+        env:
+          COMPOSER_AUDIT_ABANDONED: ignore
+        run: composer config --global audit.block-insecure false && vendor/bin/roave-backward-compatibility-check
