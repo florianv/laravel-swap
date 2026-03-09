@@ -25,4 +25,4 @@ jobs:
       - name: Run BC Check
         env:
           COMPOSER_AUDIT_ABANDONED: ignore
-        run: composer config --global audit.block-insecure false && vendor/bin/roave-backward-compatibility-check
+        run: composer config --global audit.block-insecure false && vendor/bin/roave-backward-compatibility-check --install-development-dependencies
