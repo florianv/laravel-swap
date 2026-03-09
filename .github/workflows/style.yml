@@ -1,0 +1,27 @@
+name: Code Style
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+jobs:
+  style:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+          coverage: none
+        env:
+          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install dependencies
+        run: composer update --no-interaction --prefer-dist
+
+      - name: Lint facade docblocks
+        run: php -f vendor/bin/facade.php Swap\\Laravel\\Facades\\Swap
