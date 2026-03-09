@@ -52,6 +52,7 @@
     ],
     "scripts": {
         "test": "vendor/bin/phpunit",
+        "facade:fix": "php -f vendor/bin/facade.php Swap\\Laravel\\Facades\\Swap --write",
         "facade:lint": "php -f vendor/bin/facade.php Swap\\Laravel\\Facades\\Swap",
         "psalm": "vendor/bin/psalm --no-progress",
         "cs:fix": "vendor/bin/php-cs-fixer fix --no-interaction --ansi --quiet",
