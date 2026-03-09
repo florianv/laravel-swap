@@ -20,26 +20,17 @@ class SwapTest extends AbstractTestCase
 {
     use FacadeTrait;
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getFacadeAccessor()
+    protected static function getFacadeAccessor(): string
     {
         return 'swap';
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getFacadeClass()
+    protected static function getFacadeClass(): string
     {
         return SwapFacade::class;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getFacadeRoot()
+    protected static function getFacadeRoot(): string
     {
         return Swap::class;
     }
