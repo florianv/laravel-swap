@@ -16,10 +16,7 @@ use Swap\Laravel\SwapServiceProvider;
 
 abstract class AbstractTestCase extends AbstractPackageTestCase
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function getServiceProviderClass()
+    protected static function getServiceProviderClass(): string
     {
         return SwapServiceProvider::class;
     }

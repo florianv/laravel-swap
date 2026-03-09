@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
+  <file src="src/Facades/Swap.php">
+    <MissingOverrideAttribute>
+      <code><![CDATA[protected static function getFacadeAccessor()]]></code>
+    </MissingOverrideAttribute>
+    <UnusedClass>
+      <code><![CDATA[Swap]]></code>
+    </UnusedClass>
+  </file>
+  <file src="src/SwapServiceProvider.php">
+    <InvalidArgument>
+      <code><![CDATA[$cache]]></code>
+    </InvalidArgument>
+    <InvalidArrayOffset>
+      <code><![CDATA[[$source => $this->getConfigPath('swap.php')]]]></code>
+    </InvalidArrayOffset>
+    <InvalidReturnStatement>
+      <code><![CDATA[$store]]></code>
+    </InvalidReturnStatement>
+    <MissingClosureParamType>
+      <code><![CDATA[$app]]></code>
+    </MissingClosureParamType>
+    <MissingOverrideAttribute>
+      <code><![CDATA[public function provides()]]></code>
+      <code><![CDATA[public function register()]]></code>
+    </MissingOverrideAttribute>
+    <MissingReturnType>
+      <code><![CDATA[boot]]></code>
+    </MissingReturnType>
+    <MixedArgument>
+      <code><![CDATA[$app->config->get('swap.options', [])]]></code>
+      <code><![CDATA[$name]]></code>
+    </MixedArgument>
+    <MixedArrayOffset>
+      <code><![CDATA[$this->app[$httpClient]]]></code>
+      <code><![CDATA[$this->app[$requestFactory]]]></code>
+    </MixedArrayOffset>
+    <MixedAssignment>
+      <code><![CDATA[$cache]]></code>
+      <code><![CDATA[$config]]></code>
+      <code><![CDATA[$httpClient]]></code>
+      <code><![CDATA[$name]]></code>
+      <code><![CDATA[$requestFactory]]></code>
+      <code><![CDATA[$store]]></code>
+    </MixedAssignment>
+    <MixedMethodCall>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[get]]></code>
+      <code><![CDATA[getStore]]></code>
+      <code><![CDATA[store]]></code>
+    </MixedMethodCall>
+    <MixedPropertyFetch>
+      <code><![CDATA[$app->config]]></code>
+    </MixedPropertyFetch>
+    <MixedReturnStatement>
+      <code><![CDATA[$this->app[$httpClient]]]></code>
+      <code><![CDATA[$this->app[$requestFactory]]]></code>
+      <code><![CDATA[new SimpleCacheBridge(
+                new IlluminateCachePool($store->getStore())
+            )]]></code>
+    </MixedReturnStatement>
+    <NoInterfaceProperties>
+      <code><![CDATA[$this->app->config]]></code>
+      <code><![CDATA[$this->app->config]]></code>
+      <code><![CDATA[$this->app->config]]></code>
+    </NoInterfaceProperties>
+    <NullableReturnStatement>
+      <code><![CDATA[null]]></code>
+    </NullableReturnStatement>
+    <PossiblyFalseArgument>
+      <code><![CDATA[$source]]></code>
+    </PossiblyFalseArgument>
+    <RedundantConditionGivenDocblockType>
+      <code><![CDATA[null !== $cache = $this->getSimpleCache()]]></code>
+    </RedundantConditionGivenDocblockType>
+    <UndefinedDocblockClass>
+      <code><![CDATA[SimpleCacheBridge]]></code>
+    </UndefinedDocblockClass>
+    <UndefinedInterfaceMethod>
+      <code><![CDATA[$this->app]]></code>
+      <code><![CDATA[$this->app]]></code>
+      <code><![CDATA[$this->app]]></code>
+    </UndefinedInterfaceMethod>
+    <UnusedClass>
+      <code><![CDATA[SwapServiceProvider]]></code>
+    </UnusedClass>
+  </file>
+</files>
