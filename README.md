@@ -8,23 +8,6 @@
 Swap allows you to retrieve currency exchange rates from various services such as **[Fixer](https://fixer.io/)**, **[Currency Data](https://currencylayer.com)**
 or **[Exchange Rates Data](https://exchangeratesapi.io)** and optionally cache the results. 
 
-## Sponsors
-
-<table>
-   <tr>
-      <td><img src="https://assets.apilayer.com/apis/fixer.png" width="50px"/></td>
-      <td><a href="https://fixer.io/">Fixer</a> is a simple and lightweight API for foreign exchange rates that supports up to 170 world currencies.</td>
-   </tr>
-   <tr>
-     <td><img src="https://assets.apilayer.com/apis/currency_data.png" width="50px"/></td>
-     <td><a href="https://currencylayer.com">Currency Data</a> provides reliable exchange rates and currency conversions for your business up to 168 world currencies.</td>
-   </tr>
-   <tr>
-     <td><img src="https://assets.apilayer.com/apis/exchangerates_data.png" width="50px"/></td>
-     <td><a href="https://exchangeratesapi.io">Exchange Rates Data</a> provides reliable exchange rates and currency conversions for your business with over 15 data sources.</td>
-   </tr>
-</table>
-
 ## QuickStart
 
 ### Installation
