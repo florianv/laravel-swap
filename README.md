@@ -7,7 +7,9 @@
 
 > _Drop-in currency conversion for Laravel and Lumen. Auto-discovered service provider, facade, and config. Maintained since 2014._
 
-Laravel Swap is a drop-in **Laravel currency conversion** package. Install it, get a facade, and start fetching exchange rates. Auto-discovery wires the service provider in Laravel 5.5+; configuration publishes to `config/swap.php`; rates are cached through the Laravel cache store you already have. Lumen is supported. Used in real-world Laravel applications since 2014.
+**Install, publish the config, and call `Swap::latest('EUR/USD')` from anywhere. No service container wiring, no boilerplate, no manual cache plumbing.**
+
+Laravel Swap is a drop-in package for **Laravel currency conversion**. Install it, get a facade, and start fetching **Laravel exchange rates** from multiple providers in one call. The service provider is auto-discovered in Laravel 5.5+; configuration publishes to `config/swap.php`; rates are cached through the Laravel cache store you already have. Lumen is supported. Used in real-world Laravel applications since 2014.
 
 ## 💡 What is Laravel Swap?
 
@@ -25,6 +27,10 @@ Laravel Swap is a drop-in **Laravel currency conversion** package. Install it, g
 
 ## 🧠 Why Laravel Swap and not raw Swap?
 
+Using [Swap](https://github.com/florianv/swap) directly inside a Laravel app means three pieces of plumbing on every project: registering it in the service container, bridging your Laravel cache store to the PSR-16 contract Swap expects, and managing the HTTP client and PSR factories yourself. Doable, but boilerplate every project pays for.
+
+Laravel Swap does this for you:
+
 - **Drop-in.** Auto-discovery in Laravel 5.5+. No manual provider or alias registration.
 - **Laravel cache integration.** Rates are cached through the cache store you already configured (`file`, `redis`, `database`, etc.), no PSR-16 wiring required.
 - **Facade.** `Swap::latest('EUR/USD')` from anywhere in the app.
@@ -41,11 +47,15 @@ Laravel Swap requires PHP 8.2 or newer.
 composer require florianv/laravel-swap symfony/http-client nyholm/psr7
 ```
 
-`symfony/http-client` and `nyholm/psr7` provide the PSR-18 HTTP client and PSR-17 factories. Any PSR-18 / PSR-17 implementation works (for example `php-http/guzzle7-adapter` if your app already uses Guzzle); see the [documentation](doc/readme.md) for alternatives.
+That's it. Auto-discovery wires the service provider and the `Swap` facade in Laravel 5.5+. Skip to [Quickstart](#-quickstart).
 
-Auto-discovery handles the rest in Laravel 5.5+. For Lumen and older Laravel versions, see [Setup](doc/readme.md#-setup) in the documentation.
+---
+
+_Optional: any PSR-18 HTTP client paired with a PSR-17 factory works. If your app already uses Guzzle, swap `symfony/http-client` for `php-http/guzzle7-adapter`. For Lumen or older Laravel versions, see [Setup](doc/readme.md#-setup) in the documentation._
 
 ## ⚡ Quickstart
+
+> **The `Swap` facade is available everywhere: controllers, jobs, console commands, queue workers, Blade templates. One static call returns a typed exchange rate.**
 
 Out of the box, the package works without an API key. Publish the config to customize providers and caching:
 
@@ -53,7 +63,7 @@ Out of the box, the package works without an API key. Publish the config to cust
 php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 ```
 
-The published `config/swap.php` defaults to the European Central Bank (free, no key). You can now use the facade anywhere in the app:
+The published `config/swap.php` defaults to the European Central Bank (free, no key). Then call the facade anywhere in the app:
 
 ```php
 use Swap;
