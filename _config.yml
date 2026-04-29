@@ -1,10 +1,9 @@
-title: Laravel-swap
-description: Currency exchange rates for Laravel and Lumen
-google_analytics: 
-show_downloads: true
+title: "Laravel Swap: drop-in currency conversion for Laravel and Lumen"
+description: Drop-in Laravel currency conversion. Auto-discovered service provider, facade, and config. Multi-provider exchange rates with fallback and caching. Maintained since 2014.
 theme: jekyll-theme-cayman
 remote_theme: pages-themes/cayman@v0.2.0
+show_downloads: false
+
 plugins:
   - jekyll-remote-theme
-gems:
-  - jekyll-mentions
+  - jekyll-seo-tag
