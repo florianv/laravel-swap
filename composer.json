@@ -1,15 +1,16 @@
 {
     "name": "florianv/laravel-swap",
     "type": "library",
-    "description": "Currency exchange rates library for Laravel and Lumen",
+    "description": "Drop-in Laravel currency conversion: auto-discovered service provider, facade, and config. Multi-provider exchange rates.",
     "keywords": [
+        "php",
         "laravel",
         "lumen",
-        "currency",
-        "money",
-        "rate",
-        "conversion",
-        "exchange rates"
+        "currency-conversion",
+        "exchange-rates",
+        "exchange-rate-api",
+        "swap",
+        "money"
     ],
     "homepage": "https://github.com/florianv/laravel-swap",
     "license": "MIT",
