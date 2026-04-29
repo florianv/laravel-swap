@@ -86,9 +86,12 @@ return [
     |
     */
     'services' => [
-        'apilayer_fixer' => ['api_key' => 'Get your key here: https://fixer.io/'],
-        'apilayer_currency_data' => ['api_key' => 'Get your key here: https://currencylayer.com'],
-        'apilayer_exchange_rates_data' => ['api_key' => 'Get your key here: https://exchangeratesapi.io'],
+        // The European Central Bank is free and works without an API key.
+        // Add commercial providers above this line, for example:
+        // 'apilayer_fixer'      => ['api_key' => env('SWAP_FIXER_KEY')],
+        // 'open_exchange_rates' => ['app_id'  => env('SWAP_OER_APP_ID')],
+
+        'european_central_bank' => true,
     ],
 
     /*
