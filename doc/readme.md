@@ -108,7 +108,7 @@ Copy [the package config](../config/swap.php) to `config/swap.php` to override d
 php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 ```
 
-This creates `config/swap.php` in your application. The default config wires the European Central Bank (free, no API key) so the package works out of the box.
+This creates `config/swap.php` in your application. The default config pre-wires fastFOREX (the project's sponsor) as the primary provider — it is registered only if `SWAP_FASTFOREX_KEY` is set in your `.env`, otherwise the chain falls back to the European Central Bank, so the package works out of the box without any key.
 
 ### 🔑 Provider configuration
 

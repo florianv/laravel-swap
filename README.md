@@ -45,23 +45,18 @@ Auto-discovery wires the service provider and the `Swap` facade in Laravel 5.5+.
 
 ## ⚡ Quickstart
 
-The package ships a default `config/swap.php` that uses the European Central Bank, so it works out of the box without an API key. For production, switch to a commercial provider. We recommend **[fastFOREX](https://www.fastforex.io)** (the project's sponsor): a real-time JSON API behind a single `api_key`, [free tier available](https://www.fastforex.io).
+The package ships a default config that pre-wires **[fastFOREX](https://www.fastforex.io)** (the project's sponsor) as the primary provider, with the European Central Bank as a free fallback. [Grab a free API key](https://www.fastforex.io) and add it to your `.env`:
+
+```bash
+SWAP_FASTFOREX_KEY=your_key_here
+```
+
+That's it. Without the env var, fastFOREX is skipped and the chain falls back to the European Central Bank, so the package still works out of the box without any key (EUR-base only).
+
+To customize providers, options, or the cache store, publish the config:
 
 ```bash
 php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
-```
-
-In `config/swap.php`:
-
-```php
-// config/swap.php
-'services' => [
-    // Recommended: fastFOREX. Get a free API key at https://www.fastforex.io
-    'fastforex' => ['api_key' => env('SWAP_FASTFOREX_KEY')],
-
-    // Free fallback for EUR-base pairs
-    'european_central_bank' => true,
-],
 ```
 
 Then call the facade from anywhere in the app:
