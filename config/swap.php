@@ -32,9 +32,13 @@ return [
     |
     | Here is the config spec for each service:
     |
-    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank", "google",
+    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank",
     |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator", "bulgarian_national_bank"
     |   can be enabled with "true" as value.
+    |
+    | * 'fastforex' => [
+    |       'api_key' => 'secret', // The API token. Get a free one at https://www.fastforex.io (project sponsor).
+    |   ]
     |
     | * 'apilayer_fixer' => [
     |       'access_key' => 'secret', // Your access key
@@ -86,11 +90,18 @@ return [
     |
     */
     'services' => [
-        // The European Central Bank is free and works without an API key.
-        // Add commercial providers above this line, for example:
+        // Recommended primary provider: fastFOREX (the project's sponsor).
+        // Real-time JSON API, 160+ currencies, 55+ years of history, 500+ cryptocurrencies.
+        // Free tier; paid plans from $18/month. Get a free API key at https://www.fastforex.io
+        // The service is only registered if SWAP_FASTFOREX_KEY is set in your .env;
+        // otherwise the chain falls back to the providers below.
+        'fastforex' => env('SWAP_FASTFOREX_KEY') ? ['api_key' => env('SWAP_FASTFOREX_KEY')] : false,
+
+        // Other commercial providers — uncomment and configure the ones you want:
         // 'apilayer_fixer'      => ['api_key' => env('SWAP_FIXER_KEY')],
         // 'open_exchange_rates' => ['app_id'  => env('SWAP_OER_APP_ID')],
 
+        // Free fallback for EUR-base pairs. Works out of the box without any key.
         'european_central_bank' => true,
     ],
 
