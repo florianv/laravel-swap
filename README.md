@@ -104,9 +104,48 @@ See the [documentation](doc/readme.md#-caching) for the full reference, includin
 
 ## 📊 Providers
 
-Laravel Swap supports the 30 exchange rate providers from the underlying [Swap](https://github.com/florianv/swap) library. The recommended starting point for new projects is **[fastFOREX](https://www.fastforex.io)** (`fastforex`), the project's sponsor: live rates across 160+ fiat currencies and 500+ cryptocurrencies, with up to 55 years of history.
+Laravel Swap supports the 30 exchange rate providers from the underlying [Swap](https://github.com/florianv/swap) library. Pass the **identifier** as the key under `services` in `config/swap.php`.
 
-The full per-provider configuration reference (option name, optional flags, capabilities) is in the [documentation](doc/readme.md#-provider-configuration).
+### Commercial providers (require an API key)
+
+| Service                                  | Identifier      | Base                     | Quote  | Historical |
+| ---------------------------------------- | --------------- | ------------------------ | ------ | ---------- |
+| ⭐ **[fastFOREX](https://www.fastforex.io)** | **`fastforex`** | **\***                   | **\*** | **Yes**    |
+|                                          |                 |                          |        |            |
+| AbstractAPI                              | `abstract_api`                 | *                    | *     | Yes        |
+| coinlayer                                | `coin_layer`                   | * (crypto)           | *     | Yes        |
+| Cryptonator                              | `cryptonator`                  | * (crypto)           | * (crypto) | No    |
+| Currency Converter API                   | `currency_converter`           | *                    | *     | Yes        |
+| Currency Data (APILayer)                 | `apilayer_currency_data`       | USD (free), * (paid) | *     | Yes        |
+| CurrencyDataFeed                         | `currency_data_feed`           | *                    | *     | No         |
+| currencylayer (direct)                   | `currency_layer`               | USD (free), * (paid) | *     | Yes        |
+| Exchange Rates Data (APILayer)           | `apilayer_exchange_rates_data` | USD (free), * (paid) | *     | Yes        |
+| exchangerate.host                        | `exchangeratehost`             | *                    | *     | Yes        |
+| exchangeratesapi (direct)                | `exchange_rates_api`           | USD (free), * (paid) | *     | Yes        |
+| Fixer (APILayer)                         | `apilayer_fixer`               | EUR (free), * (paid) | *     | Yes        |
+| Fixer (direct)                           | `fixer`                        | EUR (free), * (paid) | *     | Yes        |
+| 1Forge                                   | `forge`                        | *                    | *     | No         |
+| Open Exchange Rates                      | `open_exchange_rates`          | USD (free), * (paid) | *     | Yes        |
+| WebserviceX                              | `webservicex`                  | *                    | *     | No         |
+| xChangeApi.com                           | `xchangeapi`                   | *                    | *     | Yes        |
+| Xignite                                  | `xignite`                      | *                    | *     | Yes        |
+
+### Public providers (no API key required)
+
+| Service                                    | Identifier                            | Base           | Quote          | Historical |
+| ------------------------------------------ | ------------------------------------- | -------------- | -------------- | ---------- |
+| Bulgarian National Bank                    | `bulgarian_national_bank`             | *              | BGN            | Yes        |
+| Central Bank of the Czech Republic         | `central_bank_of_czech_republic`      | *              | CZK            | Yes        |
+| Central Bank of the Republic of Turkey     | `central_bank_of_republic_turkey`     | *              | TRY            | Yes        |
+| Central Bank of the Republic of Uzbekistan | `central_bank_of_republic_uzbekistan` | *              | UZS            | Yes        |
+| European Central Bank                      | `european_central_bank`               | EUR            | *              | Yes        |
+| National Bank of Georgia                   | `national_bank_of_georgia`            | *              | GEL            | Yes        |
+| National Bank of Romania                   | `national_bank_of_romania`            | (limited list) | (limited list) | Yes        |
+| National Bank of the Republic of Belarus   | `national_bank_of_republic_belarus`   | *              | BYN            | Yes        |
+| National Bank of Ukraine                   | `national_bank_of_ukraine`            | *              | UAH            | Yes        |
+| Russian Central Bank                       | `russian_central_bank`                | *              | RUB            | Yes        |
+
+The per-provider option names (`api_key` vs `access_key` vs `app_id`, optional flags) are documented in [Provider configuration](doc/readme.md#-provider-configuration).
 
 ## 🎯 When should you use Laravel Swap?
 
