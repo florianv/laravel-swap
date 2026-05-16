@@ -1,28 +1,20 @@
 # Documentation
 
-## 💡 What is Laravel Swap?
+<table>
+   <tr>
+      <td width="220" align="center">
+         <a href="https://www.fastforex.io" target="_blank" rel="noopener">
+            <img src="https://console.fastforex.io/img/fastforex/logo-bk-1k.svg" width="180px" alt="fastFOREX"/>
+         </a>
+      </td>
+      <td>
+         <strong>Sponsored by <a href="https://www.fastforex.io" target="_blank" rel="noopener">fastFOREX</a>.</strong> Real-time JSON API, 160+ currencies, 55+ years of history, 500+ cryptocurrencies. <strong>Free tier</strong>; paid plans from $18/month.
+         <a href="https://www.fastforex.io" target="_blank" rel="noopener"><strong>→ Get a free fastFOREX API key</strong></a>
+      </td>
+   </tr>
+</table>
 
-- Laravel Swap is the Laravel application of [Swap](https://github.com/florianv/swap), the PHP currency conversion library.
-- It registers a service provider (`Swap\Laravel\SwapServiceProvider`) and a `Swap` facade.
-- Auto-discovery wires both in Laravel 5.5+ with no manual configuration.
-- Configuration publishes to `config/swap.php`.
-- Rates are cached through any Laravel cache store you already have.
-- Lumen is supported with a few extra lines in `bootstrap/app.php`.
-
-For the wider ecosystem (Swap, Exchanger, Symfony Swap), see the [README](../README.md).
-
-## 🎯 When should you use Laravel Swap?
-
-- Use Laravel Swap when you need exchange rates inside a Laravel or Lumen application: localized prices, invoice totals, multi-currency reporting, historical FX data.
-- You do not need to install [Swap](https://github.com/florianv/swap) separately. It is pulled in as a dependency, and Laravel Swap exposes it through Laravel's service container, facade, and cache store.
-
-## 🧠 Why Laravel Swap and not raw Swap?
-
-- **Drop-in.** Auto-discovery in Laravel 5.5+. No manual provider or alias registration.
-- **Laravel cache.** Rates are cached through the cache store you already configured (`file`, `redis`, `database`, etc.), no PSR-16 wiring required.
-- **Facade.** `Swap::latest('EUR/USD')` from anywhere in the app.
-- **Config.** `config/swap.php` exposes providers, options, the cache store, the HTTP client, and the request factory.
-- **Lumen.** Supported with the same configuration shape.
+This is the technical reference for Laravel Swap. For the project overview and ecosystem (Swap, Exchanger, Symfony Swap), see the [README](../README.md).
 
 ## Index
 
@@ -32,7 +24,7 @@ For the wider ecosystem (Swap, Exchanger, Symfony Swap), see the [README](../REA
   * [Lumen](#lumen)
 * [Configuration](#-configuration)
   * [Publishing the config](#publishing-the-config)
-  * [Provider configuration](#provider-configuration)
+  * [Provider configuration](#-provider-configuration)
   * [Selecting the HTTP client](#selecting-the-http-client)
 * [Usage](#-usage)
   * [The facade](#the-facade)
@@ -118,22 +110,24 @@ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 
 This creates `config/swap.php` in your application. The default config wires the European Central Bank (free, no API key) so the package works out of the box.
 
-### Provider configuration
+### 🔑 Provider configuration
 
-Public providers (central banks, national banks, `cryptonator`, `exchangeratehost`, `webservicex`) need no configuration. Use `true` as the value:
+Public providers (central banks, national banks) need no configuration. Use `true` as the value:
 
 ```php
 // config/swap.php
 'services' => [
-    'european_central_bank'   => true,
+    'european_central_bank'    => true,
     'national_bank_of_romania' => true,
 ],
 ```
 
-Commercial providers require an API key. The option name varies by provider:
+Commercial providers require an API key. The option name varies by provider. The project's sponsor [fastFOREX](https://www.fastforex.io) (`fastforex`) is the recommended starting point.
 
 | Identifier                       | Required option | Optional flags        |
 | -------------------------------- | --------------- | --------------------- |
+| ⭐ **`fastforex`**                | **`api_key`**   |                       |
+|                                  |                 |                       |
 | `abstract_api`                   | `api_key`       |                       |
 | `apilayer_currency_data`         | `api_key`       |                       |
 | `apilayer_exchange_rates_data`   | `api_key`       |                       |
@@ -143,7 +137,6 @@ Commercial providers require an API key. The option name varies by provider:
 | `currency_data_feed`             | `api_key`       |                       |
 | `currency_layer`                 | `access_key`    | `enterprise` (bool)   |
 | `exchange_rates_api`             | `access_key`    |                       |
-| `fastforex`                      | `api_key`       |                       |
 | `fixer`                          | `access_key`    |                       |
 | `fixer_apilayer`                 | `api_key`       |                       |
 | `forge`                          | `api_key`       |                       |
@@ -151,20 +144,21 @@ Commercial providers require an API key. The option name varies by provider:
 | `xchangeapi`                     | `api-key`       | (note the hyphen)     |
 | `xignite`                        | `token`         |                       |
 
-Example:
+> Note: `cryptonator`, `exchangeratehost` and `webservicex` are commercial upstream services but the current Exchanger wrapper does not enforce any option for them. They can be added with `'exchangeratehost' => true` until the wrapper is updated to require an API key.
+
+Example chaining fastFOREX as the primary provider with a couple of fallbacks:
 
 ```php
 // config/swap.php
 'services' => [
-    'apilayer_fixer'      => ['api_key' => env('SWAP_FIXER_KEY')],
-    'open_exchange_rates' => ['app_id'  => env('SWAP_OER_APP_ID'), 'enterprise' => false],
+    'fastforex'             => ['api_key' => env('SWAP_FASTFOREX_KEY')],
+    'apilayer_fixer'        => ['api_key' => env('SWAP_FIXER_KEY')],
+    'open_exchange_rates'   => ['app_id'  => env('SWAP_OER_APP_ID'), 'enterprise' => false],
     'european_central_bank' => true, // free fallback
 ],
 ```
 
-Providers are tried in order. See [How the fallback chain works](https://github.com/florianv/swap#-configuring-multiple-providers-fallback-chain) in the Swap README for the full semantics.
-
-The full provider list with capabilities (base currency, quote currency, historical support) is in the [Swap README's Providers table](https://github.com/florianv/swap#-providers).
+Providers are tried in declaration order. See [How the fallback chain works](https://github.com/florianv/swap#-configuring-multiple-providers-fallback-chain) in the Swap README for the full semantics.
 
 ### Selecting the HTTP client
 
@@ -172,7 +166,7 @@ By default, Swap auto-discovers a PSR-18 client via `php-http/discovery`. To pas
 
 ```php
 // config/swap.php
-'http_client' => 'my_http_client',     // a service ID in the Laravel container
+'http_client'     => 'my_http_client',   // a service ID in the Laravel container
 'request_factory' => 'my_psr17_factory', // optional PSR-17 factory service ID
 ```
 
@@ -190,8 +184,8 @@ public static function historical(string $currencyPair, \DateTimeInterface $date
 You can also resolve it manually:
 
 ```php
-$swap = app('swap');                       // \Swap\Swap
-$swap = app(\Swap\Swap::class);            // same instance
+$swap = app('swap');            // \Swap\Swap
+$swap = app(\Swap\Swap::class); // same instance
 ```
 
 ### Latest and historical rates
@@ -220,7 +214,7 @@ $rate->getCurrencyPair();  // Exchanger\CurrencyPair
 $rate->getProviderName();  // string, the identifier that returned the rate
 ```
 
-`getProviderName()` is useful when several providers are configured: the returned value is the identifier of the provider that actually answered, for example `european_central_bank`.
+`getProviderName()` is useful when several providers are configured: the returned value is the identifier of the provider that actually answered, for example `fastforex`.
 
 ## 💾 Caching
 
@@ -361,7 +355,7 @@ Swap throws an `Exchanger\Exception\ChainException`. Calling `$exception->getExc
 
 #### Can I use Laravel Swap without an API key?
 
-Yes. The published config defaults to the European Central Bank, which is free. The national banks, `cryptonator`, `exchangeratehost`, and `webservicex` also work without a key. See the [Swap README's Providers table](https://github.com/florianv/swap#-providers) for the full list.
+Yes. The published config defaults to the European Central Bank, which is free. The national banks also require no key. A few commercial providers (`cryptonator`, `exchangeratehost`, `webservicex`) can also currently be used without one, since the Exchanger wrapper does not yet enforce an option for them. See [Provider configuration](#-provider-configuration) for the full reference.
 
 #### How does Laravel Swap relate to Swap?
 
@@ -381,4 +375,4 @@ Implement `Exchanger\Contract\ExchangeRateService` (or extend `HttpService` / `S
 
 #### Where is the full provider list with capabilities?
 
-In the [Swap README's Providers table](https://github.com/florianv/swap#-providers). It lists every supported identifier with its base currency, quote currency, and historical support.
+In the [Provider configuration](#-provider-configuration) section above (option reference) and the [Swap README's Providers table](https://github.com/florianv/swap#-providers) (base currency, quote currency, historical support).
