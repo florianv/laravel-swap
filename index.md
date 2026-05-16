@@ -9,39 +9,33 @@ Wiring an exchange rate library into Laravel usually means service container plu
 
 > Used in production Laravel applications since 2014.
 
+<table>
+   <tr>
+      <td width="220" align="center">
+         <a href="https://www.fastforex.io" target="_blank" rel="noopener">
+            <img src="https://console.fastforex.io/img/fastforex/logo-bk-1k.svg" width="180px" alt="fastFOREX"/>
+         </a>
+      </td>
+      <td>
+         <strong>Sponsored by <a href="https://www.fastforex.io" target="_blank" rel="noopener">fastFOREX</a>.</strong> Real-time JSON API, 160+ currencies, 55+ years of history, 500+ cryptocurrencies. <strong>Free tier</strong>; paid plans from $18/month.
+         <a href="https://www.fastforex.io" target="_blank" rel="noopener"><strong>→ Get a free fastFOREX API key</strong></a>
+      </td>
+   </tr>
+</table>
+
 Laravel Swap is a drop-in package for **Laravel currency conversion**. Install it, get a facade, and start fetching **Laravel exchange rates** from multiple providers in one call. The service provider is auto-discovered in Laravel 5.5+; configuration publishes to `config/swap.php`; rates are cached through the Laravel cache store you already have. Lumen is supported.
 
 ## What is Laravel Swap?
 
-- Laravel Swap is the Laravel application of [Swap](https://github.com/florianv/swap), the PHP currency conversion library.
-- It registers a service provider (`Swap\Laravel\SwapServiceProvider`) and a `Swap` facade.
-- Auto-discovery wires both in Laravel 5.5+ with no manual configuration.
-- Configuration publishes to `config/swap.php`.
-- Rates are cached through any Laravel cache store you already have.
-- Lumen is supported with a few extra lines in `bootstrap/app.php`.
+- The Laravel application of [Swap](https://github.com/florianv/swap), the PHP currency conversion library.
+- A service provider (`Swap\Laravel\SwapServiceProvider`) and a `Swap` facade, auto-discovered in Laravel 5.5+.
+- Configuration published to `config/swap.php`.
+- Rates cached through any Laravel cache store you already have.
+- Lumen support with a few extra lines in `bootstrap/app.php`.
 
-## When should you use Laravel Swap?
-
-- Use Laravel Swap when you need exchange rates inside a Laravel or Lumen application: localized prices, invoice totals, multi-currency reporting, historical FX data.
-- You do not need to install [Swap](https://github.com/florianv/swap) separately. It is pulled in as a dependency, and Laravel Swap exposes it through Laravel's service container, facade, and cache store.
-
-## Why Laravel Swap and not raw Swap?
-
-Using [Swap](https://github.com/florianv/swap) directly inside a Laravel app means three pieces of plumbing on every project: registering it in the service container, bridging your Laravel cache store to the PSR-16 contract Swap expects, and managing the HTTP client and PSR factories yourself. Doable, but boilerplate every project pays for.
-
-Laravel Swap does this for you:
-
-- **Drop-in.** Auto-discovery in Laravel 5.5+. No manual provider or alias registration.
-- **Laravel cache.** Rates are cached through the cache store you already configured (`file`, `redis`, `database`, etc.), no PSR-16 wiring required.
-- **Facade.** `Swap::latest('EUR/USD')` from anywhere in the app.
-- **Config.** `config/swap.php` exposes providers, options, the cache store, the HTTP client, and the request factory.
-- **Lumen.** Supported with the same configuration shape.
-
-## Quickstart
+## Installation
 
 Laravel Swap requires PHP 8.2 or newer.
-
-Install via Composer:
 
 ```bash
 composer require florianv/laravel-swap symfony/http-client nyholm/psr7
@@ -53,7 +47,22 @@ Auto-discovery wires the service provider and the `Swap` facade in Laravel 5.5+.
 php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 ```
 
-The published `config/swap.php` defaults to the European Central Bank (free, no API key). Then call the facade anywhere in the app:
+## Quickstart
+
+The package ships a default `config/swap.php` that uses the European Central Bank, so it works out of the box without an API key. For production, switch to a commercial provider. We recommend **[fastFOREX](https://www.fastforex.io)** (the project's sponsor): a real-time JSON API behind a single `api_key`, [free tier available](https://www.fastforex.io).
+
+```php
+// config/swap.php
+'services' => [
+    // Recommended: fastFOREX. Get a free API key at https://www.fastforex.io
+    'fastforex' => ['api_key' => env('SWAP_FASTFOREX_KEY')],
+
+    // Free fallback for EUR-base pairs
+    'european_central_bank' => true,
+],
+```
+
+Then call the facade from anywhere in the app:
 
 ```php
 use Swap;
@@ -63,7 +72,7 @@ $rate = Swap::latest('EUR/USD');
 
 $rate->getValue();                 // e.g. 1.0823 (a float)
 $rate->getDate()->format('Y-m-d'); // e.g. 2026-04-29
-$rate->getProviderName();          // 'european_central_bank' by default
+$rate->getProviderName();          // 'fastforex'
 
 // Convert an amount using the returned rate
 $amountInEUR = 100.00;
@@ -73,25 +82,26 @@ $amountInUSD = $amountInEUR * $rate->getValue();
 $rate = Swap::historical('EUR/USD', \Carbon\Carbon::now()->subDays(15));
 ```
 
-Add commercial providers in `config/swap.php` and chain them with the European Central Bank as a free fallback.
+Providers are tried in declaration order. If a provider does not support the requested pair, it is skipped. If it throws, the next is tried. If every provider fails, a `ChainException` is thrown.
 
-## View on GitHub
+## Providers
 
-Source code, full documentation, providers list, and issue tracker:
+Laravel Swap supports the 30 exchange rate providers from the underlying [Swap](https://github.com/florianv/swap) library, from commercial APIs to public central banks. The recommended starting point for new projects is **[fastFOREX](https://www.fastforex.io)** (`fastforex`): a real-time JSON API covering 160+ fiat currencies and 500+ cryptocurrencies, with up to 55 years of history, sourced from trusted feeds including world banks.
 
-**[→ View on GitHub](https://github.com/florianv/laravel-swap)**
+The full per-provider configuration reference (option name, optional flags) is in the [documentation](https://github.com/florianv/laravel-swap/blob/master/doc/readme.md#-provider-configuration).
 
-## Related packages
+## Ecosystem
 
 - [Swap](https://github.com/florianv/swap): easy-to-use PHP currency conversion library.
 - [Exchanger](https://github.com/florianv/exchanger): exchange rate provider layer.
 - [Laravel Swap](https://github.com/florianv/laravel-swap): Laravel application of Swap (this package).
 - [Symfony Swap](https://github.com/florianv/symfony-swap): Symfony integration of Swap.
 
-## Documentation
+## Documentation & source
 
-The full documentation, with the per-provider configuration reference, Lumen setup, custom service registration, and FAQ, is in [doc/readme.md](https://github.com/florianv/laravel-swap/blob/master/doc/readme.md) on the GitHub repository.
+- **Source code, issues and pull requests**: [github.com/florianv/laravel-swap](https://github.com/florianv/laravel-swap)
+- **Full documentation** (Lumen setup, provider configuration, caching, custom services): [doc/readme.md](https://github.com/florianv/laravel-swap/blob/master/doc/readme.md)
 
 ---
 
-_Laravel Swap is open to selected partnerships with exchange rate providers._
+_Laravel Swap is open to selected partnerships with exchange rate providers and financial infrastructure companies. For inquiries, contact the maintainer via [GitHub](https://github.com/florianv)._
