@@ -1,33 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="7.0.0-beta19@7e751c06a756fa64dc4c759c09fe4a173afcb433">
-  <file src="src/Facades/Swap.php">
-    <MissingOverrideAttribute>
-      <code><![CDATA[protected static function getFacadeAccessor()]]></code>
-    </MissingOverrideAttribute>
-    <UnusedClass>
-      <code><![CDATA[Swap]]></code>
-    </UnusedClass>
-  </file>
   <file src="src/SwapServiceProvider.php">
-    <InvalidArgument>
-      <code><![CDATA[$cache]]></code>
-    </InvalidArgument>
     <InvalidArrayOffset>
       <code><![CDATA[[$source => $this->getConfigPath('swap.php')]]]></code>
     </InvalidArrayOffset>
-    <InvalidReturnStatement>
-      <code><![CDATA[$store]]></code>
-    </InvalidReturnStatement>
-    <MissingClosureParamType>
-      <code><![CDATA[$app]]></code>
-    </MissingClosureParamType>
-    <MissingOverrideAttribute>
-      <code><![CDATA[public function provides()]]></code>
-      <code><![CDATA[public function register()]]></code>
-    </MissingOverrideAttribute>
-    <MissingReturnType>
-      <code><![CDATA[boot]]></code>
-    </MissingReturnType>
     <MixedArgument>
       <code><![CDATA[$app->config->get('swap.options', [])]]></code>
       <code><![CDATA[$cache]]></code>
@@ -54,9 +30,6 @@
       <code><![CDATA[get]]></code>
       <code><![CDATA[getStore]]></code>
     </MixedMethodCall>
-    <MixedPropertyFetch>
-      <code><![CDATA[$app->config]]></code>
-    </MixedPropertyFetch>
     <MixedReturnStatement>
       <code><![CDATA[$this->app[$httpClient]]]></code>
       <code><![CDATA[$this->app[$requestFactory]]]></code>
@@ -65,21 +38,19 @@
             )]]></code>
     </MixedReturnStatement>
     <NoInterfaceProperties>
+      <code><![CDATA[$app->config]]></code>
       <code><![CDATA[$this->app->config]]></code>
       <code><![CDATA[$this->app->config]]></code>
       <code><![CDATA[$this->app->config]]></code>
     </NoInterfaceProperties>
-    <NullableReturnStatement>
-      <code><![CDATA[null]]></code>
-    </NullableReturnStatement>
     <PossiblyFalseArgument>
       <code><![CDATA[$source]]></code>
     </PossiblyFalseArgument>
-    <RedundantConditionGivenDocblockType>
-      <code><![CDATA[null !== $cache = $this->getSimpleCache()]]></code>
-    </RedundantConditionGivenDocblockType>
+    <PossiblyInvalidArgument>
+      <code><![CDATA[$cache]]></code>
+    </PossiblyInvalidArgument>
     <UndefinedDocblockClass>
-      <code><![CDATA[SimpleCacheBridge]]></code>
+      <code><![CDATA[\Psr\SimpleCache\CacheInterface|\Cache\Bridge\SimpleCache\SimpleCacheBridge|null]]></code>
     </UndefinedDocblockClass>
   </file>
 </files>

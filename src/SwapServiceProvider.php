@@ -13,6 +13,7 @@ namespace Swap\Laravel;
 
 use Cache\Bridge\SimpleCache\SimpleCacheBridge;
 use Cache\Adapter\Illuminate\IlluminateCachePool;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Swap\Builder;
 
@@ -26,7 +27,7 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Bootstrap the application services.
      */
-    public function boot()
+    public function boot(): void
     {
         $source = realpath(__DIR__.'/../config/swap.php');
         $this->publishes([$source => $this->getConfigPath('swap.php')]);
@@ -36,9 +37,10 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Register the application services.
      */
+    #[\Override]
     public function register()
     {
-        $this->app->singleton('swap', function ($app) {
+        $this->app->singleton('swap', function (Application $app) {
             $builder = new Builder($app->config->get('swap.options', []));
 
             if (null !== $cache = $this->getSimpleCache()) {
@@ -74,6 +76,7 @@ final class SwapServiceProvider extends ServiceProvider
      *
      * @psalm-pure
      */
+    #[\Override]
     public function provides()
     {
         return [
@@ -96,7 +99,7 @@ final class SwapServiceProvider extends ServiceProvider
     /**
      * Gets the simple cache.
      *
-     * @return SimpleCacheBridge
+     * @return \Psr\SimpleCache\CacheInterface|\Cache\Bridge\SimpleCache\SimpleCacheBridge|null
      */
     private function getSimpleCache()
     {
