@@ -4,9 +4,6 @@
     <MissingOverrideAttribute>
       <code><![CDATA[protected static function getFacadeAccessor()]]></code>
     </MissingOverrideAttribute>
-    <MissingPureAnnotation>
-      <code><![CDATA[getFacadeAccessor]]></code>
-    </MissingPureAnnotation>
     <UnusedClass>
       <code><![CDATA[Swap]]></code>
     </UnusedClass>
@@ -28,9 +25,6 @@
       <code><![CDATA[public function provides()]]></code>
       <code><![CDATA[public function register()]]></code>
     </MissingOverrideAttribute>
-    <MissingPureAnnotation>
-      <code><![CDATA[provides]]></code>
-    </MissingPureAnnotation>
     <MissingReturnType>
       <code><![CDATA[boot]]></code>
     </MissingReturnType>
