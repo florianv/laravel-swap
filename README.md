@@ -104,7 +104,7 @@ See the [documentation](doc/readme.md#-caching) for the full reference, includin
 
 ## 📊 Providers
 
-Laravel Swap supports the 31 exchange rate providers from the underlying [Swap](https://github.com/florianv/swap) library. Pass the **identifier** as the key under `services` in `config/swap.php`.
+Laravel Swap supports the 30+ exchange rate providers from the underlying [Swap](https://github.com/florianv/swap) library. Pass the **identifier** as the key under `services` in `config/swap.php`.
 
 ### Commercial providers (require an API key)
 
