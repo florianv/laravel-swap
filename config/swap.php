@@ -86,6 +86,10 @@ return [
     | * 'xchangeapi' => [
     |       'api-key' => 'secret', // The API token
     |   ]
+    |
+    | * 'unirate_api' => [
+    |       'api_key' => 'secret', // The API token. Get a free one at https://unirateapi.com
+    |   ]
 
     |
     */
@@ -100,6 +104,7 @@ return [
         // Other commercial providers — uncomment and configure the ones you want:
         // 'apilayer_fixer'      => ['api_key' => env('SWAP_FIXER_KEY')],
         // 'open_exchange_rates' => ['app_id'  => env('SWAP_OER_APP_ID')],
+        // 'unirate_api'         => ['api_key' => env('SWAP_UNIRATE_API_KEY')],
 
         // Free fallback for EUR-base pairs. Works out of the box without any key.
         'european_central_bank' => true,
