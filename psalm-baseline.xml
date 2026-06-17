@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="6.15.1@28dc127af1b5aecd52314f6f645bafc10d0e11f9">
+<files psalm-version="7.0.0-beta19@7e751c06a756fa64dc4c759c09fe4a173afcb433">
   <file src="src/Facades/Swap.php">
     <MissingOverrideAttribute>
       <code><![CDATA[protected static function getFacadeAccessor()]]></code>
     </MissingOverrideAttribute>
+    <MissingPureAnnotation>
+      <code><![CDATA[getFacadeAccessor]]></code>
+    </MissingPureAnnotation>
     <UnusedClass>
       <code><![CDATA[Swap]]></code>
     </UnusedClass>
@@ -25,12 +28,18 @@
       <code><![CDATA[public function provides()]]></code>
       <code><![CDATA[public function register()]]></code>
     </MissingOverrideAttribute>
+    <MissingPureAnnotation>
+      <code><![CDATA[provides]]></code>
+    </MissingPureAnnotation>
     <MissingReturnType>
       <code><![CDATA[boot]]></code>
     </MissingReturnType>
     <MixedArgument>
       <code><![CDATA[$app->config->get('swap.options', [])]]></code>
+      <code><![CDATA[$cache]]></code>
+      <code><![CDATA[$httpClient]]></code>
       <code><![CDATA[$name]]></code>
+      <code><![CDATA[$requestFactory]]></code>
     </MixedArgument>
     <MixedArrayOffset>
       <code><![CDATA[$this->app[$httpClient]]]></code>
@@ -42,7 +51,6 @@
       <code><![CDATA[$httpClient]]></code>
       <code><![CDATA[$name]]></code>
       <code><![CDATA[$requestFactory]]></code>
-      <code><![CDATA[$store]]></code>
     </MixedAssignment>
     <MixedMethodCall>
       <code><![CDATA[get]]></code>
@@ -51,7 +59,6 @@
       <code><![CDATA[get]]></code>
       <code><![CDATA[get]]></code>
       <code><![CDATA[getStore]]></code>
-      <code><![CDATA[store]]></code>
     </MixedMethodCall>
     <MixedPropertyFetch>
       <code><![CDATA[$app->config]]></code>
@@ -80,13 +87,5 @@
     <UndefinedDocblockClass>
       <code><![CDATA[SimpleCacheBridge]]></code>
     </UndefinedDocblockClass>
-    <UndefinedInterfaceMethod>
-      <code><![CDATA[$this->app]]></code>
-      <code><![CDATA[$this->app]]></code>
-      <code><![CDATA[$this->app]]></code>
-    </UndefinedInterfaceMethod>
-    <UnusedClass>
-      <code><![CDATA[SwapServiceProvider]]></code>
-    </UnusedClass>
   </file>
 </files>
