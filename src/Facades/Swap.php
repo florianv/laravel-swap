@@ -23,6 +23,8 @@ final class Swap extends Facade
 {
     /**
      * {@inheritdoc}
+     *
+     * @psalm-pure
      */
     protected static function getFacadeAccessor()
     {

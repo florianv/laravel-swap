@@ -71,6 +71,8 @@ final class SwapServiceProvider extends ServiceProvider
      * Get the services provided by the provider.
      *
      * @return string[]
+     *
+     * @psalm-pure
      */
     public function provides()
     {
