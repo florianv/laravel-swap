@@ -25,7 +25,7 @@ use Swap\Swap;
  */
 final class SwapServiceProvider extends ServiceProvider implements DeferrableProvider
 {
-    private const CONFIG_SOURCE = __DIR__.'/../config/swap.php';
+    private const CONFIG_SOURCE = __DIR__ . '/../config/swap.php';
 
     /**
      * Bootstrap the application services.

@@ -149,7 +149,7 @@ class SwapServiceProviderTest extends AbstractTestCase
         $paths = ServiceProvider::pathsToPublish(SwapServiceProvider::class);
 
         Assert::assertSame([$this->app->configPath('swap.php')], array_values($paths));
-        Assert::assertSame(realpath(__DIR__.'/../config/swap.php'), realpath((string) array_key_first($paths)));
+        Assert::assertSame(realpath(__DIR__ . '/../config/swap.php'), realpath((string) array_key_first($paths)));
     }
 
     public function testVendorPublishCopiesTheConfig()
@@ -160,7 +160,7 @@ class SwapServiceProviderTest extends AbstractTestCase
         try {
             $this->artisan('vendor:publish', ['--provider' => SwapServiceProvider::class])->assertSuccessful();
 
-            Assert::assertFileEquals(__DIR__.'/../config/swap.php', $target);
+            Assert::assertFileEquals(__DIR__ . '/../config/swap.php', $target);
         } finally {
             @unlink($target);
         }

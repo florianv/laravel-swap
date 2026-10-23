@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Exchanger\Contract\ExchangeRate historical(string $currencyPair, \DateTimeInterface $date, array $options = [])
  *
  * @see \Swap\Swap
- * @api
  */
 final class Swap extends Facade
 {
