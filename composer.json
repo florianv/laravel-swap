@@ -44,7 +44,8 @@
         "roave/backward-compatibility-check": "^8.9",
         "php-http/guzzle7-adapter": "^1.0",
         "nyholm/psr7": "^1.0",
-        "friendsofphp/php-cs-fixer": "^3.95"
+        "friendsofphp/php-cs-fixer": "^3.95",
+        "psalm/plugin-phpunit": "^0.20.4"
     },
     "repositories": [
         {

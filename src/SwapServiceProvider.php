@@ -14,7 +14,6 @@ namespace Swap\Laravel;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
-use Psr\SimpleCache\CacheInterface;
 use Swap\Builder;
 use Swap\Swap;
 
@@ -43,27 +42,37 @@ final class SwapServiceProvider extends ServiceProvider implements DeferrablePro
     {
         $this->mergeConfigFrom(self::CONFIG_SOURCE, 'swap');
 
-        $this->app->singleton('swap', function (Application $app) {
-            $builder = new Builder($app->config->get('swap.options', []));
+        $this->app->singleton('swap', static function (Application $app): Swap {
+            $config = $app->make('config');
 
-            if (null !== $cache = $this->getSimpleCache()) {
-                $builder->useSimpleCache($cache);
+            // Typed for any user config, not only the shipped defaults the Laravel plugin infers.
+            /** @var array<string, mixed> $options */
+            $options = $config->get('swap.options', []);
+            $builder = new Builder($options);
+
+            if (null !== $store = self::serviceId($config->get('swap.cache'))) {
+                $builder->useSimpleCache($app->make('cache')->store($store));
             }
 
-            if (null !== $httpClient = $this->getHttpClient()) {
-                $builder->useHttpClient($httpClient);
+            if (null !== $httpClient = self::serviceId($config->get('swap.http_client'))) {
+                /** @psalm-suppress MixedArgument Builder::useHttpClient() rejects anything but a PSR-18 or HTTPlug client. */
+                $builder->useHttpClient($app->make($httpClient));
             }
 
-            if (null !== $requestFactory = $this->getRequestFactory()) {
-                $builder->useRequestFactory($requestFactory);
+            if (null !== $requestFactory = self::serviceId($config->get('swap.request_factory'))) {
+                /** @psalm-suppress MixedArgument The RequestFactoryInterface parameter type rejects anything else. */
+                $builder->useRequestFactory($app->make($requestFactory));
             }
 
-            foreach ($app->config->get('swap.services', []) as $name => $config) {
-                if (false === $config) {
+            /** @var array<array-key, array<string, mixed>|bool> $services */
+            $services = $config->get('swap.services', []);
+
+            foreach ($services as $name => $serviceOptions) {
+                if (false === $serviceOptions) {
                     continue;
                 }
 
-                $builder->add($name, is_array($config) ? $config : []);
+                $builder->add((string) $name, \is_array($serviceOptions) ? $serviceOptions : []);
             }
 
             return $builder->build();
@@ -89,44 +98,14 @@ final class SwapServiceProvider extends ServiceProvider implements DeferrablePro
     }
 
     /**
-     * Gets the Laravel cache store configured in "swap.cache", if any.
+     * Returns the container or cache store name set in a "swap.*" option, or null when it is not set.
      *
-     * Laravel cache repositories implement PSR-16, so the store is passed to Swap as is.
-     */
-    private function getSimpleCache(): ?CacheInterface
-    {
-        if ($cache = $this->app->config->get('swap.cache')) {
-            return $this->app['cache']->store($cache);
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the http client.
+     * Laravel cache stores implement PSR-16, so the configured store is passed to Swap as is.
      *
-     * @return \Psr\Http\Client\ClientInterface|null
+     * @psalm-pure
      */
-    private function getHttpClient()
+    private static function serviceId(mixed $value): ?string
     {
-        if ($httpClient = $this->app->config->get('swap.http_client')) {
-            return $this->app[$httpClient];
-        }
-
-        return null;
-    }
-
-    /**
-     * Gets the request factory.
-     *
-     * @return \Psr\Http\Message\RequestFactoryInterface|null
-     */
-    private function getRequestFactory()
-    {
-        if ($requestFactory = $this->app->config->get('swap.request_factory')) {
-            return $this->app[$requestFactory];
-        }
-
-        return null;
+        return \is_string($value) && '' !== $value ? $value : null;
     }
 }
