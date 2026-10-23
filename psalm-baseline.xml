@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <files psalm-version="7.0.0-rc2@20339e3fe5b8d03bcd8061030eb2a83ad50e5783">
   <file src="src/SwapServiceProvider.php">
-    <InvalidArrayOffset>
-      <code><![CDATA[[$source => $this->getConfigPath('swap.php')]]]></code>
-    </InvalidArrayOffset>
     <MixedArgument>
       <code><![CDATA[$app->config->get('swap.options', [])]]></code>
       <code><![CDATA[$cache]]></code>
@@ -39,8 +36,5 @@
       <code><![CDATA[$this->app->config]]></code>
       <code><![CDATA[$this->app->config]]></code>
     </NoInterfaceProperties>
-    <PossiblyFalseArgument>
-      <code><![CDATA[$source]]></code>
-    </PossiblyFalseArgument>
   </file>
 </files>
