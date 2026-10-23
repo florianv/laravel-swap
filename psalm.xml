@@ -14,6 +14,14 @@
             <directory name="vendor"/>
         </ignoreFiles>
     </projectFiles>
+    <issueHandlers>
+        <!-- The facade is only used by applications, and facade:fix rewrites its docblock, so an @api tag would not survive. -->
+        <UnusedClass>
+            <errorLevel type="suppress">
+                <referencedClass name="Swap\Laravel\Facades\Swap"/>
+            </errorLevel>
+        </UnusedClass>
+    </issueHandlers>
     <plugins>
         <pluginClass class="Psalm\LaravelPlugin\Plugin"/>
     </plugins>

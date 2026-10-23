@@ -24,4 +24,4 @@ jobs:
         run: composer update --no-interaction --prefer-dist
 
       - name: Lint facade docblocks
-        run: php -f vendor/bin/facade.php Swap\\Laravel\\Facades\\Swap
+        run: composer facade:lint
