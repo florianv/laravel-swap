@@ -17,9 +17,10 @@ composer install
 composer test         # PHPUnit
 composer psalm        # static analysis
 composer facade:lint  # checks the facade docblock; composer facade:fix rewrites it
+composer cs:check     # coding style; composer cs:fix applies it
 ```
 
-CI runs the tests on PHP 8.2 to 8.5, plus Psalm, the facade docblock check and a backward compatibility check. A pull request is ready for review when they all pass.
+CI runs the tests on PHP 8.2 to 8.5 with Laravel 12 and 13, plus Psalm, the coding style check, the facade docblock check and a backward compatibility check. A pull request is ready for review when they all pass.
 
 ## Pull requests
 
@@ -47,7 +48,7 @@ Autocomplete of a few lines doesn't need disclosure.
 **Review it yourself first.** Before you submit, you must have:
 
 - read and understood every changed line, and be able to explain it without asking the AI again;
-- run `composer test`, `composer psalm` and `composer facade:lint` locally;
+- run `composer test`, `composer psalm`, `composer facade:lint` and `composer cs:check` locally;
 - checked every claim about Laravel, Swap, Exchanger or a provider against its documentation or code. AI tools invent options, identifiers and behaviour;
 - removed anything you can't justify: unrelated changes, speculative improvements, filler text.
 
