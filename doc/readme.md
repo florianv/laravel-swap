@@ -40,7 +40,7 @@ This is the technical reference for Laravel Swap. For the project overview and e
 
 ## 📦 Installation
 
-Laravel Swap requires PHP 8.2 or newer.
+Laravel Swap requires PHP 8.2 or newer and Laravel 12 or 13.
 
 ```bash
 composer require florianv/laravel-swap symfony/http-client nyholm/psr7
@@ -56,7 +56,7 @@ composer require florianv/laravel-swap php-http/guzzle7-adapter nyholm/psr7
 
 ### Laravel
 
-Auto-discovery in Laravel 5.5+ wires the service provider and the `Swap` facade automatically. Nothing more to do for setup.
+Package auto-discovery wires the service provider and the `Swap` facade automatically. Nothing more to do for setup.
 
 If auto-discovery is disabled, register them manually in `config/app.php`:
 
@@ -72,6 +72,8 @@ If auto-discovery is disabled, register them manually in `config/app.php`:
 ```
 
 ### Lumen
+
+Lumen is no longer tested. Laravel no longer recommends it for new projects, and its last major version is built on Laravel 11 components, which this version of Laravel Swap does not install with. The setup below is kept for applications on an earlier Laravel Swap release.
 
 In `bootstrap/app.php`:
 
@@ -352,7 +354,7 @@ Yes. The published config defaults to the European Central Bank, which is free. 
 
 #### How does Laravel Swap relate to Swap?
 
-Laravel Swap is the Laravel application of Swap. It pulls Swap in as a dependency and exposes it through Laravel's service container, facade, and cache store. If you are not on Laravel or Lumen, use [Swap](https://github.com/florianv/swap) directly.
+Laravel Swap is the Laravel application of Swap. It pulls Swap in as a dependency and exposes it through Laravel's service container, facade, and cache store. If you are not on Laravel, use [Swap](https://github.com/florianv/swap) directly.
 
 #### How do I cache rates?
 

@@ -5,7 +5,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 [![Version](http://img.shields.io/packagist/v/florianv/laravel-swap.svg?style=flat-square)](https://packagist.org/packages/florianv/laravel-swap)
 
-> _Drop-in currency conversion for Laravel and Lumen. Auto-discovered service provider, facade, and config. Maintained since 2014._
+> _Drop-in currency conversion for Laravel. Auto-discovered service provider, facade, and config. Maintained since 2014._
 
 <table>
    <tr>
@@ -23,25 +23,24 @@
 
 **Install, publish the config, and call `Swap::latest('EUR/USD')` from anywhere. No service container wiring, no boilerplate, no manual cache plumbing.**
 
-Laravel Swap is a drop-in package for **Laravel currency conversion**. The service provider is auto-discovered in Laravel 5.5+; configuration publishes to `config/swap.php`; rates are cached through the Laravel cache store you already have. Lumen is supported.
+Laravel Swap is a drop-in package for **Laravel currency conversion**. The service provider is auto-discovered; configuration publishes to `config/swap.php`; rates are cached through the Laravel cache store you already have.
 
 ## 💡 What is Laravel Swap?
 
 - The Laravel application of [Swap](https://github.com/florianv/swap), the PHP currency conversion library.
-- A service provider (`Swap\Laravel\SwapServiceProvider`) and a `Swap` facade, auto-discovered in Laravel 5.5+.
+- A service provider (`Swap\Laravel\SwapServiceProvider`) and a `Swap` facade, both auto-discovered.
 - Configuration published to `config/swap.php`.
 - Rates cached through any Laravel cache store you already have.
-- Lumen support with a few extra lines in `bootstrap/app.php`.
 
 ## 📦 Installation
 
-Laravel Swap requires PHP 8.2 or newer.
+Laravel Swap requires PHP 8.2 or newer and Laravel 12 or 13.
 
 ```bash
 composer require florianv/laravel-swap symfony/http-client nyholm/psr7
 ```
 
-Auto-discovery wires the service provider and the `Swap` facade in Laravel 5.5+. For Lumen or older Laravel versions, see [Setup](doc/readme.md#-setup) in the documentation.
+Auto-discovery wires the service provider and the `Swap` facade. To register them manually, see [Setup](doc/readme.md#-setup) in the documentation.
 
 ## ⚡ Quickstart
 
@@ -151,13 +150,13 @@ The per-provider option names (`api_key` vs `access_key` vs `app_id`, optional f
 
 ## 🎯 When should you use Laravel Swap?
 
-- Use Laravel Swap when you need exchange rates inside a Laravel or Lumen application: localized prices, invoice totals, multi-currency reporting, historical FX data.
+- Use Laravel Swap when you need exchange rates inside a Laravel application: localized prices, invoice totals, multi-currency reporting, historical FX data.
 - You do not need to install [Swap](https://github.com/florianv/swap) separately. It is pulled in as a dependency, and Laravel Swap exposes it through Laravel's service container, facade, and cache store.
 
 ## 🛠 Common use cases
 
 - Display localized prices in multi-currency Laravel storefronts.
-- Compute invoice totals across currencies in a Laravel or Lumen API.
+- Compute invoice totals across currencies in a Laravel API.
 - Reconcile multi-currency ledgers using historical rates.
 - Power internal FX dashboards with rate history.
 - Build currency conversion infrastructure for Laravel-based fintech and ERP applications.
@@ -175,7 +174,7 @@ All four packages are MIT-licensed and require PHP 8.2 or newer.
 
 ## 📚 Documentation
 
-The full documentation, with Lumen setup, per-provider configuration, custom service registration, and FAQ, is in [`doc/readme.md`](doc/readme.md).
+The full documentation, with per-provider configuration, custom service registration, and FAQ, is in [`doc/readme.md`](doc/readme.md).
 
 ## 🙌 Contributing
 

@@ -5,7 +5,6 @@
     "keywords": [
         "php",
         "laravel",
-        "lumen",
         "currency-conversion",
         "exchange-rates",
         "exchange-rate-api",
@@ -33,7 +32,9 @@
     },
     "require": {
         "php": "^8.2",
-        "florianv/swap": "^4.6"
+        "florianv/swap": "^4.6",
+        "illuminate/contracts": "^12.0 || ^13.0",
+        "illuminate/support": "^12.0 || ^13.0"
     },
     "require-dev": {
         "graham-campbell/testbench": "^6.2",
