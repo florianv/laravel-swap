@@ -11,10 +11,9 @@
 
 namespace Swap\Laravel;
 
-use Cache\Bridge\SimpleCache\SimpleCacheBridge;
-use Cache\Adapter\Illuminate\IlluminateCachePool;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
+use Psr\SimpleCache\CacheInterface;
 use Swap\Builder;
 
 /**
@@ -97,33 +96,14 @@ final class SwapServiceProvider extends ServiceProvider
     }
 
     /**
-     * Gets the simple cache.
+     * Gets the Laravel cache store configured in "swap.cache", if any.
      *
-     * @return \Psr\SimpleCache\CacheInterface|\Cache\Bridge\SimpleCache\SimpleCacheBridge|null
+     * Laravel cache repositories implement PSR-16, so the store is passed to Swap as is.
      */
-    private function getSimpleCache()
+    private function getSimpleCache(): ?CacheInterface
     {
         if ($cache = $this->app->config->get('swap.cache')) {
-            $store = $this->app['cache']->store($cache);
-
-            // Check simple cache PSR-16 compatibility
-            if ($store instanceof \Psr\SimpleCache\CacheInterface) {
-                return $store;
-            }
-
-            // Ensure PSR-6 adapter class exists
-            if (! class_exists(IlluminateCachePool::class)) {
-                throw new \Exception("cache/illuminate-adapter dependency is missing");
-            }
-
-            // Ensure PSR-16 bridge class exists
-            if (! class_exists(SimpleCacheBridge::class)) {
-                throw new \Exception("cache/simple-cache-bridge dependency is missing");
-            }
-
-            return new SimpleCacheBridge(
-                new IlluminateCachePool($store->getStore())
-            );
+            return $this->app['cache']->store($cache);
         }
 
         return null;
