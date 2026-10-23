@@ -41,10 +41,13 @@ jobs:
           php-version: ${{ matrix.php }}
           coverage: none
 
-      # Laravel 11 has unpatched security advisories, which Composer refuses to install by default.
-      - name: Allow Laravel 11
+      # Laravel 11 has unpatched security advisories, which Composer refuses to install by default,
+      # and the Psalm plugins need Laravel 12+. Psalm runs in its own workflow.
+      - name: Prepare Laravel 11
         if: matrix.laravel == '11'
-        run: composer config audit.block-insecure false
+        run: |
+          composer config audit.block-insecure false
+          composer remove --dev psalm/plugin-laravel psalm/plugin-phpunit vimeo/psalm --no-update --no-interaction
 
       - name: Pin Laravel ${{ matrix.laravel }}
         run: composer require "illuminate/contracts:^${{ matrix.laravel }}.0" "illuminate/support:^${{ matrix.laravel }}.0" --no-update --no-interaction
