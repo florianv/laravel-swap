@@ -11,25 +11,37 @@
 
 namespace Swap\Laravel\Tests\Facades;
 
+use GrahamCampbell\TestBenchCore\FacadeTrait;
 use Swap\Laravel\Facades\Swap as SwapFacade;
 use Swap\Laravel\Tests\AbstractTestCase;
-use GrahamCampbell\TestBenchCore\FacadeTrait;
 use Swap\Swap;
 
-class SwapTest extends AbstractTestCase
+final class SwapTest extends AbstractTestCase
 {
     use FacadeTrait;
 
+    /**
+     * @psalm-pure
+     */
+    #[\Override]
     protected static function getFacadeAccessor(): string
     {
         return 'swap';
     }
 
+    /**
+     * @psalm-pure
+     */
+    #[\Override]
     protected static function getFacadeClass(): string
     {
         return SwapFacade::class;
     }
 
+    /**
+     * @psalm-pure
+     */
+    #[\Override]
     protected static function getFacadeRoot(): string
     {
         return Swap::class;

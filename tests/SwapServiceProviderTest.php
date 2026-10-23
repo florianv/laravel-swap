@@ -13,228 +13,210 @@ namespace Swap\Laravel\Tests;
 
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 use Illuminate\Cache\ArrayStore;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Nyholm\Psr7\Factory\Psr17Factory;
+use PHPUnit\Framework\Assert;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Swap\Laravel\SwapServiceProvider;
-use Http\Discovery\HttpClientDiscovery;
 use Swap\Swap;
-use PHPUnit\Framework\Assert;
-use Http\Discovery\Psr17FactoryDiscovery;
 
-class SwapServiceProviderTest extends AbstractTestCase
+final class SwapServiceProviderTest extends AbstractTestCase
 {
     use ServiceProviderTrait;
 
-    public function testMissingServiceConfig()
+    public function testMissingServiceConfig(): void
     {
         $this->expectException(\InvalidArgumentException::class);
         $this->expectExceptionMessage('The "access_key" option must be provided.');
 
-        $this->app->config->set('swap.services', [
+        $this->setConfig('swap.services', [
             'currency_layer' => true,
         ]);
 
-        $this->app['swap'];
+        $this->resolveSwap();
     }
 
-    public function testUnknownService()
+    public function testUnknownService(): void
     {
         $this->expectException(\LogicException::class);
         $this->expectExceptionMessage('The service "unknown" is not registered.');
 
-        $this->app->config->set('swap.services', [
+        $this->setConfig('swap.services', [
             'unknown' => true,
         ]);
 
-        $this->app['swap'];
+        $this->resolveSwap();
     }
 
-    public function testEmptyServices()
+    public function testEmptyServices(): void
     {
-        Assert::assertInstanceOf(Swap::class, $this->app['swap']);
+        $this->setConfig('swap.services', []);
+
+        Assert::assertInstanceOf(Swap::class, $this->resolveSwap());
     }
 
-    public function testSwapIsInjectable()
+    public function testSwapIsInjectable(): void
     {
         $this->assertIsInjectable(Swap::class);
     }
 
-    public function testOptions()
+    public function testOptions(): void
     {
-        $this->app->config->set('swap.options', ['cache_ttl' => 60]);
+        $this->setConfig('swap.options', ['cache_ttl' => 60]);
 
-        Assert::assertInstanceOf(Swap::class, $this->app['swap']);
+        Assert::assertInstanceOf(Swap::class, $this->resolveSwap());
     }
 
-    public function testCustomHttpClient()
-    {
-        $client = HttpClientDiscovery::find();
-
-        $this->app->singleton('http_client_custom', function () use ($client) {
-            return $client;
-        });
-
-        $this->app->config->set('swap.http_client', 'http_client_custom');
-
-        Assert::assertInstanceOf(Swap::class, $this->app['swap']);
-    }
-
-    public function testCustomRequestFactory()
-    {
-        $requestFactory = Psr17FactoryDiscovery::findRequestFactory();
-
-        $this->app->singleton('request_factory_custom', function () use ($requestFactory) {
-            return $requestFactory;
-        });
-
-        $this->app->config->set('swap.request_factory', 'request_factory_custom');
-
-        Assert::assertInstanceOf(Swap::class, $this->app['swap']);
-    }
-
-    public function testCustomLaravelCache()
-    {
-        $this->app->config->set('swap.cache', 'file');
-
-        Assert::assertInstanceOf(Swap::class, $this->app['swap']);
-    }
-
-    public function testConfiguredCacheStoreIsUsed()
+    public function testConfiguredCacheStoreIsUsed(): void
     {
         $store = new class extends ArrayStore {
+            /**
+             * @psalm-mutation-free
+             */
             public function isEmpty(): bool
             {
                 return [] === $this->storage;
             }
         };
 
-        $this->app['cache']->extend('swap_test', function ($app) use ($store) {
-            return $app['cache']->repository($store);
+        $this->application()->make('cache')->extend('swap_test', function (Application $app) use ($store) {
+            return $app->make('cache')->repository($store);
         });
-        $this->app->config->set('cache.stores.swap_test', ['driver' => 'swap_test']);
-        $this->app->config->set('swap.cache', 'swap_test');
-        $this->app->config->set('swap.services', [
+        $this->setConfig('cache.stores.swap_test', ['driver' => 'swap_test']);
+        $this->setConfig('swap.cache', 'swap_test');
+        $this->setConfig('swap.services', [
             'array' => [['EUR/USD' => 1.1]],
         ]);
 
         Assert::assertTrue($store->isEmpty());
 
-        $rate = $this->app['swap']->latest('EUR/USD');
+        $rate = $this->resolveSwap()->latest('EUR/USD');
 
         Assert::assertSame(1.1, $rate->getValue());
         Assert::assertFalse($store->isEmpty());
     }
 
-    public function testProviderIsDeferred()
+    public function testProviderIsDeferred(): void
     {
-        $provider = new SwapServiceProvider($this->app);
+        $provider = new SwapServiceProvider($this->application());
 
         Assert::assertInstanceOf(DeferrableProvider::class, $provider);
         Assert::assertTrue($provider->isDeferred());
         Assert::assertSame(['swap', Swap::class], $provider->provides());
     }
 
-    public function testSwapClassIsAnAliasOfTheSwapService()
+    public function testSwapClassIsAnAliasOfTheSwapService(): void
     {
-        Assert::assertSame($this->app['swap'], $this->app->make(Swap::class));
+        Assert::assertSame($this->resolveSwap(), $this->application()->make(Swap::class));
     }
 
-    public function testConfigIsPublishedToTheApplicationConfigPath()
+    public function testConfigIsPublishedToTheApplicationConfigPath(): void
     {
         $paths = ServiceProvider::pathsToPublish(SwapServiceProvider::class);
 
-        Assert::assertSame([$this->app->configPath('swap.php')], array_values($paths));
+        Assert::assertSame([$this->application()->configPath('swap.php')], array_values($paths));
         Assert::assertSame(realpath(__DIR__ . '/../config/swap.php'), realpath((string) array_key_first($paths)));
     }
 
-    public function testVendorPublishCopiesTheConfig()
+    public function testVendorPublishCopiesTheConfig(): void
     {
-        $target = $this->app->configPath('swap.php');
+        $target = $this->application()->configPath('swap.php');
         Assert::assertFileDoesNotExist($target);
 
         try {
-            $this->artisan('vendor:publish', ['--provider' => SwapServiceProvider::class])->assertSuccessful();
+            $exitCode = $this->withoutMockingConsoleOutput()->artisan('vendor:publish', ['--provider' => SwapServiceProvider::class]);
 
+            Assert::assertSame(0, $exitCode);
             Assert::assertFileEquals(__DIR__ . '/../config/swap.php', $target);
         } finally {
             @unlink($target);
         }
     }
 
-    public function testDefaultConfigIsMerged()
+    public function testDefaultConfigIsMerged(): void
     {
-        $this->app['swap'];
+        $this->resolveSwap();
 
-        Assert::assertSame(['european_central_bank' => true], array_filter($this->app->config->get('swap.services')));
-        Assert::assertSame([], $this->app->config->get('swap.options'));
+        $config = $this->application()->make('config');
+
+        Assert::assertSame(['european_central_bank' => true], array_filter($config->get('swap.services')));
+        Assert::assertSame([], $config->get('swap.options'));
     }
 
-    public function testConfiguredHttpClientAndRequestFactoryAreUsed()
+    public function testConfiguredHttpClientAndRequestFactoryAreUsed(): void
     {
         $client = new RecordingClient();
         $requestFactory = new RecordingRequestFactory();
 
-        $this->app->instance('test.http_client', $client);
-        $this->app->instance('test.request_factory', $requestFactory);
-        $this->app->config->set('swap.http_client', 'test.http_client');
-        $this->app->config->set('swap.request_factory', 'test.request_factory');
-        $this->app->config->set('swap.services', ['european_central_bank' => true]);
+        $this->application()->instance('test.http_client', $client);
+        $this->application()->instance('test.request_factory', $requestFactory);
+        $this->setConfig('swap.http_client', 'test.http_client');
+        $this->setConfig('swap.request_factory', 'test.request_factory');
+        $this->setConfig('swap.services', ['european_central_bank' => true]);
 
         try {
-            $this->app['swap']->latest('EUR/USD');
+            $this->resolveSwap()->latest('EUR/USD');
             Assert::fail('The recording client never returns a response.');
-        } catch (\Throwable) {
+        } catch (\Exception) {
         }
 
         Assert::assertSame(['www.ecb.europa.eu'], $client->hosts);
         Assert::assertSame(1, $requestFactory->calls);
     }
 
-    public function testServiceDisabledWithFalseIsNotAdded()
+    public function testServiceDisabledWithFalseIsNotAdded(): void
     {
-        $this->app->config->set('swap.services', [
+        $this->setConfig('swap.services', [
             'unknown' => false,
             'array' => [['EUR/USD' => 1.1]],
         ]);
 
-        Assert::assertSame(1.1, $this->app['swap']->latest('EUR/USD')->getValue());
+        Assert::assertSame(1.1, $this->resolveSwap()->latest('EUR/USD')->getValue());
     }
 
-    public function testServicesAreTriedInConfigOrder()
+    public function testServicesAreTriedInConfigOrder(): void
     {
         $client = new RecordingClient();
-        $this->app->instance('test.http_client', $client);
-        $this->app->config->set('swap.http_client', 'test.http_client');
-        $this->app->config->set('swap.services', [
+        $this->application()->instance('test.http_client', $client);
+        $this->setConfig('swap.http_client', 'test.http_client');
+        $this->setConfig('swap.services', [
             'european_central_bank' => true,
             'array' => [['EUR/USD' => 1.1]],
         ]);
 
-        $rate = $this->app['swap']->latest('EUR/USD');
+        $rate = $this->resolveSwap()->latest('EUR/USD');
 
         Assert::assertSame('array', $rate->getProviderName());
         Assert::assertSame(['www.ecb.europa.eu'], $client->hosts, 'The first configured service is tried first.');
     }
 
-    public function testFirstConfiguredServiceAnswersFirst()
+    public function testFirstConfiguredServiceAnswersFirst(): void
     {
         $client = new RecordingClient();
-        $this->app->instance('test.http_client', $client);
-        $this->app->config->set('swap.http_client', 'test.http_client');
-        $this->app->config->set('swap.services', [
+        $this->application()->instance('test.http_client', $client);
+        $this->setConfig('swap.http_client', 'test.http_client');
+        $this->setConfig('swap.services', [
             'array' => [['EUR/USD' => 1.1]],
             'european_central_bank' => true,
         ]);
 
-        $rate = $this->app['swap']->latest('EUR/USD');
+        $rate = $this->resolveSwap()->latest('EUR/USD');
 
         Assert::assertSame('array', $rate->getProviderName());
         Assert::assertSame([], $client->hosts, 'Later services are not called once a rate is found.');
+    }
+
+    private function resolveSwap(): Swap
+    {
+        $swap = $this->application()->make('swap');
+        Assert::assertInstanceOf(Swap::class, $swap);
+
+        return $swap;
     }
 }
 
@@ -246,6 +228,7 @@ final class RecordingClient implements ClientInterface
     /** @var list<string> */
     public array $hosts = [];
 
+    #[\Override]
     public function sendRequest(RequestInterface $request): ResponseInterface
     {
         $this->hosts[] = $request->getUri()->getHost();
@@ -261,6 +244,7 @@ final class RecordingRequestFactory implements RequestFactoryInterface
 {
     public int $calls = 0;
 
+    #[\Override]
     public function createRequest(string $method, $uri): RequestInterface
     {
         ++$this->calls;
