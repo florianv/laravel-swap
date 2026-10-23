@@ -12,6 +12,7 @@
 namespace Swap\Laravel\Tests;
 
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
+use Illuminate\Cache\ArrayStore;
 use Http\Discovery\HttpClientDiscovery;
 use Swap\Swap;
 use PHPUnit\Framework\Assert;
@@ -93,5 +94,31 @@ class SwapServiceProviderTest extends AbstractTestCase
         $this->app->config->set('swap.cache', 'file');
 
         Assert::assertInstanceOf(Swap::class, $this->app['swap']);
+    }
+
+    public function testConfiguredCacheStoreIsUsed()
+    {
+        $store = new class extends ArrayStore {
+            public function isEmpty(): bool
+            {
+                return [] === $this->storage;
+            }
+        };
+
+        $this->app['cache']->extend('swap_test', function ($app) use ($store) {
+            return $app['cache']->repository($store);
+        });
+        $this->app->config->set('cache.stores.swap_test', ['driver' => 'swap_test']);
+        $this->app->config->set('swap.cache', 'swap_test');
+        $this->app->config->set('swap.services', [
+            'array' => [['EUR/USD' => 1.1]],
+        ]);
+
+        Assert::assertTrue($store->isEmpty());
+
+        $rate = $this->app['swap']->latest('EUR/USD');
+
+        Assert::assertSame(1.1, $rate->getValue());
+        Assert::assertFalse($store->isEmpty());
     }
 }

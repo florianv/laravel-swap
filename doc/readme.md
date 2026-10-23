@@ -71,14 +71,6 @@ If auto-discovery is disabled, register them manually in `config/app.php`:
 ],
 ```
 
-**Laravel 5.7 or older.** If you use the cache, also install the PSR-6 / PSR-16 bridges:
-
-```bash
-composer require cache/illuminate-adapter cache/simple-cache-bridge
-```
-
-These dependencies are not required on Laravel 5.8+, which [implements PSR-16 natively](https://github.com/laravel/framework/pull/27217).
-
 ### Lumen
 
 In `bootstrap/app.php`:
@@ -136,8 +128,8 @@ Commercial providers require an API key. The option name varies by provider. The
 | `currency_converter`             | `access_key`    | `enterprise` (bool)   |
 | `currency_data_feed`             | `api_key`       |                       |
 | `currency_layer`                 | `access_key`    | `enterprise` (bool)   |
-| `exchange_rates_api`             | `access_key`    |                       |
-| `fixer`                          | `access_key`    |                       |
+| `exchange_rates_api`             | `access_key`    | `enterprise` (bool)   |
+| `fixer`                          | `access_key`    | `enterprise` (bool)   |
 | `fixer_apilayer`                 | `api_key`       |                       |
 | `forge`                          | `api_key`       |                       |
 | `open_exchange_rates`            | `app_id`        | `enterprise` (bool)   |
@@ -232,7 +224,7 @@ Set `cache` in `config/swap.php` to any Laravel cache store name:
 'cache' => 'redis', // any Laravel cache store: file, redis, database, ...
 ```
 
-On Laravel 5.8+ the store is used directly. On Laravel 5.7 or older, the package uses the PSR-6 / PSR-16 bridges installed during [Setup](#-setup).
+Laravel cache stores implement PSR-16, so Swap uses the store directly.
 
 ### Per-query options
 

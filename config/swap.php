@@ -30,67 +30,40 @@ return [
     | This option specifies the services to use with their name as key and
     | their config as value.
     |
-    | Here is the config spec for each service:
+    | Set a service to false to disable it. Services are tried in the order
+    | they are listed here.
     |
-    | * "central_bank_of_czech_republic", "central_bank_of_republic_turkey", "european_central_bank",
-    |   "national_bank_of_romania", "webservicex", "russian_central_bank", "cryptonator", "bulgarian_national_bank"
-    |   can be enabled with "true" as value.
+    | Services that need no option are enabled with true:
     |
-    | * 'fastforex' => [
-    |       'api_key' => 'secret', // The API token. Get a free one at https://www.fastforex.io (project sponsor).
-    |   ]
+    |   bulgarian_national_bank, central_bank_of_czech_republic,
+    |   central_bank_of_republic_turkey, central_bank_of_republic_uzbekistan,
+    |   cryptonator, european_central_bank, exchangeratehost,
+    |   national_bank_of_denmark, national_bank_of_georgia,
+    |   national_bank_of_republic_belarus, national_bank_of_romania,
+    |   national_bank_of_ukraine, russian_central_bank, webservicex
     |
-    | * 'apilayer_fixer' => [
-    |       'access_key' => 'secret', // Your access key
-    |   ]
+    | Services that need credentials take an array of options:
     |
-    | * 'apilayer_exchange_rates_data' => [
-    |       'access_key' => 'secret', // Your access key
-    |   ]
+    |   'fastforex'                    => ['api_key' => 'secret'], // https://www.fastforex.io (project sponsor)
+    |   'abstract_api'                 => ['api_key' => 'secret'],
+    |   'apilayer_currency_data'       => ['api_key' => 'secret'],
+    |   'apilayer_exchange_rates_data' => ['api_key' => 'secret'],
+    |   'apilayer_fixer'               => ['api_key' => 'secret'],
+    |   'coin_layer'                   => ['access_key' => 'secret', 'paid' => false],
+    |   'currency_converter'           => ['access_key' => 'secret', 'enterprise' => false],
+    |   'currency_data_feed'           => ['api_key' => 'secret'],
+    |   'currency_layer'               => ['access_key' => 'secret', 'enterprise' => false],
+    |   'exchange_rates_api'           => ['access_key' => 'secret', 'enterprise' => false],
+    |   'fixer'                        => ['access_key' => 'secret', 'enterprise' => false],
+    |   'fixer_apilayer'               => ['api_key' => 'secret'],
+    |   'forge'                        => ['api_key' => 'secret'],
+    |   'open_exchange_rates'          => ['app_id' => 'secret', 'enterprise' => false],
+    |   'unirate_api'                  => ['api_key' => 'secret'],
+    |   'xchangeapi'                   => ['api-key' => 'secret'], // note the hyphen
+    |   'xignite'                      => ['token' => 'secret'],
     |
-    | * 'exchange_rates_api' => [
-    |       'access_key' => 'secret', // Your access key
-    |   ]
-    |
-    | * 'coin_layer' => [
-    |       'access_key' => 'secret', // Your access key
-    |       'paid' => true, // True if your access key is a paying one
-    |   ]
-    |
-    | * 'forge' => [
-    |       'api_key' => 'secret', // The API token
-    |   ]
-    |
-    | * 'abstract_api' => [
-    |       'api_key' => 'secret', // The API token
-    |   ]
-    |
-    | * 'open_exchange_rates' => [
-    |       'app_id' => 'secret', // Your app id
-    |       'enterprise' => true, // True if your AppId is an enterprise one
-    |   ]
-    |
-    | * 'xignite' => [
-    |       'token' => 'secret', // The API token
-    |   ]
-    |
-    | * 'currency_data_feed' => [
-    |       'api_key' => 'secret', // The API token
-    |   ]
-    |
-    | * 'currency_converter' => [
-    |       'api_key' => 'access_key', // The API token
-    |       'enterprise' => true, // True if your AppId is an enterprise one
-    |   ]
-    |
-    | * 'xchangeapi' => [
-    |       'api-key' => 'secret', // The API token
-    |   ]
-    |
-    | * 'unirate_api' => [
-    |       'api_key' => 'secret', // The API token. Get a free one at https://unirateapi.com
-    |   ]
-
+    | The paid and enterprise flags default to false. Set them to true when
+    | your key is on a paid plan. See doc/readme.md for the full reference.
     |
     */
     'services' => [
@@ -101,7 +74,7 @@ return [
         // otherwise the chain falls back to the providers below.
         'fastforex' => env('SWAP_FASTFOREX_KEY') ? ['api_key' => env('SWAP_FASTFOREX_KEY')] : false,
 
-        // Other commercial providers — uncomment and configure the ones you want:
+        // Other commercial providers: uncomment and configure the ones you want:
         // 'apilayer_fixer'      => ['api_key' => env('SWAP_FIXER_KEY')],
         // 'open_exchange_rates' => ['app_id'  => env('SWAP_OER_APP_ID')],
         // 'unirate_api'         => ['api_key' => env('SWAP_UNIRATE_API_KEY')],

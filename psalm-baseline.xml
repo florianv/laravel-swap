@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="7.0.0-beta19@7e751c06a756fa64dc4c759c09fe4a173afcb433">
+<files psalm-version="7.0.0-rc2@20339e3fe5b8d03bcd8061030eb2a83ad50e5783">
   <file src="src/SwapServiceProvider.php">
     <InvalidArrayOffset>
       <code><![CDATA[[$source => $this->getConfigPath('swap.php')]]]></code>
@@ -28,14 +28,10 @@
       <code><![CDATA[get]]></code>
       <code><![CDATA[get]]></code>
       <code><![CDATA[get]]></code>
-      <code><![CDATA[getStore]]></code>
     </MixedMethodCall>
     <MixedReturnStatement>
       <code><![CDATA[$this->app[$httpClient]]]></code>
       <code><![CDATA[$this->app[$requestFactory]]]></code>
-      <code><![CDATA[new SimpleCacheBridge(
-                new IlluminateCachePool($store->getStore())
-            )]]></code>
     </MixedReturnStatement>
     <NoInterfaceProperties>
       <code><![CDATA[$app->config]]></code>
@@ -46,11 +42,5 @@
     <PossiblyFalseArgument>
       <code><![CDATA[$source]]></code>
     </PossiblyFalseArgument>
-    <PossiblyInvalidArgument>
-      <code><![CDATA[$cache]]></code>
-    </PossiblyInvalidArgument>
-    <UndefinedDocblockClass>
-      <code><![CDATA[\Psr\SimpleCache\CacheInterface|\Cache\Bridge\SimpleCache\SimpleCacheBridge|null]]></code>
-    </UndefinedDocblockClass>
   </file>
 </files>
