@@ -11,7 +11,9 @@
 
 namespace Swap\Laravel;
 
+use Illuminate\Container\Container;
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Swap\Builder;
 use Swap\Swap;
@@ -19,13 +21,13 @@ use Swap\Swap;
 /**
  * Provides the Swap service.
  *
- * Not deferred on purpose: a deferred provider registers on first use, after the application's
- * own providers, so it would override their bindings and test doubles, and the config defaults
- * would be missing until Swap is resolved.
+ * Deferred: it registers when Swap is first resolved, after the application's own providers,
+ * so it leaves alone any binding the application or a test already made for "swap" or Swap.
+ * Until then, config('swap') only holds what the application's own config/swap.php sets.
  *
  * @author Florian Voutzinos <florian@voutzinos.com>
  */
-final class SwapServiceProvider extends ServiceProvider
+final class SwapServiceProvider extends ServiceProvider implements DeferrableProvider
 {
     private const CONFIG_SOURCE = __DIR__ . '/../config/swap.php';
 
@@ -44,6 +46,16 @@ final class SwapServiceProvider extends ServiceProvider
     public function register()
     {
         $this->mergeConfigFrom(self::CONFIG_SOURCE, 'swap');
+
+        // A binding rather than an alias, so extend() calls the application made on Swap::class
+        // before this deferred provider registered still apply.
+        if (!$this->isBoundByApplication(Swap::class)) {
+            $this->app->singleton(Swap::class, static fn(Application $app): Swap => $app->make('swap'));
+        }
+
+        if ($this->isBoundByApplication('swap')) {
+            return;
+        }
 
         $this->app->singleton('swap', static function (Application $app): Swap {
             $config = $app->make('config');
@@ -80,8 +92,6 @@ final class SwapServiceProvider extends ServiceProvider
 
             return $builder->build();
         });
-
-        $this->app->alias('swap', Swap::class);
     }
 
     /**
@@ -98,6 +108,21 @@ final class SwapServiceProvider extends ServiceProvider
             'swap',
             Swap::class,
         ];
+    }
+
+    /**
+     * Whether the application or a test bound the service before this provider registered.
+     *
+     * Application::bound() cannot tell: it is also true for the services this provider defers.
+     */
+    private function isBoundByApplication(string $abstract): bool
+    {
+        if ($this->app->resolved($abstract)) {
+            return true;
+        }
+
+        return $this->app instanceof Container
+            && (isset($this->app->getBindings()[$abstract]) || $this->app->isAlias($abstract));
     }
 
     /**

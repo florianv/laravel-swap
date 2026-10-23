@@ -100,16 +100,9 @@ final class SwapServiceProviderTest extends AbstractTestCase
         Assert::assertFalse($store->isEmpty());
     }
 
-    public function testProviderIsNotDeferred(): void
+    public function testProviderIsDeferred(): void
     {
-        // A deferred provider would register after the application's providers and override their bindings.
-        Assert::assertFalse((new SwapServiceProvider($this->application()))->isDeferred());
-    }
-
-    public function testConfigDefaultsAreAvailableBeforeSwapIsResolved(): void
-    {
-        Assert::assertFalse($this->application()->resolved('swap'));
-        Assert::assertIsArray($this->application()->make('config')->get('swap.services'));
+        Assert::assertTrue((new SwapServiceProvider($this->application()))->isDeferred());
     }
 
     public function testApplicationBindingOfTheSwapClassWins(): void
@@ -141,7 +134,7 @@ final class SwapServiceProviderTest extends AbstractTestCase
         $this->resolveSwap();
     }
 
-    public function testSwapClassIsAnAliasOfTheSwapService(): void
+    public function testSwapClassResolvesTheSwapService(): void
     {
         Assert::assertSame($this->resolveSwap(), $this->application()->make(Swap::class));
     }

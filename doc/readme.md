@@ -104,6 +104,8 @@ php artisan vendor:publish --provider="Swap\Laravel\SwapServiceProvider"
 
 This creates `config/swap.php` in your application. The default config pre-wires fastFOREX (the project's sponsor) as the primary provider — it is registered only if `SWAP_FASTFOREX_KEY` is set in your `.env`, otherwise the chain falls back to the European Central Bank, so the package works out of the box without any key.
 
+The service provider is deferred, so it only registers the first time Swap is resolved. Until then, `config('swap')` holds only what your own `config/swap.php` sets, without the package defaults. Bindings your application or tests make for `swap` (used by the facade) or `Swap\Swap` (used by injection) are kept, and so are `extend()` calls on either.
+
 ### 🔑 Provider configuration
 
 Public providers (central banks, national banks) need no configuration. Use `true` as the value:
