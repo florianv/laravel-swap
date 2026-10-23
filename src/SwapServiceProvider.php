@@ -12,25 +12,27 @@
 namespace Swap\Laravel;
 
 use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Psr\SimpleCache\CacheInterface;
 use Swap\Builder;
+use Swap\Swap;
 
 /**
  * Provides the Swap service.
  *
  * @author Florian Voutzinos <florian@voutzinos.com>
  */
-final class SwapServiceProvider extends ServiceProvider
+final class SwapServiceProvider extends ServiceProvider implements DeferrableProvider
 {
+    private const CONFIG_SOURCE = __DIR__.'/../config/swap.php';
+
     /**
      * Bootstrap the application services.
      */
     public function boot(): void
     {
-        $source = realpath(__DIR__.'/../config/swap.php');
-        $this->publishes([$source => $this->getConfigPath('swap.php')]);
-        $this->mergeConfigFrom($source, 'swap');
+        $this->publishes([self::CONFIG_SOURCE => $this->app->configPath('swap.php')]);
     }
 
     /**
@@ -39,6 +41,8 @@ final class SwapServiceProvider extends ServiceProvider
     #[\Override]
     public function register()
     {
+        $this->mergeConfigFrom(self::CONFIG_SOURCE, 'swap');
+
         $this->app->singleton('swap', function (Application $app) {
             $builder = new Builder($app->config->get('swap.options', []));
 
@@ -65,7 +69,7 @@ final class SwapServiceProvider extends ServiceProvider
             return $builder->build();
         });
 
-        $this->app->bind('Swap\Swap', 'swap');
+        $this->app->alias('swap', Swap::class);
     }
 
     /**
@@ -80,19 +84,8 @@ final class SwapServiceProvider extends ServiceProvider
     {
         return [
             'swap',
+            Swap::class,
         ];
-    }
-
-    /**
-     * Gets the full path to the config.
-     *
-     * @param string $path
-     *
-     * @return string
-     */
-    private function getConfigPath($path = '')
-    {
-        return app()->basePath().'/config'.($path ? '/'.$path : $path);
     }
 
     /**
