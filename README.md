@@ -106,7 +106,7 @@ See the [documentation](doc/readme.md#-caching) for the full reference, includin
 
 Laravel Swap supports the 30+ exchange rate providers from the underlying [Swap](https://github.com/florianv/swap) library. Pass the **identifier** as the key under `services` in `config/swap.php`.
 
-### Commercial providers (require an API key)
+### Commercial providers
 
 | Service                                  | Identifier      | Base                     | Quote  | Historical |
 | ---------------------------------------- | --------------- | ------------------------ | ------ | ---------- |
@@ -121,7 +121,7 @@ Laravel Swap supports the 30+ exchange rate providers from the underlying [Swap]
 | currencylayer (direct)                   | `currency_layer`               | USD (free), * (paid) | *     | Yes        |
 | Exchange Rates Data (APILayer)           | `apilayer_exchange_rates_data` | USD (free), * (paid) | *     | Yes        |
 | exchangerate.host                        | `exchangeratehost`             | *                    | *     | Yes        |
-| exchangeratesapi (direct)                | `exchange_rates_api`           | USD (free), * (paid) | *     | Yes        |
+| exchangeratesapi (direct)                | `exchange_rates_api`           | EUR (free), * (paid) | *     | Yes        |
 | Fixer (APILayer)                         | `apilayer_fixer`               | EUR (free), * (paid) | *     | Yes        |
 | Fixer (direct)                           | `fixer`                        | EUR (free), * (paid) | *     | Yes        |
 | 1Forge                                   | `forge`                        | *                    | *     | No         |
@@ -130,6 +130,8 @@ Laravel Swap supports the 30+ exchange rate providers from the underlying [Swap]
 | WebserviceX                              | `webservicex`                  | *                    | *     | No         |
 | xChangeApi.com                           | `xchangeapi`                   | *                    | *     | Yes        |
 | Xignite                                  | `xignite`                      | *                    | *     | Yes        |
+
+Most commercial providers need an API key; see [Provider configuration](doc/readme.md#-provider-configuration) for each option name. `cryptonator`, `exchangeratehost` and `webservicex` currently work without one and are enabled with `true`.
 
 ### Public providers (no API key required)
 

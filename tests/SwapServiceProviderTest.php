@@ -14,7 +14,6 @@ namespace Swap\Laravel\Tests;
 use GrahamCampbell\TestBenchCore\ServiceProviderTrait;
 use Illuminate\Cache\ArrayStore;
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\Assert;
@@ -101,13 +100,45 @@ final class SwapServiceProviderTest extends AbstractTestCase
         Assert::assertFalse($store->isEmpty());
     }
 
-    public function testProviderIsDeferred(): void
+    public function testProviderIsNotDeferred(): void
     {
-        $provider = new SwapServiceProvider($this->application());
+        // A deferred provider would register after the application's providers and override their bindings.
+        Assert::assertFalse((new SwapServiceProvider($this->application()))->isDeferred());
+    }
 
-        Assert::assertInstanceOf(DeferrableProvider::class, $provider);
-        Assert::assertTrue($provider->isDeferred());
-        Assert::assertSame(['swap', Swap::class], $provider->provides());
+    public function testConfigDefaultsAreAvailableBeforeSwapIsResolved(): void
+    {
+        Assert::assertFalse($this->application()->resolved('swap'));
+        Assert::assertIsArray($this->application()->make('config')->get('swap.services'));
+    }
+
+    public function testApplicationBindingOfTheSwapClassWins(): void
+    {
+        $fake = $this->createStub(Swap::class);
+        $this->application()->instance(Swap::class, $fake);
+
+        $this->resolveSwap();
+
+        Assert::assertSame($fake, $this->application()->make(Swap::class));
+    }
+
+    public function testApplicationBindingOfTheSwapServiceWins(): void
+    {
+        $custom = $this->createStub(Swap::class);
+        $this->application()->singleton('swap', static fn(): Swap => $custom);
+
+        Assert::assertSame($custom, $this->application()->make('swap'));
+        Assert::assertSame($custom, $this->application()->make(Swap::class));
+    }
+
+    public function testInvalidServiceNameOptionFailsLoudly(): void
+    {
+        $this->expectException(\InvalidArgumentException::class);
+        $this->expectExceptionMessage('The "swap.cache" option must be a name, bool given.');
+
+        $this->setConfig('swap.cache', true);
+
+        $this->resolveSwap();
     }
 
     public function testSwapClassIsAnAliasOfTheSwapService(): void

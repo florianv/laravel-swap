@@ -12,7 +12,6 @@
 namespace Swap\Laravel;
 
 use Illuminate\Contracts\Foundation\Application;
-use Illuminate\Contracts\Support\DeferrableProvider;
 use Illuminate\Support\ServiceProvider;
 use Swap\Builder;
 use Swap\Swap;
@@ -20,9 +19,13 @@ use Swap\Swap;
 /**
  * Provides the Swap service.
  *
+ * Not deferred on purpose: a deferred provider registers on first use, after the application's
+ * own providers, so it would override their bindings and test doubles, and the config defaults
+ * would be missing until Swap is resolved.
+ *
  * @author Florian Voutzinos <florian@voutzinos.com>
  */
-final class SwapServiceProvider extends ServiceProvider implements DeferrableProvider
+final class SwapServiceProvider extends ServiceProvider
 {
     private const CONFIG_SOURCE = __DIR__ . '/../config/swap.php';
 
@@ -50,16 +53,16 @@ final class SwapServiceProvider extends ServiceProvider implements DeferrablePro
             $options = $config->get('swap.options', []);
             $builder = new Builder($options);
 
-            if (null !== $store = self::serviceId($config->get('swap.cache'))) {
+            if (null !== $store = self::serviceId($config->get('swap.cache'), 'cache')) {
                 $builder->useSimpleCache($app->make('cache')->store($store));
             }
 
-            if (null !== $httpClient = self::serviceId($config->get('swap.http_client'))) {
+            if (null !== $httpClient = self::serviceId($config->get('swap.http_client'), 'http_client')) {
                 /** @psalm-suppress MixedArgument Builder::useHttpClient() rejects anything but a PSR-18 or HTTPlug client. */
                 $builder->useHttpClient($app->make($httpClient));
             }
 
-            if (null !== $requestFactory = self::serviceId($config->get('swap.request_factory'))) {
+            if (null !== $requestFactory = self::serviceId($config->get('swap.request_factory'), 'request_factory')) {
                 /** @psalm-suppress MixedArgument The RequestFactoryInterface parameter type rejects anything else. */
                 $builder->useRequestFactory($app->make($requestFactory));
             }
@@ -102,10 +105,20 @@ final class SwapServiceProvider extends ServiceProvider implements DeferrablePro
      *
      * Laravel cache stores implement PSR-16, so the configured store is passed to Swap as is.
      *
+     * @throws \InvalidArgumentException when the option is set to something other than a name
+     *
      * @psalm-pure
      */
-    private static function serviceId(mixed $value): ?string
+    private static function serviceId(mixed $value, string $option): ?string
     {
-        return \is_string($value) && '' !== $value ? $value : null;
+        if (null === $value || false === $value || '' === $value) {
+            return null;
+        }
+
+        if (!\is_string($value)) {
+            throw new \InvalidArgumentException(\sprintf('The "swap.%s" option must be a name, %s given.', $option, get_debug_type($value)));
+        }
+
+        return $value;
     }
 }

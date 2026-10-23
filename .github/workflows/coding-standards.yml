@@ -13,8 +13,8 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
-  php-cs-fixer:
-    name: PHP CS Fixer
+  coding-standards:
+    name: PHP CS Fixer and facade docblocks
     runs-on: ubuntu-latest
     timeout-minutes: 10
 
@@ -35,36 +35,18 @@ jobs:
           dependency-versions: highest
 
       - name: Run PHP CS Fixer
+        id: cs
         run: composer cs:check
 
-      - name: How to fix
-        if: failure()
-        run: echo "::error::Coding style check failed. Run 'composer cs:fix' locally and commit the result."
-
-  facade-docblocks:
-    name: Facade docblocks
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-
-    steps:
-      - uses: actions/checkout@v6
-
-      - name: Setup PHP
-        uses: shivammathur/setup-php@v2
-        with:
-          php-version: '8.4'
-          coverage: none
-        env:
-          COMPOSER_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Install dependencies
-        uses: ramsey/composer-install@v3
-        with:
-          dependency-versions: highest
+      - name: How to fix the coding style
+        if: failure() && steps.cs.outcome == 'failure'
+        run: echo "::error::If the coding style check failed, run 'composer cs:fix' locally and commit the result."
 
       - name: Lint facade docblocks
+        id: facade
+        if: success() || failure()
         run: composer facade:lint
 
-      - name: How to fix
-        if: failure()
+      - name: How to fix the facade docblock
+        if: failure() && steps.facade.outcome == 'failure'
         run: echo "::error::The Swap facade docblock is out of date. Run 'composer facade:fix' locally and commit the result."

@@ -139,6 +139,8 @@ Commercial providers require an API key. The option name varies by provider. The
 | `xchangeapi`                     | `api-key`       | (note the hyphen)     |
 | `xignite`                        | `token`         |                       |
 
+> Note: with `paid` set to `false` (the default), `coin_layer` calls the free HTTP endpoint, so the access key is sent unencrypted. Use it only with `paid` set to `true` if that matters to you.
+
 > Note: `cryptonator`, `exchangeratehost` and `webservicex` are commercial upstream services but the current Exchanger wrapper does not enforce any option for them. They can be added with `'exchangeratehost' => true` until the wrapper is updated to require an API key.
 
 Example chaining fastFOREX as the primary provider with a couple of fallbacks:

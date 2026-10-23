@@ -63,7 +63,9 @@ return [
     |   'xignite'                      => ['token' => 'secret'],
     |
     | The paid and enterprise flags default to false. Set them to true when
-    | your key is on a paid plan. See doc/readme.md for the full reference.
+    | your key is on a paid plan. For coin_layer, paid also switches to HTTPS:
+    | with paid set to false the access key is sent over plain HTTP.
+    | See doc/readme.md for the full reference.
     |
     */
     'services' => [
